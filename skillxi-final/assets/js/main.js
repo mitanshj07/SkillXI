@@ -3,8 +3,8 @@
    ============================================================ */
 
 // --- 1. CONFIGURATION & REAL SDK INIT ---
-const SUPABASE_URL = 'https://vtvrvlcholgloujqcxd.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_acI3fmYK6aVYrggO8DrPiw_MRiFdo78';
+const SUPABASE_URL = 'https://vtvrvlcholgjoujqcoxd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdWJhc2VzInJlZzIsInJlZiI6InZ0dnJ2bGNob2xnam91anFjb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4MzE0ODAsImV4cCI6MjAyODQwNzQ4MH0.kkgEG83casObXDcorqf50w9EqTleD_evYInWGrhkcR';
 const { createClient } = supabase;
 const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 

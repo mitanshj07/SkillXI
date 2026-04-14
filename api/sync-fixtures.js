@@ -2,7 +2,7 @@ const axios = require('axios');
 const { createClient } = require('@supabase/supabase-js');
 
 // Init Supabase with Admin rights for backend insertion
-const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://vtvrvlcholgloujqcxd.supabase.co';
+const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://vtvrvlcholgjoujqcoxd.supabase.co';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Must be set in Vercel
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
