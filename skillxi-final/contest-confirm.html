@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Confirm Entry | SkillXI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: { extend: {
+                colors: { "primary":"#a8e8ff", "surface":"#131318", "background":"#131318", "secondary":"#d2bbff", "tertiary":"#00ff88" },
+                fontFamily:{ headline:["Space Grotesk"], body:["Inter"] }
+            }}
+        }
+    </script>
+    <!-- Solana Web3 Integrations -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
+    <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-surface text-white font-body min-h-screen">
+
+<div class="p-6 max-w-2xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center gap-4 mb-8">
+        <button onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></button>
+        <h1 class="text-xl font-headline font-black">Confirm Selection</h1>
+    </div>
+
+    <!-- Match Summary -->
+    <div class="bg-[#1a1a2e] border border-white/5 rounded-3xl p-6 mb-8 text-center">
+        <p id="confirm-match-name" class="font-headline font-bold text-lg mb-1">...</p>
+        <p id="confirm-contest-name" class="text-xs text-primary font-bold uppercase tracking-widest">...</p>
+    </div>
+
+    <!-- The Team Grid -->
+    <div class="mb-8">
+        <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Your Final XI</h2>
+        <div id="confirm-player-grid" class="grid grid-cols-3 gap-3">
+            <!-- Small player cards -->
+        </div>
+    </div>
+
+    <!-- Payment Detail -->
+    <div class="bg-gradient-to-br from-[#1a1a2e] to-[#131318] border border-white/10 rounded-3xl p-8 mb-12 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full translate-y-1/2"></div>
+        <div class="relative z-10">
+            <p class="text-xs text-slate-400 font-bold uppercase mb-2">Total Entry Fee</p>
+            <h3 id="confirm-entry-fee" class="text-4xl font-headline font-black text-white mb-2">0.1 SOL</h3>
+            <p class="text-[11px] text-slate-500 mb-8 italic">🔐 Payment secured via Umbra & Solana Devnet</p>
+            
+            <button id="final-pay-btn" onclick="executeFinalJoin()" class="w-full bg-gradient-to-r from-[#00ff88] to-primary text-[#131318] font-headline font-black py-4 rounded-xl shadow-[0_10px_40px_rgba(0,255,136,0.3)] hover:scale-[1.05] transition-transform">
+                PAY & JOIN CONTEST
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Success Overlay -->
+<div id="success-overlay" class="fixed inset-0 bg-[#00ff88] z-[200] flex flex-col items-center justify-center text-[#131318] hidden">
+    <span class="text-8xl mb-6">✅</span>
+    <h2 class="text-5xl font-headline font-black mb-2 italic">YOU'RE IN!</h2>
+    <p class="text-xl font-bold opacity-70">Redirecting to Leaderboard...</p>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script>
+    let currentMatch, currentContest;
+
+    window.addEventListener('load', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const matchId = urlParams.get('match');
+        const contestId = urlParams.get('contest');
+        
+        currentContest = CONTESTS.find(c => c.id === matchId) || CONTESTS[0];
+        document.getElementById('confirm-match-name').innerText = `${currentContest.homeTeam} vs ${currentContest.awayTeam}`;
+        document.getElementById('confirm-contest-name').innerText = currentContest.league;
+        document.getElementById('confirm-entry-fee').innerText = `${currentContest.entry} SOL`;
+
+        const lineup = JSON.parse(localStorage.getItem('skillxi_temp_lineup') || '[]');
+        const cId = localStorage.getItem('skillxi_temp_c');
+        const vcId = localStorage.getItem('skillxi_temp_vc');
+        
+        const grid = document.getElementById('confirm-player-grid');
+        lineup.forEach(p => {
+            const card = document.createElement('div');
+            card.className = "bg-[#131318] border border-white/5 p-3 rounded-xl text-center relative";
+            const isC = p.id === cId;
+            const isVC = p.id === vcId;
+            
+            card.innerHTML = `
+                ${isC ? `<span class="absolute top-1 right-1 bg-yellow-400 text-black text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center">C</span>` : ''}
+                ${isVC ? `<span class="absolute top-1 right-1 bg-slate-300 text-black text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center">VC</span>` : ''}
+                <div class="w-8 h-8 rounded-full bg-primary/10 mx-auto mb-2 flex items-center justify-center text-[10px] font-bold overflow-hidden">
+                    ${p.photo ? `<img src="${p.photo}" class="w-full h-full object-cover">` : p.name.slice(0,1)}
+                </div>
+                <p class="text-[9px] font-black text-white truncate">${p.name}</p>
+            `;
+            grid.appendChild(card);
+        });
+    });
+
+    async function executeFinalJoin() {
+        const btn = document.getElementById('final-pay-btn');
+        btn.innerHTML = '<span class="animate-spin mr-2">🌀</span> SHIELDING...';
+        btn.disabled = true;
+
+        try {
+            // Re-using the built-in Umbra Flow from main.js
+            const success = await window.lockLineupWithUmbra(currentContest.id, { 
+                match: currentContest.id,
+                squad: JSON.parse(localStorage.getItem('skillxi_temp_lineup'))
+            });
+
+            if (success) {
+                document.getElementById('success-overlay').classList.remove('hidden');
+                setTimeout(() => {
+                    window.location.href = 'leaderboard.html';
+                }, 2000);
+            } else {
+                btn.innerHTML = 'PAY & JOIN CONTEST';
+                btn.disabled = false;
+            }
+        } catch (e) {
+            window.showWalletToast(e.message, 'error');
+            btn.innerHTML = 'PAY & JOIN CONTEST';
+            btn.disabled = false;
+        }
+    }
+</script>
+</body>
+</html>
