@@ -156,10 +156,14 @@
 
 <script src="assets/js/main.js"></script>
 <script>
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const matchId = urlParams.get('match');
-        const contest = CONTESTS.find(c => c.id === matchId) || CONTESTS[0];
+        
+        let contests = window.CURRENT_CONTESTS;
+        if (!contests || contests.length === 0) contests = await window.getContests();
+        
+        const contest = contests.find(c => c.id === matchId) || contests[0];
         
         document.getElementById('lobby-match-name').innerText = `${contest.homeTag} vs ${contest.awayTag}`;
         document.getElementById('home-tag').innerText = contest.homeTag;

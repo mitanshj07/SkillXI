@@ -10,8 +10,8 @@ const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const ESCROW_ADDRESS = '9WvVMvMKQYKnBgVe6egAH7NZ13ar4NB76PVsiG9vsEbN';
 
-// --- VERSION 1 DATA (HARDCODED) ---
-const CONTESTS = [
+// --- VERSION 1 DATA (FALLBACK) ---
+const FALLBACK_CONTESTS = [
   {
     id: "c001",
     sport: "football",
@@ -129,7 +129,7 @@ const CONTESTS = [
   }
 ];
 
-const PLAYERS = [
+const FALLBACK_PLAYERS = [
   // GOALKEEPERS
   { id: "p1", name:"Ederson", team:"MCI", price:8.0, aiScore:8.1, pos: "GK", photo: "https://lh3.googleusercontent.com/aida-public/AB6AXuBigPNit_Zd4b9VGvmjLOMC-WW266smXEGTYzKfoya4VkPo03U565UJX2k4Hj-Z0DepAtRJ-1yqV0v4BSye2wRImb7L6OVp7mXXRoYhPEh9PCqi3Q9EzeizXKRQhOfM9O_ENFoMy3vZmH8P3iA4mEBNMUCeCS9TIYkoE0eYOUHxS1Tis3iDr9oWogeo3TPlqc615hR4hd87X3i2ciMp2RQHYhu3zY1n7TtpU0w86BxVJht2WHbl2l-Mr4QyzMuztT7JqW9GDsk7qk9Y" },
   { id: "p2", name:"Raya", team:"ARS", price:7.5, aiScore:7.8, pos: "GK", photo: "https://lh3.googleusercontent.com/aida-public/AB6AXuBigPNit_Zd4b9VGvmjLOMC-WW266smXEGTYzKfoya4VkPo03U565UJX2k4Hj-Z0DepAtRJ-1yqV0v4BSye2wRImb7L6OVp7mXXRoYhPEh9PCqi3Q9EzeizXKRQhOfM9O_ENFoMy3vZmH8P3iA4mEBNMUCeCS9TIYkoE0eYOUHxS1Tis3iDr9oWogeo3TPlqc615hR4hd87X3i2ciMp2RQHYhu3zY1n7TtpU0w86BxVJht2WHbl2l-Mr4QyzMuztT7JqW9GDsk7qk9Y" },
@@ -194,7 +194,50 @@ window.ensureUserExists = async function(walletAddress) {
 };
 
 window.getContests = async function() {
-  return await supabaseQuery('contests');
+  const data = await supabaseQuery('matches');
+  if (!data || data.length === 0) return FALLBACK_CONTESTS;
+  
+  // Map Supabase columns to frontend expected format
+  return data.map(m => ({
+     id: m.id,
+     sport: m.sport,
+     homeTeam: m.home_team,
+     homeTag: m.home_tag,
+     awayTeam: m.away_team,
+     awayTag: m.away_tag,
+     league: m.league,
+     matchDate: new Date(m.match_date).toLocaleString(),
+     prize: m.prize,
+     entry: m.entry,
+     maxPlayers: m.max_players,
+     currentPlayers: m.current_players,
+     difficulty: m.difficulty,
+     aiTip: m.ai_tip || `Highly competitive match`,
+     hot: m.featured,
+     almostFull: (m.current_players / m.max_players) > 0.8,
+     timeLeft: (new Date(m.match_date).getTime() - Date.now()) / 1000
+  }));
+};
+
+window.getPlayers = async function(matchId = null) {
+  try {
+     let query = _supabase.from('players').select('*');
+     if (matchId) query = query.eq('match_id', matchId);
+     const { data, error } = await query;
+     if (error || !data || data.length === 0) return FALLBACK_PLAYERS;
+
+     return data.map(p => ({
+        id: p.id,
+        name: p.name,
+        team: p.team_tag,
+        price: parseFloat(p.price),
+        aiScore: parseFloat(p.ai_score),
+        pos: p.position,
+        photo: p.photo_url || null
+     }));
+  } catch (err) {
+     return FALLBACK_PLAYERS;
+  }
 };
 
 window.getLeaderboard = async function() {
@@ -454,7 +497,7 @@ class LineupManager {
   }
 
   togglePlayer(playerId) {
-    const p = PLAYERS.find(x => x.id === playerId);
+    const p = window.CURRENT_PLAYERS.find(x => x.id === playerId);
     const index = this.selectedPlayers.findIndex(x => x.id === playerId);
     
     if (index > -1) {
@@ -499,13 +542,19 @@ class LineupManager {
 }
 
 window.lineupManager = new LineupManager();
+window.CURRENT_PLAYERS = []; // Hold dynamic state
 
-window.renderPlayerList = function(posFilter = 'ALL') {
+window.renderPlayerList = async function(posFilter = 'ALL', matchId = null) {
   const container = document.getElementById('player-selection-list');
   if (!container) return;
   
+  if (window.CURRENT_PLAYERS.length === 0) {
+      container.innerHTML = '<p class="text-center text-white mt-10">Fetching Live Squads...</p>';
+      window.CURRENT_PLAYERS = await window.getPlayers(matchId);
+  }
+
   container.innerHTML = '';
-  const filtered = posFilter === 'ALL' ? PLAYERS : PLAYERS.filter(p => p.pos === posFilter);
+  const filtered = posFilter === 'ALL' ? window.CURRENT_PLAYERS : window.CURRENT_PLAYERS.filter(p => p.pos === posFilter);
   
   filtered.forEach(p => {
     const isSelected = window.lineupManager.selectedPlayers.find(x => x.id === p.id);
@@ -618,12 +667,15 @@ window.renderMyTeamPitch = function() {
 document.addEventListener('click', () => {
     document.querySelectorAll('.captain-selector').forEach(el => el.classList.add('hidden'));
 });
-window.renderContests = function(filter = 'all') {
+window.renderContests = async function(filter = 'all') {
   const grid = document.getElementById('contests-grid');
   if (!grid) return;
   
+  grid.innerHTML = '<p class="text-white text-center mt-10">Fetching Next Gen Maches...</p>';
+  window.CURRENT_CONTESTS = await window.getContests();
+
   grid.innerHTML = '';
-  const filtered = filter === 'all' ? CONTESTS : CONTESTS.filter(c => c.sport === filter);
+  const filtered = filter === 'all' ? window.CURRENT_CONTESTS : window.CURRENT_CONTESTS.filter(c => c.sport === filter);
 
   filtered.forEach(c => {
     const card = document.createElement('div');
@@ -699,11 +751,11 @@ window.filterContests = function(sport) {
 };
 
 // --- 8. PAGE ROUTING & INITIALIZATION ---
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   const page = window.location.pathname;
   
   if (page.includes('contests.html')) {
-    window.renderContests();
+    await window.renderContests();
   }
   
   // Wallet re-sync

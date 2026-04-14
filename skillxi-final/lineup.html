@@ -152,13 +152,19 @@
         window.location.href = `contest-confirm.html?match=${urlParams.get('match')}&contest=${urlParams.get('contest')}`;
     }
 
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const matchId = urlParams.get('match');
-        const contest = CONTESTS.find(c => c.id === matchId) || CONTESTS[0];
-        document.getElementById('match-header-title').innerText = `${contest.homeTeam} vs ${contest.awayTeam}`;
+        let contests = window.CURRENT_CONTESTS;
+        if (!contests || contests.length === 0) {
+            contests = await window.getContests();
+        }
+        const contest = contests.find(c => c.id === matchId) || contests[0];
+        if (contest) {
+            document.getElementById('match-header-title').innerText = `${contest.homeTeam} vs ${contest.awayTeam}`;
+        }
         
-        window.renderPlayerList();
+        await window.renderPlayerList('ALL', matchId);
         window.updateBuilderUI();
     });
 </script>
