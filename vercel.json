@@ -1,6 +1,6 @@
 {
   "buildCommand": "echo 'No build required'",
-  "outputDirectory": ".",
+  "outputDirectory": "skillxi-final",
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
