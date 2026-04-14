@@ -1,12 +1,7 @@
 {
   "buildCommand": "echo 'No build required'",
-  "outputDirectory": "skillxi-final",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/$1" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
