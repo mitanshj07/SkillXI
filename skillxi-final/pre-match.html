@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillXI | Pre-Match Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "outline": "#859398",
+                        "primary": "#a8e8ff",
+                        "surface": "#131318",
+                        "tertiary-fixed-dim": "#00e479",
+                        "surface-container": "#1f1f25",
+                        "on-secondary-container": "#c9aeff",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#00586b",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary": "#3f008e",
+                        "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed": "#60ff99",
+                        "on-surface": "#e4e1e9",
+                        "surface-container-highest": "#35343a",
+                        "on-background": "#e4e1e9",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-container-lowest": "#0e0e13",
+                        "secondary": "#d2bbff",
+                        "on-primary-fixed": "#001f27",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#eaddff",
+                        "surface-tint": "#3cd7ff",
+                        "surface-container-low": "#1b1b20",
+                        "inverse-on-surface": "#303036",
+                        "tertiary-container": "#00df76",
+                        "surface-container-high": "#2a292f",
+                        "secondary-container": "#6001d1",
+                        "primary-fixed": "#b4ebff",
+                        "on-tertiary-fixed": "#00210c",
+                        "inverse-surface": "#e4e1e9",
+                        "surface-variant": "#35343a",
+                        "surface-bright": "#39383e",
+                        "background": "#131318",
+                        "primary-container": "#00d4ff",
+                        "on-primary": "#003642",
+                        "tertiary": "#00ff88",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "surface-dim": "#131318",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "on-error": "#690005",
+                        "inverse-primary": "#00677e",
+                        "outline-variant": "#3c494e",
+                        "on-tertiary": "#003919",
+                        "on-tertiary-container": "#005d2d",
+                        "primary-fixed-dim": "#3cd7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(31, 31, 37, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .pitch-gradient {
+            background: radial-gradient(circle at center, #1b1b20 0%, #0e0e13 100%);
+        }
+    </style>
+<link rel="stylesheet" href="assets/css/style.css"/>
+    <!-- Solana Web3 Integrations -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
+    <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-headline">SkillXI</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline" href="#">Lobby</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline" href="#">Research</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline" href="#">Squads</a>
+<a class="text-[#a8e8ff] border-b-2 border-[#a8e8ff] pb-1 font-headline" href="#">Intelligence</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="p-2 text-[#a8e8ff] hover:bg-[#a8e8ff]/10 transition-all duration-300 rounded-full active:scale-95">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<button class="p-2 text-[#a8e8ff] hover:bg-[#a8e8ff]/10 transition-all duration-300 rounded-full active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img alt="User Profile Avatar" data-alt="vibrant 3d avatar of a young tech professional with short dark hair and modern glasses on a clean studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUf7uTi8_Z2ybDxRTutAHtLRbnFnRYiXCc29YcZC4b9UY5SXXRrvhmoA54T1_LuvxPVEQOse6XCIxtXib96ZneQrhkn1ekD882Nitph7vFtuFAMxkYKsnaelDsIrQQoJ0zA1heTW5GOeW6m9pUkF_84GCHydTjVBEfOqahXrGcpkxzWlxXISSNb9K1lpQrAatOObwnN9YcfnIABQ553k_1sDz-Kj_onh7wMfwmhERvjQAa_GYm3P6l2M4hpLkTirjJBSWYtSBzKCde"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Side Navigation Bar (Desktop) -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-[#ffffff0f] bg-[#0e0e13] hidden md:flex flex-col py-8 pt-24">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary text-sm" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<div class="text-[#d2bbff] font-black text-xs font-headline uppercase tracking-widest">KINETIC AI</div>
+<div class="text-[10px] text-[#5a5a75] font-bold">V3.2 Active</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col">
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all font-headline" href="#">
+<span class="material-symbols-outlined">grid_view</span> Home
+            </a>
+<a class="bg-gradient-to-r from-[#a8e8ff1a] to-transparent text-[#a8e8ff] border-r-4 border-[#a8e8ff] flex items-center gap-4 px-6 py-4 font-headline" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span> AI Analyst
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all font-headline" href="#">
+<span class="material-symbols-outlined">database</span> Market
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all font-headline" href="#">
+<span class="material-symbols-outlined">emoji_events</span> Contests
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all font-headline" href="#">
+<span class="material-symbols-outlined">leaderboard</span> Leaderboard
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all font-headline" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-3 bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full font-bold text-xs shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-95 transition-transform">
+                UPGRADE TO PRO
+            </button>
+<div class="mt-6 flex flex-col gap-2">
+<a class="text-[#5a5a75] hover:text-white text-xs flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">help</span> Support
+                </a>
+<a class="text-[#5a5a75] hover:text-white text-xs flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">logout</span> Logout
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 pt-24 pb-32 px-4 md:px-12 max-w-7xl mx-auto">
+
+<!-- AI Report Generator Section -->
+<div id="ai-report-section" style="
+  max-width: 900px;
+  margin: 0 auto 30px;
+">
+  <div style="
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+  ">
+    <div>
+      <h2 style="color:#fff; font-size:22px; font-weight:700; margin:0;">
+        📄 AI Pre-Match Report
+      </h2>
+      <p style="color:#a0a0b8; font-size:14px; margin:4px 0 0;">
+        Man City vs Arsenal · Premier League · Tonight
+      </p>
+    </div>
+    <button onclick="generateReport()" style="
+      background: linear-gradient(135deg, #00d4ff, #0099bb);
+      color: #0a0a0f;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    ">🤖 Generate AI Report</button>
+  </div>
+
+  <div id="report-loading" style="display:none; text-align:center; padding:40px;">
+    <div style="
+      width: 48px; height: 48px;
+      border: 4px solid #1e1e30;
+      border-top: 4px solid #00d4ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    "></div>
+    <p style="color:#a0a0b8;">Generating your AI report...</p>
+  </div>
+
+  <div id="report-result" style="display:none;"></div>
+</div>
+
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+<!-- Score Prediction Hero -->
+<section class="relative overflow-hidden rounded-[2rem] bg-surface-container-low mb-12 p-8 md:p-12">
+<div class="absolute inset-0 opacity-20" data-alt="wide angle shot of a professional football stadium at night under bright floodlights with a cool cinematic blue atmosphere" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD5jSXN9mZpJpzd7JSPrII-OFhb_YX98EBHRZyuByZfWtiUKv8xmZtNE-zZEtbp7DLG3BccuUFjzZtWO41KUGCnE6OcK5WndS_EWEqRpNA0Sq05lQKtSt4coGfO631FJXXbFZVFqnrK_3SV4Vxi34Qw5XQAEyESb6T9tdx64okV5dP7jZ38rC6IEPBG-OX5YlkvBx9m6kuUvwwph_UtDTa67D429pZdjm_zS_IsBqcGcBJvWAbehskxAg1ekrwUXul2dOLNFG9Lg3_Z'); background-size: cover; background-position: center;"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-low via-transparent to-surface-container-low"></div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-secondary/20 border border-secondary/30 mb-8">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="text-secondary text-[10px] font-bold tracking-[0.2em] font-headline">AI PREDICTION</span>
+</div>
+<div class="flex items-center justify-center gap-8 md:gap-24 mb-10 w-full">
+<!-- Home Team -->
+<div class="flex flex-col items-center gap-4">
+<div class="w-20 h-20 md:w-32 md:h-32 rounded-2xl bg-surface-container-high flex items-center justify-center p-4">
+<img alt="MCI" class="w-full h-full object-contain" data-alt="professional football club crest for Manchester City with light blue and white aesthetic elements" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAARpL64gIuDSBJmCk8z7jOp7B67yy60yVoOIntlPYQAHBdtzcPOjd4RyZ5nvJe8TxLCpSedXf8aG8_Q7cHMcc7zsww9U8ugDsdtR8QJG8clll2pPBOp-DCG7iru7fPij5VydDFeLfcqr-ByNkCqzVOeUiMd-q3vCOGrtpx8I-kgt75sUHHM0xk2gCmo7xHlyrOupmyPcWjH2de6nFr9Qw9UYoPJpT7BBRdeLzbrhmr3UFVo7wPOGUs3Hwv9CC5K3u0oovf-KnoV3Oh"/>
+</div>
+<h2 class="text-2xl font-black font-headline tracking-tighter">MCI</h2>
+</div>
+<!-- Score -->
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-4 text-6xl md:text-8xl font-black font-headline text-white tracking-tighter">
+<span>2</span>
+<span class="text-outline-variant text-4xl md:text-6xl">-</span>
+<span>1</span>
+</div>
+<div class="text-[#00ff88] font-bold text-sm tracking-widest mt-2">68% CONFIDENCE</div>
+</div>
+<!-- Away Team -->
+<div class="flex flex-col items-center gap-4">
+<div class="w-20 h-20 md:w-32 md:h-32 rounded-2xl bg-surface-container-high flex items-center justify-center p-4">
+<img alt="ARS" class="w-full h-full object-contain" data-alt="professional football club crest for Arsenal with red and white aesthetic elements" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE5YxAJTvec0Pcvf1Zc_4Ub_vd5IS6TGPD_Sesw0gP6kkIEwAhIcOx801vF5N1_Pq_vujvgfTOz314dyXD0Xbyjdj--yuxGte6MXNgGofVZTWOL0A2-vWroJhMlpqEzz65C358FvDK9zbbevX0rjELKai5IJDmXzanC2EMvWWZBIFaFWY1ILN35liZ4pIwrMINq_LJY1xPMWfzR_lK3MOq_eGY1VYJV9Xx_5jLkxE-nWRFQvXJy_QIYOlm8Gq8Iuhj7qJn-d_wbFoU"/>
+</div>
+<h2 class="text-2xl font-black font-headline tracking-tighter">ARS</h2>
+</div>
+</div>
+<!-- Win Probability Bar -->
+<div class="w-full max-w-2xl">
+<div class="flex justify-between mb-3 px-1">
+<span class="text-primary font-bold text-xs">MCI 54%</span>
+<span class="text-[#5a5a75] font-bold text-xs">DRAW 21%</span>
+<span class="text-secondary font-bold text-xs">ARS 25%</span>
+</div>
+<div class="h-3 w-full rounded-full bg-surface-container-highest overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 54%"></div>
+<div class="h-full bg-surface-variant" style="width: 21%"></div>
+<div class="h-full bg-secondary" style="width: 25%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Insights Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Key Players to Target -->
+<div class="md:col-span-2 bg-surface-container-low rounded-3xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-bold font-headline">Key Players to Target</h3>
+<span class="text-xs text-[#5a5a75] font-bold tracking-widest">TOP VALUE PICKS</span>
+</div>
+<div class="space-y-4">
+<!-- Player 1 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:shadow-[0_0_30px_rgba(0,212,255,0.1)] transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Kevin De Bruyne" class="w-12 h-12 rounded-full border-2 border-primary" data-alt="hyper-realistic digital avatar of a professional athlete with short blonde hair and determined expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6f1uMT1gZTILuXU_Z18bIWpx4uVSyVXgJR5KrMXpHV_O4FmvTqb4Zo_TeifLv3X_XF7B9j_4oDJtSn5hwKZsOiSRNgkhYLb2cjjbkfUgPyuGwTbNhSRb_5_l9MWsl15bsAobVeT5uSMmD_R4WT_gnvAnq39woEP34QkKiMD-l36TNeCd8YY7krsIWdjzX9bjZPUnRBpvhhAF_VTFG4MKX-wAWdxPLbuluG4BqKbL8aAI6u_CSolO0gVPdyoedRCona1EkhAlOnGmk"/>
+<div class="absolute -top-1 -right-1 w-5 h-5 bg-secondary rounded-full flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-[10px] text-on-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+</div>
+<div>
+<div class="font-bold">K. De Bruyne</div>
+<div class="text-[10px] text-[#5a5a75] font-bold uppercase tracking-tighter">MCI • MIDFIELD</div>
+</div>
+</div>
+<div class="text-right">
+<div class="text-primary font-black text-lg">8.5</div>
+<div class="text-[10px] text-[#00ff88] font-bold">PROJ. PTS</div>
+</div>
+</div>
+<!-- Player 2 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:shadow-[0_0_30px_rgba(0,212,255,0.1)] transition-all">
+<div class="flex items-center gap-4">
+<img alt="Bukayo Saka" class="w-12 h-12 rounded-full" data-alt="hyper-realistic digital avatar of a young athlete with dark curly hair and focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVBpYmZ34m1ZIJC3frRH4aS9e_SjAusUSxCuNb5w5l8cgf2Pb2mZXWc0NfG5is19LSFpHaBGfyDLlhjHYRoPIMqwkbJ4fhIyOWwtozPaLZe6VkewRr9PQkA6XiokS3hO9Nhrpf5IaMla6VCUKSqqcdEyJP5HPGrR0daLKsf1_A-HGleCFIwoN-YpXxNunMOMDXHp1n5c5U5imYp_lW7WFNPwnqCLUPxXnierWJQhokHWgbYvNSYwdy29xSRygwmEDmbC3FK6FjJzI7"/>
+<div>
+<div class="font-bold">B. Saka</div>
+<div class="text-[10px] text-[#5a5a75] font-bold uppercase tracking-tighter">ARS • FORWARD</div>
+</div>
+</div>
+<div class="text-right">
+<div class="text-primary font-black text-lg">7.2</div>
+<div class="text-[10px] text-[#00ff88] font-bold">PROJ. PTS</div>
+</div>
+</div>
+<!-- Player 3 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:shadow-[0_0_30px_rgba(0,212,255,0.1)] transition-all">
+<div class="flex items-center gap-4">
+<img alt="Erling Haaland" class="w-12 h-12 rounded-full border-2 border-secondary" data-alt="hyper-realistic digital avatar of a muscular athlete with long blonde hair tied back and intense look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa_D1W9kEJKktcsAsW9uq85XDZJkNDev9V94biPeiyAOY6XDY8D-SgmAHxc-AfAde0v316g_mSk73VoYKBr0MixStW6Io0kO7txOx9bouF5KAh7H2LF5wgLTxklEyuXaXVEXNXQkf-ObjVCLTYJpZDPGCBjbthK6Ja7XJ2Xp7jg4tL2620-Ed6Jht7suTI2x5PAfDnF831kcxa7T9yE1vXkvjdBCGRd6Ic5dGzjupJ9IM7v7Jv6fETeXGA3vEU-V0nOiXdZEdRsPpD"/>
+<div>
+<div class="font-bold">E. Haaland</div>
+<div class="text-[10px] text-[#5a5a75] font-bold uppercase tracking-tighter">MCI • FORWARD</div>
+</div>
+</div>
+<div class="text-right">
+<div class="text-primary font-black text-lg">9.1</div>
+<div class="text-[10px] text-[#00ff88] font-bold">PROJ. PTS</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Head to Head -->
+<div class="bg-surface-container-low rounded-3xl p-6">
+<h3 class="text-xl font-bold font-headline mb-6">Head-to-Head</h3>
+<div class="space-y-4">
+<div class="flex flex-col gap-2 p-4 bg-surface-container-lowest rounded-2xl">
+<div class="flex justify-between items-center mb-1">
+<span class="text-[10px] text-[#5a5a75] font-black uppercase">Last 5 Matches</span>
+<span class="text-[10px] text-primary font-black">MCI LEADS 4-1</span>
+</div>
+<div class="flex gap-1.5">
+<div class="w-full h-8 bg-primary rounded-lg flex items-center justify-center font-black text-on-primary text-xs">W</div>
+<div class="w-full h-8 bg-primary rounded-lg flex items-center justify-center font-black text-on-primary text-xs">W</div>
+<div class="w-full h-8 bg-secondary rounded-lg flex items-center justify-center font-black text-on-secondary text-xs">L</div>
+<div class="w-full h-8 bg-primary rounded-lg flex items-center justify-center font-black text-on-primary text-xs">W</div>
+<div class="w-full h-8 bg-primary rounded-lg flex items-center justify-center font-black text-on-primary text-xs">W</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-high rounded-2xl">
+<div class="text-[10px] text-[#5a5a75] font-black uppercase mb-4">AVG GOALS PER GAME</div>
+<div class="flex items-end justify-between gap-4">
+<div class="flex-1 flex flex-col items-center">
+<div class="w-full bg-primary h-16 rounded-t-xl"></div>
+<div class="mt-2 font-bold text-xs">MCI (2.8)</div>
+</div>
+<div class="flex-1 flex flex-col items-center">
+<div class="w-full bg-secondary h-10 rounded-t-xl"></div>
+<div class="mt-2 font-bold text-xs">ARS (1.4)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tactical Breakdown -->
+<div class="md:col-span-2 bg-surface-container-low rounded-3xl p-6 relative overflow-hidden">
+<div class="flex justify-between items-center mb-8 relative z-10">
+<div>
+<h3 class="text-xl font-bold font-headline">Tactical Breakdown</h3>
+<p class="text-xs text-[#5a5a75] mt-1">Spatial analysis &amp; Expected Overlap</p>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-highest rounded-full text-[10px] font-bold hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-sm">settings_input_component</span> ADVANCED VIEW
+                    </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+<div class="aspect-[4/3] rounded-2xl pitch-gradient border border-[#ffffff0f] relative p-4">
+<!-- Pitch lines -->
+<div class="absolute inset-4 border border-[#ffffff0a] rounded-lg"></div>
+<div class="absolute inset-y-4 left-1/2 w-px bg-[#ffffff0a]"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border border-[#ffffff0a] rounded-full"></div>
+<!-- Tactical markers -->
+<div class="absolute top-1/4 left-1/3 w-8 h-8 rounded-full bg-primary/20 border border-primary animate-pulse"></div>
+<div class="absolute bottom-1/3 right-1/4 w-12 h-12 rounded-full bg-secondary/20 border border-secondary animate-pulse"></div>
+<div class="absolute top-1/2 right-1/2 w-4 h-4 rounded-full bg-white/50 blur-sm"></div>
+</div>
+<div class="space-y-6">
+<div class="border-l-4 border-primary pl-4">
+<h4 class="font-bold text-sm text-primary mb-1">MCI: High-Press Overload</h4>
+<p class="text-xs text-[#5a5a75] leading-relaxed">City expected to focus play through the left half-space. Look for Grealish to pull defenders wide for Haaland's central run.</p>
+</div>
+<div class="border-l-4 border-secondary pl-4">
+<h4 class="font-bold text-sm text-secondary mb-1">ARS: Transitional Counter</h4>
+<p class="text-xs text-[#5a5a75] leading-relaxed">Arsenal likely to soak pressure and release Saka into the space left by City's advancing full-backs.</p>
+</div>
+<div class="bg-surface-container-high rounded-2xl p-4 flex items-center gap-4">
+<span class="material-symbols-outlined text-tertiary">bolt</span>
+<div>
+<div class="text-[10px] text-tertiary font-black uppercase">Critical Factor</div>
+<div class="text-xs font-bold">Midfield transition speed is the deciding metric for MCI win.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Team Analysis Cards -->
+<div class="bg-surface-container-low rounded-3xl p-6">
+<h3 class="text-xl font-bold font-headline mb-6">Squad Depth</h3>
+<div class="flex flex-col gap-4">
+<div class="p-4 rounded-2xl bg-surface-container-high border-l-2 border-primary">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold">Manchester City</span>
+<span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full">ELITE</span>
+</div>
+<div class="flex items-center gap-1">
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-variant rounded-full"></div>
+</div>
+<div class="mt-3 text-[10px] text-[#5a5a75] font-bold">Fatigue Level: <span class="text-on-surface">Low (92%)</span></div>
+</div>
+<div class="p-4 rounded-2xl bg-surface-container-high border-l-2 border-secondary">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold">Arsenal</span>
+<span class="text-[10px] bg-secondary/20 text-secondary px-2 py-0.5 rounded-full">STRONG</span>
+</div>
+<div class="flex items-center gap-1">
+<div class="h-1 flex-1 bg-secondary rounded-full"></div>
+<div class="h-1 flex-1 bg-secondary rounded-full"></div>
+<div class="h-1 flex-1 bg-secondary rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-variant rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-variant rounded-full"></div>
+</div>
+<div class="mt-3 text-[10px] text-[#5a5a75] font-bold">Fatigue Level: <span class="text-on-surface">Medium (78%)</span></div>
+</div>
+</div>
+<button class="w-full mt-6 py-4 bg-surface-container-highest hover:bg-surface-variant transition-all rounded-2xl flex items-center justify-center gap-2 text-xs font-bold">
+<span class="material-symbols-outlined text-sm">analytics</span> FULL TEAM STATS
+                </button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#131318]/90 backdrop-blur-2xl md:hidden z-50 border-t border-[#ffffff1a] rounded-t-[2rem] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">sports_kabaddi</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Lobby</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-3 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Intel</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Build</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Wallet</span>
+</a>
+</nav>
+<script src="assets/js/main.js"></script>
+</body></html>

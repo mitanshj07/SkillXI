@@ -1,0 +1,185 @@
+/* ============================================================
+   SkillXI — Centralized Stylesheet
+   ============================================================ */
+
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+/* === GLOBAL RESET & BASE === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    padding-top: 80px; /* Height of fixed top nav */
+}
+
+/* Material Symbols default settings */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* === SHARED UTILITY CLASSES === */
+.glass-panel {
+    background: rgba(27, 27, 32, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-card {
+    background: rgba(53, 52, 58, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.neon-glow-primary {
+    box-shadow: 0 0 20px rgba(168, 232, 255, 0.15);
+}
+
+.neon-glow-primary-hover:hover {
+    box-shadow: 0 0 20px rgba(168, 232, 255, 0.4);
+}
+
+.neon-glow-secondary-hover:hover {
+    box-shadow: 0 0 20px rgba(210, 187, 255, 0.4);
+}
+
+.neon-border-gold {
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+}
+
+.text-gradient-primary {
+    background: linear-gradient(135deg, #a8e8ff 0%, #00d4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #35343a; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #a8e8ff; }
+
+/* === HOME PAGE === */
+.asymmetric-bleed {
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+/* === LINEUP BUILDER === */
+/* (No extra styles needed — all Tailwind) */
+
+/* === LEADERBOARD === */
+/* (No extra styles needed — all Tailwind) */
+
+/* === PAYOUT/RESULTS === */
+/* (No extra styles needed — all Tailwind) */
+
+/* === PLAYER ANALYSIS === */
+/* (No extra styles needed — all Tailwind) */
+
+/* === AI CHAT === */
+/* (No extra styles needed — all Tailwind) */
+
+/* === PROFILE === */
+.skill-score-glow {
+    text-shadow: 0 0 30px rgba(168, 232, 255, 0.5);
+}
+
+/* === SUBSCRIPTION === */
+.neon-glow {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+}
+
+/* === PRE-MATCH REPORT === */
+.pitch-gradient {
+    background: radial-gradient(circle at center, #1b1b20 0%, #0e0e13 100%);
+}
+
+/* === WEB3 ONBOARDING === */
+.neon-grid {
+    background-image: linear-gradient(to right, rgba(168, 232, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(168, 232, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.orb-glow-primary {
+    filter: blur(80px);
+    background: radial-gradient(circle, #00d4ff 0%, transparent 70%);
+}
+
+.orb-glow-secondary {
+    filter: blur(80px);
+    background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+}
+
+/* === WALLET === */
+/* (Uses shared .glass-card) */
+
+/* === NEXUS FEED === */
+.neon-border-glow:hover {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+/* === ROSTER LAB === */
+.chamfer-tr-bl {
+    clip-path: polygon(0% 0%, 90% 0%, 100% 15%, 100% 100%, 10% 100%, 0% 85%);
+}
+
+.chamfer-all {
+    clip-path: polygon(10% 0%, 90% 0%, 100% 20%, 100% 80%, 90% 100%, 10% 100%, 0% 80%, 0% 20%);
+}
+
+.scan-lines {
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 243, 255, 0.03) 50%);
+    background-size: 100% 4px;
+}
+
+.chromatic-aberration {
+    text-shadow: 2px 0 #ff003c, -2px 0 #00f3ff;
+}
+
+.scanner-bar {
+    height: 2px;
+    background: #ccff00;
+    box-shadow: 0 0 15px #ccff00;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #000;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #00f3ff22;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #00f3ff;
+}
+
+/* === GLOBAL LEADERBOARD === */
+/* (Uses shared classes) */
+
+/* === MOBILE NAV SAFE AREA === */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* === AI CHAT ANIMATIONS === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}

@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+*.pid
+node_modules/
+.env
+temp/

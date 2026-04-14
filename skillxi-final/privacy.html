@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SkillXI | AI Fantasy Sports Platform</title>
+    <meta name="description" content="SkillXI — The AI-powered fantasy sports platform where skill wins over luck. Build lineups, analyze players, and compete in contests."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error-container": "#ffdad6", "secondary-fixed-dim": "#d2bbff",
+                        "outline": "#859398", "primary": "#a8e8ff", "surface": "#131318",
+                        "tertiary-fixed-dim": "#00e479", "surface-container": "#1f1f25",
+                        "on-secondary-container": "#c9aeff", "error-container": "#93000a",
+                        "on-primary-container": "#00586b", "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary": "#3f008e", "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed": "#60ff99", "on-surface": "#e4e1e9",
+                        "surface-container-highest": "#35343a", "on-background": "#e4e1e9",
+                        "on-surface-variant": "#bbc9cf", "surface-container-lowest": "#0e0e13",
+                        "secondary": "#d2bbff", "on-primary-fixed": "#001f27",
+                        "error": "#ffb4ab", "secondary-fixed": "#eaddff",
+                        "surface-tint": "#3cd7ff", "surface-container-low": "#1b1b20",
+                        "inverse-on-surface": "#303036", "tertiary-container": "#00df76",
+                        "surface-container-high": "#2a292f", "secondary-container": "#6001d1",
+                        "primary-fixed": "#b4ebff", "on-tertiary-fixed": "#00210c",
+                        "inverse-surface": "#e4e1e9", "surface-variant": "#35343a",
+                        "surface-bright": "#39383e", "background": "#131318",
+                        "primary-container": "#00d4ff", "on-primary": "#003642",
+                        "tertiary": "#00ff88", "on-primary-fixed-variant": "#004e5f",
+                        "surface-dim": "#131318", "on-tertiary-fixed-variant": "#005228",
+                        "on-error": "#690005", "inverse-primary": "#00677e",
+                        "outline-variant": "#3c494e", "on-tertiary": "#003919",
+                        "on-tertiary-container": "#005d2d", "primary-fixed-dim": "#3cd7ff"
+                    },
+                    borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "9999px" },
+                    fontFamily: { headline: ["Space Grotesk"], body: ["Inter"], label: ["Inter"] }
+                },
+            },
+        }
+    </script>
+    <!-- Solana Web3 Integrations -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
+    <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen">
+
+<!-- ===== TOP NAV BAR ===== -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+    <div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+        <div class="flex items-center gap-8">
+            <a href="index.html" class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-['Space_Grotesk']">SkillXI</a>
+            <div class="hidden md:flex gap-6">
+                <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="index.html">Home</a>
+                <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="contests.html">Contests</a>
+                <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="lineup.html">Squads</a>
+                <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="pre-match.html">Intelligence</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="wallet.html" class="p-2 rounded-full hover:bg-[#a8e8ff]/10 transition-all duration-300 active:scale-95">
+                <span class="material-symbols-outlined text-[#a8e8ff]">account_balance_wallet</span>
+            </a>
+            <button class="p-2 rounded-full hover:bg-[#a8e8ff]/10 transition-all duration-300 active:scale-95">
+                <span class="material-symbols-outlined text-[#a8e8ff]">notifications</span>
+            </button>
+            <a href="profile.html" class="w-10 h-10 rounded-full border-2 border-[#a8e8ff]/30 overflow-hidden">
+                <img alt="User Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuWHy486rZWdwY1x41y0EEiakZeMKzCtels-E4FhYeP6C8L5eXU4ad4CDChNvgUAdFJkEvHni22VQsfSQ8SR2AuvdePWlbmTt5wm5GpkYQZ0OFhBf51CrQScJqioPhDKpNZGzQyyUWUet8n14uUIAonLXrVgs-Q9p-RsWdj6iqE9rHZ28JcC6Ju78M30mUbwcg0Zk5-FxsA0lFfGgEzhm7PmL7hCSH5NQ6azaPkSleSlSxq-hOv190dPle36yV_Up7g1_au8L2CLqt"/>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== SIDE NAV BAR (Desktop) ===== -->
+<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 border-r border-[#ffffff0f] bg-[#0e0e13] flex-col py-8 z-40">
+    <div class="px-6 mb-12 mt-20">
+        <h2 class="text-[#d2bbff] font-black text-xl font-headline tracking-tighter">KINETIC AI</h2>
+        <p class="text-[10px] text-[#5a5a75] tracking-[0.2em] font-bold">V3.2 ACTIVE</p>
+    </div>
+    <div class="flex flex-col flex-1">
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="index.html">
+            <span class="material-symbols-outlined">grid_view</span>
+            <span class="font-headline font-bold">Home</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="ai-chat.html">
+            <span class="material-symbols-outlined">psychology</span>
+            <span class="font-headline font-bold">AI Analyst</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="contests.html">
+            <span class="material-symbols-outlined">emoji_events</span>
+            <span class="font-headline font-bold">Contests</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="lineup.html">
+            <span class="material-symbols-outlined">database</span>
+            <span class="font-headline font-bold">Squad Builder</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="leaderboard.html">
+            <span class="material-symbols-outlined">leaderboard</span>
+            <span class="font-headline font-bold">Leaderboard</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="profile.html">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-headline font-bold">Settings</span>
+        </a>
+    </div>
+    <div class="px-6 mt-auto">
+        <a href="subscription.html" class="w-full block text-center bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-extrabold py-3 rounded-full shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-[1.02] transition-transform active:scale-95">
+            UPGRADE TO PRO
+        </a>
+        <div class="mt-8 flex flex-col gap-4">
+            <a class="text-[#5a5a75] hover:text-white flex items-center gap-4 transition-all" href="#">
+                <span class="material-symbols-outlined">help</span>
+                <span class="font-headline font-bold">Support</span>
+            </a>
+            <a class="text-[#5a5a75] hover:text-white flex items-center gap-4 transition-all" href="#">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-headline font-bold">Logout</span>
+            </a>
+        </div>
+    </div>
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="ml-0 lg:ml-64 pt-24 pb-24 px-4 md:px-12 relative min-h-screen overflow-hidden">
+  <div style="max-width:1000px; margin:0 auto;">
+    
+    <!-- Title -->
+    <div style="text-align:center; margin-bottom:48px;">
+      <h1 style="color:#fff; font-size:42px; font-weight:800; font-family:'Space Grotesk',sans-serif; margin-bottom:16px;">
+        🔐 Private by Default
+      </h1>
+      <p style="color:#a0a0b8; font-size:18px; line-height:1.6; max-width:700px; margin:0 auto;">
+        SkillXI uses Umbra Privacy Protocol to keep your contest entries, lineups, and winnings completely confidential on Solana
+      </p>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 style="color:#fff; font-size:24px; font-weight:700; margin-bottom:24px;">Why Privacy Matters in Fantasy Sports</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:24px; margin-bottom:56px;">
+      
+      <div style="background:#13131f; border:1px solid #1e1e30; border-radius:16px; padding:24px;">
+        <h3 style="color:#fff; font-size:18px; font-weight:700; margin:0 0 12px;">🕵️ Nobody Sees Your Strategy</h3>
+        <p style="color:#a0a0b8; font-size:14px; line-height:1.6; margin:0;">
+          Without privacy, any competitor can watch your wallet on-chain and copy your lineup picks. Umbra breaks this link completely.
+        </p>
+      </div>
+
+      <div style="background:#13131f; border:1px solid #1e1e30; border-radius:16px; padding:24px;">
+        <h3 style="color:#fff; font-size:18px; font-weight:700; margin:0 0 12px;">💰 Private Prize Payouts</h3>
+        <p style="color:#a0a0b8; font-size:14px; line-height:1.6; margin:0;">
+          When you win, your prize arrives in your wallet privately. Nobody knows how much you earned or that you won at all.
+        </p>
+      </div>
+
+      <div style="background:#13131f; border:1px solid #1e1e30; border-radius:16px; padding:24px;">
+        <h3 style="color:#fff; font-size:18px; font-weight:700; margin:0 0 12px;">🔒 Anonymous Contest Entry</h3>
+        <p style="color:#a0a0b8; font-size:14px; line-height:1.6; margin:0;">
+          Your wallet address is never linked to your contest participation on the public blockchain. Your strategy stays yours.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <h2 style="color:#fff; font-size:24px; font-weight:700; margin-bottom:24px;">How It Works</h2>
+    <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:56px;">
+      
+      <div style="background:rgba(124,58,237,0.05); border:1px solid rgba(124,58,237,0.2); border-radius:12px; padding:20px; display:flex; align-items:flex-start; gap:16px;">
+        <div style="background:#9d5cf5; color:#fff; font-weight:bold; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</div>
+        <div>
+          <h4 style="color:#fff; font-size:16px; margin:0 0 4px;">Connect Wallet</h4>
+          <p style="color:#a0a0b8; font-size:14px; margin:0;">You connect Phantom/Solflare.</p>
+        </div>
+      </div>
+
+      <div style="background:rgba(124,58,237,0.05); border:1px solid rgba(124,58,237,0.2); border-radius:12px; padding:20px; display:flex; align-items:flex-start; gap:16px;">
+        <div style="background:#9d5cf5; color:#fff; font-weight:bold; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</div>
+        <div>
+          <h4 style="color:#fff; font-size:16px; margin:0 0 4px;">Enter Umbra Pool</h4>
+          <p style="color:#a0a0b8; font-size:14px; margin:0;">Your SOL enters Umbra's encrypted anonymity pool via SDK.</p>
+        </div>
+      </div>
+
+      <div style="background:rgba(124,58,237,0.05); border:1px solid rgba(124,58,237,0.2); border-radius:12px; padding:20px; display:flex; align-items:flex-start; gap:16px;">
+        <div style="background:#9d5cf5; color:#fff; font-weight:bold; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</div>
+        <div>
+          <h4 style="color:#fff; font-size:16px; margin:0 0 4px;">Compete Privately</h4>
+          <p style="color:#a0a0b8; font-size:14px; margin:0;">Entry fees and lineup submissions are shielded from public view.</p>
+        </div>
+      </div>
+
+      <div style="background:rgba(124,58,237,0.05); border:1px solid rgba(124,58,237,0.2); border-radius:12px; padding:20px; display:flex; align-items:flex-start; gap:16px;">
+        <div style="background:#9d5cf5; color:#fff; font-weight:bold; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">4</div>
+        <div>
+          <h4 style="color:#fff; font-size:16px; margin:0 0 4px;">Receive Winnings</h4>
+          <p style="color:#a0a0b8; font-size:14px; margin:0;">Prize paid to private Umbra address, unlinkable to public wallet.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <h2 style="color:#fff; font-size:24px; font-weight:700; margin-bottom:24px; text-align:center;">Powered By</h2>
+    <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:56px;">
+      
+      <div style="background:#13131f; border:1px solid #1e1e30; border-radius:12px; padding:16px 24px; box-shadow:0 0 20px rgba(0,212,255,0.05);">
+        <h4 style="color:#fff; font-size:14px; margin:0; font-weight:700;">⚡ Built on Solana</h4>
+      </div>
+      
+      <div style="background:#13131f; border:1px solid rgba(124,58,237,0.3); border-radius:12px; padding:16px 24px; box-shadow:0 0 20px rgba(124,58,237,0.1);">
+        <h4 style="color:#fff; font-size:14px; margin:0; font-weight:700;">🔐 Umbra Privacy SDK</h4>
+      </div>
+
+      <div style="background:#13131f; border:1px solid rgba(0,255,136,0.2); border-radius:12px; padding:16px 24px; box-shadow:0 0 20px rgba(0,255,136,0.05);">
+        <h4 style="color:#fff; font-size:14px; margin:0; font-weight:700;">🧠 Arcium MPC Network</h4>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div style="background:rgba(0,255,136,0.05); border:1px solid rgba(0,255,136,0.3); border-radius:16px; padding:24px; text-align:center;">
+      <h3 style="color:#00ff88; font-size:16px; font-weight:700; margin:0 0 12px; text-transform:uppercase; letter-spacing:1px;">✅ Compliance Ready</h3>
+      <p style="color:#a0a0b8; font-size:14px; line-height:1.6; margin:0;">
+        SkillXI's privacy implementation is compliance-ready. Umbra includes optional viewing keys for authorized auditors, meaning privacy and accountability can coexist. We follow all applicable regulations.
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<!-- ===== BOTTOM NAV BAR (Mobile) ===== -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#131318]/90 backdrop-blur-2xl md:hidden z-50 rounded-t-[2rem] border-t border-[#ffffff1a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+    <a class="bottom-nav-link flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="index.html">
+        <span class="material-symbols-outlined">sports_kabaddi</span>
+        <span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Home</span>
+    </a>
+    <a class="bottom-nav-link flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="pre-match.html">
+        <span class="material-symbols-outlined">auto_awesome</span>
+        <span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Intel</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-4 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all" href="lineup.html">
+        <span class="material-symbols-outlined text-3xl">add_circle</span>
+    </a>
+    <a class="bottom-nav-link flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="leaderboard.html">
+        <span class="material-symbols-outlined">analytics</span>
+        <span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+    </a>
+    <a class="bottom-nav-link flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="wallet.html">
+        <span class="material-symbols-outlined">account_balance_wallet</span>
+        <span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Wallet</span>
+    </a>
+</nav>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

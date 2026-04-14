@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile | SkillXI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "outline": "#859398",
+                    "primary": "#a8e8ff",
+                    "surface": "#131318",
+                    "tertiary-fixed-dim": "#00e479",
+                    "surface-container": "#1f1f25",
+                    "on-secondary-container": "#c9aeff",
+                    "error-container": "#93000a",
+                    "on-primary-container": "#00586b",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "on-secondary": "#3f008e",
+                    "on-secondary-fixed": "#25005a",
+                    "tertiary-fixed": "#60ff99",
+                    "on-surface": "#e4e1e9",
+                    "surface-container-highest": "#35343a",
+                    "on-background": "#e4e1e9",
+                    "on-surface-variant": "#bbc9cf",
+                    "surface-container-lowest": "#0e0e13",
+                    "secondary": "#d2bbff",
+                    "on-primary-fixed": "#001f27",
+                    "error": "#ffb4ab",
+                    "secondary-fixed": "#eaddff",
+                    "surface-tint": "#3cd7ff",
+                    "surface-container-low": "#1b1b20",
+                    "inverse-on-surface": "#303036",
+                    "tertiary-container": "#00df76",
+                    "surface-container-high": "#2a292f",
+                    "secondary-container": "#6001d1",
+                    "primary-fixed": "#b4ebff",
+                    "on-tertiary-fixed": "#00210c",
+                    "inverse-surface": "#e4e1e9",
+                    "surface-variant": "#35343a",
+                    "surface-bright": "#39383e",
+                    "background": "#131318",
+                    "primary-container": "#00d4ff",
+                    "on-primary": "#003642",
+                    "tertiary": "#00ff88",
+                    "on-primary-fixed-variant": "#004e5f",
+                    "surface-dim": "#131318",
+                    "on-tertiary-fixed-variant": "#005228",
+                    "on-error": "#690005",
+                    "inverse-primary": "#00677e",
+                    "outline-variant": "#3c494e",
+                    "on-tertiary": "#003919",
+                    "on-tertiary-container": "#005d2d",
+                    "primary-fixed-dim": "#3cd7ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .skill-score-glow {
+            text-shadow: 0 0 30px rgba(168, 232, 255, 0.5);
+        }
+        .glass-panel {
+            background: rgba(53, 52, 58, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-headline">SkillXI</div>
+<div class="hidden md:flex items-center gap-8 font-headline tracking-tight">
+<a class="text-slate-400 font-medium hover:text-white transition-colors" href="#">Lobby</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors" href="#">Research</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors" href="#">Squads</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors" href="#">Intelligence</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#a8e8ff] hover:bg-[#a8e8ff]/10 transition-all duration-300 rounded-full active:scale-95">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<button class="p-2 text-[#a8e8ff] hover:bg-[#a8e8ff]/10 transition-all duration-300 rounded-full active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-surface-container-highest border-2 border-primary ring-2 ring-primary/20 overflow-hidden">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="Portrait of a young man with a confident expression, professional studio lighting, dark moody background, high fashion photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv4WlVqDJVj9hxkFP2TkxR2LNmbN43mFOQkNu2o69QJdySCC87fj_WRPd0HMEAaR9n-KXUoRxAWg-cdTG1ZinjNU4L9aE3m2dYUHVrX9vC14x_vXNgIxV75n3vQztHI7mwT7tvbanKEgbrsn-IGFqe2fKd8V5w5ydyhf1lmBYx_fAhsAqjdkR2SHR8-NFjkgxRn757k8Q3HTkeswM5s_ccq9xVlgS5V4TQJQdylZFccS3DawuPPiaC4zyF3aVM3LfaaOXQj_3eDmp9"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-[#0e0e13] border-r border-[#ffffff0f] flex-col py-8 z-40">
+<div class="px-6 mb-10 mt-20">
+<div class="flex items-center gap-3">
+<div class="w-2 h-8 bg-secondary rounded-full"></div>
+<div>
+<h3 class="text-[#d2bbff] font-black font-headline text-lg tracking-wider">KINETIC AI</h3>
+<p class="text-[10px] text-outline uppercase tracking-widest">V3.2 Active</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<span class="material-symbols-outlined">grid_view</span> Home
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<span class="material-symbols-outlined">psychology</span> AI Analyst
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<span class="material-symbols-outlined">database</span> Market
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<span class="material-symbols-outlined">emoji_events</span> Contests
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<span class="material-symbols-outlined">leaderboard</span> Leaderboard
+            </a>
+<a class="bg-gradient-to-r from-[#a8e8ff1a] to-transparent text-[#a8e8ff] border-r-4 border-[#a8e8ff] flex items-center gap-4 px-6 py-4 transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+</nav>
+<div class="px-6 mt-auto space-y-6">
+<button class="w-full py-4 px-6 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-black text-xs tracking-widest shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-[1.02] transition-transform active:scale-95">
+                UPGRADE TO PRO
+            </button>
+<div class="pt-6 border-t border-outline-variant/30 space-y-2">
+<a class="flex items-center gap-3 text-[#5a5a75] hover:text-white text-sm font-bold" href="#">
+<span class="material-symbols-outlined text-sm">help</span> Support
+                </a>
+<a class="flex items-center gap-3 text-[#5a5a75] hover:text-white text-sm font-bold" href="#">
+<span class="material-symbols-outlined text-sm">logout</span> Logout
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:ml-64 pt-24 pb-24 lg:pb-12 px-4 md:px-8">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Hero Bento Header -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Skill Score Visualization -->
+<div class="lg:col-span-2 relative overflow-hidden rounded-[2rem] bg-surface-container-low p-8 border border-outline-variant/10">
+<div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-primary/10 blur-[100px] rounded-full"></div>
+<div class="relative z-10 flex flex-col md:flex-row items-center md:items-end justify-between h-full gap-8">
+<div>
+<span class="px-4 py-1.5 rounded-full bg-primary/20 text-primary font-headline text-xs font-bold tracking-widest uppercase mb-4 inline-block">Global Ranking: #412</span>
+<h1 class="text-6xl md:text-8xl font-headline font-extrabold text-on-surface tracking-tighter skill-score-glow mb-2">1,337</h1>
+<p class="text-2xl font-headline font-bold text-secondary tracking-tight">EXPERT TIER <span class="text-outline/50 ml-2">/ LEGENDARY</span></p>
+</div>
+<div class="flex-1 w-full max-w-md">
+<div class="flex justify-between text-sm font-bold font-headline mb-2">
+<span class="text-outline">Progress to Elite Tier</span>
+<span class="text-primary">82%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[82%] rounded-full relative">
+<div class="absolute top-0 right-0 h-full w-2 bg-white/40 blur-sm"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- NFT Badges Section -->
+<div class="rounded-[2rem] bg-surface-container-low p-8 border border-outline-variant/10 flex flex-col justify-between">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline font-bold text-xl tracking-tight">NFT BADGES</h2>
+<span class="text-xs text-outline font-bold tracking-widest uppercase">4 Unlocked</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-square rounded-2xl bg-surface-container-high border border-primary/20 flex flex-col items-center justify-center p-4 text-center group cursor-pointer hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-4xl text-primary mb-2" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="text-[10px] font-bold tracking-widest uppercase leading-tight">Gold Scout</span>
+</div>
+<div class="aspect-square rounded-2xl bg-surface-container-high border border-secondary/20 flex flex-col items-center justify-center p-4 text-center group cursor-pointer hover:bg-secondary/5 transition-all">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<span class="text-[10px] font-bold tracking-widest uppercase leading-tight">Season Veteran</span>
+</div>
+<div class="aspect-square rounded-2xl bg-surface-container-high border border-outline-variant/20 flex flex-col items-center justify-center p-4 text-center group cursor-pointer hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined text-4xl text-outline mb-2">bolt</span>
+<span class="text-[10px] font-bold tracking-widest uppercase leading-tight">High Voltage</span>
+</div>
+<div class="aspect-square rounded-2xl bg-surface-container-high border border-outline-variant/10 flex items-center justify-center p-4 group cursor-pointer hover:bg-white/5 transition-all border-dashed">
+<span class="material-symbols-outlined text-3xl text-outline/30">add</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Dashboard Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
+<p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Total Earned</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-headline font-bold">$12,450.00</h3>
+<span class="text-tertiary text-xs font-bold">+12%</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
+<p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Win Rate</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-headline font-bold">68.4%</h3>
+<span class="text-tertiary text-xs font-bold">Top 5%</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
+<p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Squads Created</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-headline font-bold">156</h3>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
+<p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Active Contests</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-headline font-bold">12</h3>
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+</div>
+</div>
+<!-- Earnings History Chart & Activity Table -->
+<div class="grid grid-cols-1 xl:grid-cols-5 gap-8">
+<!-- Earnings History (Visual Representation) -->
+<div class="xl:col-span-3 bg-surface-container-low rounded-[2rem] p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h2 class="font-headline font-bold text-2xl tracking-tight">EARNINGS HISTORY</h2>
+<p class="text-sm text-outline">Performance metrics over the last 30 days</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-full bg-surface-container-highest text-xs font-bold uppercase tracking-widest">30D</button>
+<button class="px-4 py-2 rounded-full hover:bg-surface-container-highest text-xs text-outline font-bold uppercase tracking-widest transition-colors">90D</button>
+</div>
+</div>
+<!-- Mock Chart Visualization -->
+<div class="relative h-64 w-full mt-10">
+<div class="absolute inset-0 flex items-end justify-between px-2">
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[40%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[65%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[45%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[80%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[55%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[90%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[75%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[85%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[100%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[70%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[60%]"></div>
+<div class="w-8 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all cursor-pointer h-[80%]"></div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-[1px] bg-outline-variant/30"></div>
+</div>
+</div>
+<!-- Recent Activity -->
+<div class="xl:col-span-2 bg-surface-container-low rounded-[2rem] p-8 border border-outline-variant/10 overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline font-bold text-2xl tracking-tight">RECENT ACTIVITY</h2>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-bold text-sm">Contest Win #8821</p>
+<p class="text-[10px] text-outline uppercase tracking-widest">2 hours ago</p>
+</div>
+</div>
+<span class="text-tertiary font-headline font-bold">+$1,200</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">trophy</span>
+</div>
+<div>
+<p class="font-bold text-sm">Badge Unlocked: Scout</p>
+<p class="text-[10px] text-outline uppercase tracking-widest">1 day ago</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<div>
+<p class="font-bold text-sm">Squad Revision: Alpha</p>
+<p class="text-[10px] text-outline uppercase tracking-widest">3 days ago</p>
+</div>
+</div>
+<span class="text-outline text-xs font-bold">UPDATE</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-outline-variant/10 flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">remove</span>
+</div>
+<div>
+<p class="font-bold text-sm">Wallet Withdrawal</p>
+<p class="text-[10px] text-outline uppercase tracking-widest">4 days ago</p>
+</div>
+</div>
+<span class="text-error font-headline font-bold">-$450</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#131318]/90 backdrop-blur-2xl border-t border-[#ffffff1a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)] md:hidden z-50 rounded-t-[2rem]">
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined">sports_kabaddi</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Lobby</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Intel</span>
+</a>
+<div class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-4 -mt-10 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-3 shadow-[0_0_20px_rgba(0,212,255,0.4)] transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

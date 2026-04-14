@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SKILLXI // ROSTER_LAB</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chamfer-tr-bl {
+            clip-path: polygon(0% 0%, 90% 0%, 100% 15%, 100% 100%, 10% 100%, 0% 85%);
+        }
+        .chamfer-all {
+            clip-path: polygon(10% 0%, 90% 0%, 100% 20%, 100% 80%, 90% 100%, 10% 100%, 0% 80%, 0% 20%);
+        }
+        .scan-lines {
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 243, 255, 0.03) 50%);
+            background-size: 100% 4px;
+        }
+        .chromatic-aberration {
+            text-shadow: 2px 0 #ff003c, -2px 0 #00f3ff;
+        }
+        @keyframes scan-line-move {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scanner-bar {
+            height: 2px;
+            background: #ccff00;
+            box-shadow: 0 0 15px #ccff00;
+            animation: none; /* Requested no animations, static style applied */
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "primary-fixed": "#6ff6ff",
+                "on-tertiary": "#680012",
+                "surface-dim": "#131313",
+                "tertiary-fixed-dim": "#ffb3b2",
+                "on-surface": "#e2e2e2",
+                "on-error-container": "#ffdad6",
+                "surface-bright": "#393939",
+                "on-secondary-container": "#556d00",
+                "on-primary-fixed-variant": "#004f53",
+                "secondary-fixed": "#c3f400",
+                "on-secondary-fixed": "#161e00",
+                "primary-fixed-dim": "#00dce6",
+                "secondary-fixed-dim": "#abd600",
+                "outline-variant": "#3a494b",
+                "on-primary-fixed": "#002022",
+                "outline": "#849495",
+                "surface-tint": "#00dce6",
+                "error-container": "#93000a",
+                "error": "#ffb4ab",
+                "on-secondary-fixed-variant": "#3c4d00",
+                "surface-container-low": "#1b1b1b",
+                "secondary-container": "#c3f400",
+                "on-background": "#e2e2e2",
+                "inverse-primary": "#00696f",
+                "tertiary-fixed": "#ffdad8",
+                "tertiary-container": "#ffd1cf",
+                "surface-container-highest": "#353535",
+                "inverse-surface": "#e2e2e2",
+                "inverse-on-surface": "#303030",
+                "primary-container": "#00f3ff",
+                "surface-container-high": "#2a2a2a",
+                "on-tertiary-container": "#c3002b",
+                "on-error": "#690005",
+                "surface-variant": "#353535",
+                "surface-container": "#1f1f1f",
+                "primary": "#e3fdff",
+                "on-primary-container": "#006b71",
+                "on-secondary": "#283500",
+                "on-tertiary-fixed": "#410008",
+                "on-primary": "#00373a",
+                "tertiary": "#fff6f6",
+                "surface": "#131313",
+                "surface-container-lowest": "#0e0e0e",
+                "background": "#131313",
+                "secondary": "#ffffff",
+                "on-surface-variant": "#b9cacb",
+                "on-tertiary-fixed-variant": "#92001e"
+              },
+              "borderRadius": {
+                "DEFAULT": "0rem",
+                "lg": "0rem",
+                "xl": "0rem",
+                "full": "9999px"
+              },
+              "fontFamily": {
+                "headline": ["Space Grotesk"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-black text-on-surface font-body overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 left-0 w-full h-16 bg-[#000000] border-b-2 border-[#00f3ff]/20 z-50 flex justify-between items-center px-6 shadow-[0_4px_20px_rgba(0,243,255,0.1)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<h1 class="text-2xl font-black text-[#00f3ff] drop-shadow-[0_0_10px_#00f3ff] font-headline uppercase tracking-[1px]">SKILLXI//SYS_DATA</h1>
+</div>
+<div class="hidden md:flex gap-8 items-center font-headline uppercase tracking-[1px] text-xs">
+<span class="text-[#ccff00] font-bold cursor-pointer">DASHBOARD</span>
+<span class="text-[#6ff6ff]/50 hover:text-[#ccff00] transition-all cursor-pointer">NEURAL_LINK</span>
+<span class="text-[#6ff6ff]/50 hover:text-[#ccff00] transition-all cursor-pointer">NODE_RUNNER</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="font-headline text-[#00f3ff] text-xs font-bold bg-[#00f3ff]/10 px-3 py-1 border-l-2 border-[#00f3ff]">SOL_PRC:$142.32</span>
+<div class="flex gap-4 text-[#00f3ff]">
+<span class="material-symbols-outlined text-sm">sensors</span>
+<span class="material-symbols-outlined text-sm">wifi_tethering</span>
+<span class="material-symbols-outlined text-sm">terminal</span>
+</div>
+</div>
+</header>
+<!-- SIDE NAV BAR -->
+<nav class="fixed left-0 top-0 h-full w-64 bg-[#131313] border-r border-[#00f3ff]/10 z-40 flex flex-col pt-20">
+<div class="px-6 py-4 mb-6">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 bg-primary-container p-0.5">
+<img alt="Runner Profile" class="w-full h-full object-cover" data-alt="Cyberpunk character portrait with neon eye augmentations and dark techwear, high contrast, digital painting style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUn3NSB1uRQ0Ztc-X3qbBkGa153R92YggDo6S4pAiElJd8VXM_ZQ8f7vuxtFyeVYbhHOjc3ffmOn7FZaCYhPiyhnpHqksUJYB47M5iDWQ1nmubZ8gEE1P1d8inXroPCtn3g5bBQkIHs775q8mrWglQkHNPMhaisefM09fj_0vnWmfJzwjW7hnT8TWHETZFb2-Z5aKJSg3YeChENwN_0fCWpx77awbni9TkvAmEvP9KS3wipmYBzgdd94pgG4wS0ggtfEepQDc5aqlH"/>
+</div>
+<div>
+<p class="text-lg font-bold text-[#ccff00] font-headline uppercase">COMMAND_CTRL</p>
+<p class="font-headline uppercase tracking-[2px] text-[10px] text-[#3a494b]">ID: R-0092X</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col flex-1">
+<a class="group py-4 px-6 flex items-center gap-4 text-[#3a494b] hover:bg-[#1b1b1b] hover:text-[#00f3ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-headline uppercase tracking-[2px] text-[10px]">DASHBOARD</span>
+</a>
+<a class="group py-4 px-6 flex items-center gap-4 bg-gradient-to-r from-[#00f3ff]/20 to-transparent text-[#00f3ff] border-l-[3px] border-[#00f3ff] shadow-[inset_10px_0_15px_-10px_#00f3ff]" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-headline uppercase tracking-[2px] text-[10px]">NEURAL_LINK</span>
+</a>
+<a class="group py-4 px-6 flex items-center gap-4 text-[#3a494b] hover:bg-[#1b1b1b] hover:text-[#00f3ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="font-headline uppercase tracking-[2px] text-[10px]">NODE_RUNNER</span>
+</a>
+<a class="group py-4 px-6 flex items-center gap-4 text-[#3a494b] hover:bg-[#1b1b1b] hover:text-[#00f3ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+<span class="font-headline uppercase tracking-[2px] text-[10px]">VAULT_SEC</span>
+</a>
+<a class="group py-4 px-6 flex items-center gap-4 text-[#3a494b] hover:bg-[#1b1b1b] hover:text-[#00f3ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-headline uppercase tracking-[2px] text-[10px]">SYS_CONFIG</span>
+</a>
+</div>
+<div class="p-6">
+<button class="w-full py-3 bg-primary-container text-on-primary-container font-headline font-black uppercase text-xs chamfer-tr-bl hover:shadow-[0_0_20px_#00f3ff] transition-all">
+                REBOOT_CORE
+            </button>
+</div>
+</nav>
+<!-- MAIN CONTENT CANVAS -->
+<main class="pl-64 pt-16 pr-0 min-h-screen relative overflow-hidden bg-black flex">
+<div class="absolute inset-0 scan-lines pointer-events-none opacity-20"></div>
+<!-- LEFT PANEL: DEPLOYED SQUADS -->
+<section class="w-1/4 h-[calc(100vh-4rem)] bg-[#1b1b1b]/50 backdrop-blur-sm border-r border-primary-fixed/10 p-6 overflow-y-auto custom-scrollbar">
+<div class="mb-8">
+<h2 class="text-xl font-headline font-black text-primary-container mb-1 chromatic-aberration tracking-tighter">DEPLOYED_SQUADS</h2>
+<div class="h-[1px] w-full bg-gradient-to-r from-primary-container to-transparent opacity-30"></div>
+</div>
+<div class="space-y-6">
+<!-- Squad Node 1 -->
+<div class="bg-[#2a2a2a] p-4 chamfer-tr-bl border-l-2 border-primary-container relative group">
+<div class="absolute top-2 right-4 text-[8px] text-primary-fixed/40 font-mono">NODE_771-A</div>
+<p class="font-headline text-sm font-bold text-white mb-3">CYBER_STRIKE_G01</p>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-[9px] uppercase font-bold text-primary-fixed mb-1">
+<span>Core Stability</span>
+<span>88%</span>
+</div>
+<div class="h-1.5 w-full bg-black flex gap-0.5">
+<div class="h-full bg-primary-container w-[88%] relative overflow-hidden">
+<div class="absolute inset-0 bg-white/20"></div>
+</div>
+<div class="h-full bg-red-600/20 w-[2%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[9px] uppercase font-bold text-secondary-fixed mb-1">
+<span>Sync Rate</span>
+<span>94%</span>
+</div>
+<div class="h-1.5 w-full bg-black flex gap-0.5">
+<div class="h-full bg-secondary-fixed w-[94%] relative"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Squad Node 2 -->
+<div class="bg-[#131313] p-4 chamfer-tr-bl border-l-2 border-red-600 relative opacity-80">
+<div class="absolute top-2 right-4 text-[8px] text-red-600/60 font-mono">NODE_902-C</div>
+<p class="font-headline text-sm font-bold text-white mb-3">PHANTOM_OPERATORS</p>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-[9px] uppercase font-bold text-red-600 mb-1">
+<span>Core Stability</span>
+<span>12% [CRITICAL]</span>
+</div>
+<div class="h-1.5 w-full bg-black flex gap-0.5">
+<div class="h-full bg-red-600 w-[12%]"></div>
+<div class="h-full bg-red-600/10 w-[88%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[9px] uppercase font-bold text-secondary-fixed mb-1">
+<span>Sync Rate</span>
+<span>04%</span>
+</div>
+<div class="h-1.5 w-full bg-black">
+<div class="h-full bg-secondary-fixed/30 w-[4%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Squad Node 3 -->
+<div class="bg-[#2a2a2a] p-4 chamfer-tr-bl border-l-2 border-primary-container relative">
+<div class="absolute top-2 right-4 text-[8px] text-primary-fixed/40 font-mono">NODE_445-B</div>
+<p class="font-headline text-sm font-bold text-white mb-3">VOID_WALKERS</p>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-[9px] uppercase font-bold text-primary-fixed mb-1">
+<span>Core Stability</span>
+<span>65%</span>
+</div>
+<div class="h-1.5 w-full bg-black flex gap-0.5">
+<div class="h-full bg-primary-container w-[65%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[9px] uppercase font-bold text-secondary-fixed mb-1">
+<span>Sync Rate</span>
+<span>78%</span>
+</div>
+<div class="h-1.5 w-full bg-black">
+<div class="h-full bg-secondary-fixed w-[78%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CENTER PANEL: NEURAL LINK FORMATION -->
+<section class="flex-1 h-[calc(100vh-4rem)] relative p-8 flex flex-col">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-4xl font-black font-headline tracking-tighter text-white uppercase italic">FORMATION_EDIT<span class="text-primary-container">.X</span></h3>
+<p class="text-[10px] text-primary-fixed/60 font-mono tracking-widest mt-1">LAT: 52.5200° N | LONG: 13.4050° E | ELEV: 124m</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-[#1b1b1b] p-2 hover:bg-primary-container hover:text-on-primary-container border border-primary-fixed/20 transition-all">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+<button class="bg-[#1b1b1b] p-2 hover:bg-primary-container hover:text-on-primary-container border border-primary-fixed/20 transition-all">
+<span class="material-symbols-outlined">rotate_right</span>
+</button>
+<button class="bg-[#1b1b1b] p-2 hover:bg-primary-container hover:text-on-primary-container border border-primary-fixed/20 transition-all">
+<span class="material-symbols-outlined">grid_4x4</span>
+</button>
+</div>
+</div>
+<!-- 3D GRID PITCH -->
+<div class="flex-1 bg-[#0a0a0a] border border-primary-fixed/10 relative overflow-hidden chamfer-all shadow-[inset_0_0_100px_rgba(0,243,255,0.05)]">
+<!-- Digital Grid Background -->
+<div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(#00f3ff 1px, transparent 1px), linear-gradient(90deg, #00f3ff 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- Perspective Field -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="w-[80%] h-[70%] border-2 border-primary-fixed/20 transform perspective-[1000px] rotateX(60deg) relative">
+<!-- Pitch Markings -->
+<div class="absolute inset-0 border border-primary-fixed/40"></div>
+<div class="absolute left-1/2 top-0 bottom-0 w-[2px] bg-primary-fixed/30 transform -translate-x-1/2"></div>
+<div class="absolute top-1/2 left-0 right-0 h-[2px] bg-primary-fixed/30 transform -translate-y-1/2"></div>
+<div class="absolute left-1/2 top-1/2 w-32 h-32 border-2 border-primary-fixed/30 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+<!-- Player Nodes (The "Team") -->
+<!-- ST -->
+<div class="absolute top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-primary-container/20 border-2 border-primary-container flex items-center justify-center text-xs font-black text-primary-container shadow-[0_0_15px_#00f3ff]">9</div>
+<!-- Winger L -->
+<div class="absolute top-[25%] left-[20%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-primary-container/20 border-2 border-primary-container flex items-center justify-center text-xs font-black text-primary-container">11</div>
+<!-- Winger R -->
+<div class="absolute top-[25%] left-[80%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-primary-container/20 border-2 border-primary-container flex items-center justify-center text-xs font-black text-primary-container">7</div>
+<!-- CM -->
+<div class="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-secondary-fixed/20 border-2 border-secondary-fixed flex items-center justify-center text-xs font-black text-secondary-fixed shadow-[0_0_15px_#ccff00]">10</div>
+<!-- LB -->
+<div class="absolute top-[80%] left-[15%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-primary-container/20 border-2 border-primary-container flex items-center justify-center text-xs font-black text-primary-container">3</div>
+<!-- RB -->
+<div class="absolute top-[80%] left-[85%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-primary-container/20 border-2 border-primary-container flex items-center justify-center text-xs font-black text-primary-container">2</div>
+</div>
+</div>
+<!-- HUD Overlays -->
+<div class="absolute bottom-6 left-6 flex flex-col gap-2">
+<div class="bg-black/80 border-l-2 border-primary-fixed p-3 backdrop-blur-md">
+<p class="text-[9px] text-primary-fixed uppercase font-bold tracking-widest">TACTIC_SET: OVERCLOCK</p>
+<p class="text-xs text-white font-headline">HIGH_PRESS_v2.01</p>
+</div>
+</div>
+<div class="absolute top-6 right-6 text-right">
+<p class="text-[8px] text-secondary-fixed uppercase font-mono">AI_SUGGESTION</p>
+<p class="text-sm text-secondary-fixed font-headline font-bold">SWITCH TO 4-3-3(B)</p>
+<div class="h-0.5 w-24 bg-secondary-fixed mt-1 ml-auto"></div>
+</div>
+</div>
+<!-- Footer Stats Action Bar -->
+<div class="mt-8 grid grid-cols-4 gap-4">
+<div class="bg-[#1b1b1b] p-4 border border-outline-variant/10">
+<p class="text-[8px] text-primary-fixed/60 uppercase">Aggression</p>
+<p class="text-xl font-headline font-bold text-white">82%</p>
+</div>
+<div class="bg-[#1b1b1b] p-4 border border-outline-variant/10">
+<p class="text-[8px] text-primary-fixed/60 uppercase">Width</p>
+<p class="text-xl font-headline font-bold text-white">44%</p>
+</div>
+<div class="bg-[#1b1b1b] p-4 border border-outline-variant/10">
+<p class="text-[8px] text-primary-fixed/60 uppercase">Depth</p>
+<p class="text-xl font-headline font-bold text-white">91%</p>
+</div>
+<button class="bg-[#ccff00] text-[#161e00] font-headline font-black uppercase text-sm chamfer-tr-bl hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                    SYNC_NODES
+                    <span class="material-symbols-outlined text-sm">sync</span>
+</button>
+</div>
+</section>
+<!-- RIGHT PANEL: AI SCOUT REPORTS -->
+<aside class="w-1/5 h-[calc(100vh-4rem)] bg-black border-l border-primary-fixed/10 p-4 flex flex-col">
+<div class="flex items-center gap-2 mb-6">
+<span class="w-2 h-2 bg-secondary-fixed rounded-full"></span>
+<h3 class="text-xs font-headline font-bold text-secondary-fixed uppercase tracking-widest">SCOUT_FEED [LIVE]</h3>
+</div>
+<div class="flex-1 space-y-4 overflow-y-auto custom-scrollbar pr-2 font-mono text-[10px] uppercase">
+<div class="text-primary-fixed/70 border-l border-primary-fixed/30 pl-3 py-1">
+<span class="text-secondary-fixed">14:02:11</span> &gt; TARGET_ID: "K_VARDY_09" IDENTIFIED IN SUB-NET 4. DATA PACKET ACQUIRED.
+                </div>
+<div class="text-[#3a494b] pl-3 py-1">
+<span class="text-primary-fixed/50">14:02:45</span> &gt; SCANNING NODE_DELTA... NO ANOMALIES DETECTED.
+                </div>
+<div class="text-red-600 border-l border-red-600/50 pl-3 py-1">
+<span class="text-red-600">14:03:02</span> &gt; ALERT: OPPONENT_MODELING DETECTED COUNTER-STRATEGY "G_PRESS".
+                </div>
+<div class="text-secondary-fixed/80 border-l border-secondary-fixed/50 pl-3 py-1">
+<span class="text-secondary-fixed">14:03:55</span> &gt; RECOMENDATION: INCREASE NEURAL_SYNC BY 12%.
+                </div>
+<div class="text-[#3a494b] pl-3 py-1">
+<span class="text-primary-fixed/50">14:04:12</span> &gt; UPDATING ROSTER_CACHE... OK.
+                </div>
+<div class="text-primary-fixed/70 border-l border-primary-fixed/30 pl-3 py-1">
+<span class="text-secondary-fixed">14:05:00</span> &gt; MARKET_TICKER: DEFENDER_PRICE_SURGE IN SECTOR_JAPAN.
+                </div>
+<div class="text-[#3a494b] pl-3 py-1">
+<span class="text-primary-fixed/50">14:05:30</span> &gt; CALIBRATING HUD_OPTICS... OK.
+                </div>
+<div class="text-[#3a494b] pl-3 py-1">
+<span class="text-primary-fixed/50">14:06:01</span> &gt; STANDBY...
+                </div>
+</div>
+<div class="mt-4 pt-4 border-t border-primary-fixed/10">
+<div class="bg-[#1b1b1b] p-3 border border-secondary-fixed/20 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-0.5 scanner-bar opacity-30"></div>
+<p class="text-[8px] text-[#ccff00] mb-1">PROBABILITY_WIN</p>
+<p class="text-2xl font-black text-white font-headline">76.4%</p>
+</div>
+</div>
+</aside>
+</main>
+<!-- FOOTER -->
+<footer class="fixed bottom-0 left-0 w-full h-8 bg-[#000000]/90 backdrop-blur-md border-t border-[#ccff00]/10 z-50 flex justify-between items-center px-4 font-['Inter'] uppercase text-[9px] tracking-widest text-[#3a494b]">
+<div>SYS_LOGS_v4.2.0_ESTABLISHED</div>
+<div class="flex gap-6">
+<span class="text-[#ccff00] underline cursor-pointer">NET_STAT_OK</span>
+<span class="hover:text-[#ff003c] transition-colors cursor-pointer">UPTIME_99.99%</span>
+<span class="hover:text-[#ff003c] transition-colors cursor-pointer">SEC_AUTH_099X</span>
+</div>
+</footer>
+<!-- CSS CUSTOM SCROLLBARS -->
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #000;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #00f3ff22;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #00f3ff;
+        }
+    </style>
+</body></html>

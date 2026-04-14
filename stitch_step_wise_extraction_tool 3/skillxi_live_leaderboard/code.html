@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillXI - Live Contest Leaderboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#303036",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#35343a",
+                        "surface-container-lowest": "#0e0e13",
+                        "surface-container-low": "#1b1b20",
+                        "surface-dim": "#131318",
+                        "primary-container": "#00d4ff",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "on-tertiary": "#003919",
+                        "secondary-container": "#6001d1",
+                        "tertiary-fixed": "#60ff99",
+                        "tertiary-container": "#00df76",
+                        "secondary": "#d2bbff",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary-fixed": "#25005a",
+                        "surface-container-highest": "#35343a",
+                        "surface": "#131318",
+                        "on-tertiary-container": "#005d2d",
+                        "inverse-primary": "#00677e",
+                        "on-primary-fixed": "#001f27",
+                        "primary": "#a8e8ff",
+                        "primary-fixed": "#b4ebff",
+                        "on-secondary-container": "#c9aeff",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#00210c",
+                        "on-surface-variant": "#bbc9cf",
+                        "tertiary-fixed-dim": "#00e479",
+                        "surface-bright": "#39383e",
+                        "error-container": "#93000a",
+                        "secondary-fixed": "#eaddff",
+                        "background": "#131318",
+                        "outline": "#859398",
+                        "on-error": "#690005",
+                        "surface-container": "#1f1f25",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "inverse-surface": "#e4e1e9",
+                        "on-primary-container": "#00586b",
+                        "on-background": "#e4e1e9",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "on-secondary": "#3f008e",
+                        "surface-container-high": "#2a292f",
+                        "tertiary": "#00ff88",
+                        "primary-fixed-dim": "#3cd7ff",
+                        "on-primary": "#003642",
+                        "on-surface": "#e4e1e9",
+                        "outline-variant": "#3c494e",
+                        "surface-tint": "#3cd7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0f; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="text-on-surface overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl border-b border-[#a8e8ff]/10 flex justify-between items-center px-6 py-4 w-full max-w-full shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="text-2xl font-black italic tracking-tighter text-[#a8e8ff] font-['Space_Grotesk'] tracking-tight cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_28}}'">SkillXI</div>
+<nav class="hidden md:flex gap-8">
+<a class="text-[#a8e8ff] border-b-2 border-[#a8e8ff] pb-1 font-['Space_Grotesk'] tracking-tight" href="#">Lobby</a>
+<a class="text-slate-400 font-medium hover:text-[#a8e8ff] hover:bg-[#1b1b20] transition-colors font-['Space_Grotesk'] tracking-tight" href="#">My Contests</a>
+<a class="text-slate-400 font-medium hover:text-[#a8e8ff] hover:bg-[#1b1b20] transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Wallet</a>
+<a class="text-slate-400 font-medium hover:text-[#a8e8ff] hover:bg-[#1b1b20] transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Leaderboards</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:text-[#a8e8ff]">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-[#a8e8ff]">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</button>
+<img alt="User Avatar" class="w-10 h-10 rounded-full border border-primary/20" data-alt="close-up portrait of a tech-savvy gamer with neon reflective lighting on their face and high-tech background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1701N2v3TQBaD5uPuGUfx29gXrBAaKps-P3O3MMkN1Yh5UnJcjXrJ3b9zVXbx-nbRCAzI5L56hXBM1CKqkRebot23AcQ-0CG0CKNX97uqYLPsDQHOeaUBx3eYwFdnXESInGB8qkCYrm3X0Euw23bJJPxgxZ8Hdb46PUs6sdSbsL_ETPADuL2BdTKQ2VqxGG8VX0e7_RbMxwtuC4hdBHGmYnOcBrRcIycZqG_o6Nfb-6JZdioTnxKTBDUpFIHL2I9t4agjZqR0q1xP"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-full w-64 hidden lg:flex flex-col bg-[#0e0e13] py-8 gap-4 border-r border-outline-variant/10">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[#d2bbff]" data-icon="sports_soccer">sports_soccer</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-white leading-tight">Premier League</h3>
+<p class="text-[10px] text-primary uppercase tracking-widest">MCI vs ARS • Live</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 text-[#a8e8ff] bg-[#1b1b20] border-r-4 border-[#a8e8ff] font-['Space_Grotesk'] text-sm uppercase tracking-widest active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+                Live Match
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-[#2a292f] hover:text-[#a8e8ff] font-['Space_Grotesk'] text-sm uppercase tracking-widest transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+                Global Rank
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-[#2a292f] hover:text-[#a8e8ff] font-['Space_Grotesk'] text-sm uppercase tracking-widest transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+                Expert Picks
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-[#2a292f] hover:text-[#a8e8ff] font-['Space_Grotesk'] text-sm uppercase tracking-widest transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="rss_feed">rss_feed</span>
+                Match Feed
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-[#2a292f] hover:text-[#a8e8ff] font-['Space_Grotesk'] text-sm uppercase tracking-widest transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+                Rules
+            </a>
+</nav>
+<div class="mt-auto px-6 pb-20">
+<button class="w-full py-3 bg-gradient-to-br from-[#a8e8ff] to-[#d2bbff] text-on-primary font-bold rounded-full shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-95 duration-100 uppercase text-xs tracking-widest">
+                Boost My XI
+            </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-64 pt-20 pb-24 px-4 md:px-8">
+<!-- Breadcrumb & Title Section -->
+<div class="mb-8">
+<nav class="flex text-[12px] text-[#5a5a75] gap-2 mb-4 font-medium uppercase tracking-wider">
+<span>Contests</span>
+<span>/</span>
+<span>Man City vs Arsenal</span>
+<span>/</span>
+<span class="text-primary">Leaderboard</span>
+</nav>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-3xl font-headline font-extrabold text-white flex items-center gap-3">
+<span class="text-2xl">⚽</span> Man City vs Arsenal
+                    </h1>
+<p class="text-[#a0a0b8] text-sm font-medium mt-1">GW28 · Premier League</p>
+</div>
+<!-- Live Score Widget -->
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-xl px-6 py-3 flex flex-col items-center cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_18}}'">
+<div class="flex items-center gap-4">
+<span class="text-white text-[13px] font-bold tracking-wider">MCI</span>
+<span class="text-[#00d4ff] text-2xl font-black font-headline">2</span>
+<span class="text-[#5a5a75] font-bold">—</span>
+<span class="text-white text-2xl font-black font-headline">1</span>
+<span class="text-white text-[13px] font-bold tracking-wider">ARS</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+<span class="text-red-500 text-[10px] font-black uppercase tracking-tighter">LIVE ● 74'</span>
+</div>
+</div>
+</div>
+<!-- Stats Chips Row -->
+<div class="flex flex-wrap gap-3 mt-6">
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-full px-4 py-2 flex items-center gap-2 text-[#5a5a75] text-[12px] font-bold">
+<span class="material-symbols-outlined text-primary scale-75" data-icon="emoji_events">emoji_events</span>
+                    Prize Pool: <span class="text-white">8.5 SOL</span>
+</div>
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-full px-4 py-2 flex items-center gap-2 text-[#5a5a75] text-[12px] font-bold">
+<span class="material-symbols-outlined text-primary scale-75" data-icon="groups">groups</span>
+                    142 Players
+                </div>
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-full px-4 py-2 flex items-center gap-2 text-[#5a5a75] text-[12px] font-bold">
+<span class="material-symbols-outlined text-primary scale-75" data-icon="monetization_on">monetization_on</span>
+                    Top Prize: <span class="text-white">3.5 SOL</span>
+</div>
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-full px-4 py-2 flex items-center gap-2 text-[#5a5a75] text-[12px] font-bold">
+<span class="material-symbols-outlined text-primary scale-75" data-icon="timer">timer</span>
+                    Ends: <span class="text-white">16min</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col xl:flex-row gap-8">
+<!-- Table Container -->
+<div class="flex-1">
+<!-- My Position Highlight -->
+<div class="bg-[#00d4ff]/[0.06] border border-[#00d4ff]/20 rounded-xl p-5 mb-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-[120px]" data-icon="person">person</span>
+</div>
+<div class="text-[#00d4ff] text-[11px] uppercase font-black tracking-widest mb-4">Your Current Position</div>
+<div class="flex items-center justify-between flex-wrap gap-4 relative z-10">
+<div class="flex items-center gap-6">
+<div class="text-[#00d4ff] text-4xl font-black font-headline">#7</div>
+<div class="flex items-center gap-3">
+<img alt="My Avatar" class="w-12 h-12 rounded-full border-2 border-primary" data-alt="stylized 3D avatar of a professional digital sports analyst with neon blue accents and sleek headset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOEaHTWalqYWcj1G_WRp1fnXwrZBBAgpeGmLJTj1_ZupTNGckETOslkSKIZA87iKyz58Sy889MoSlG9ybqjLiomVqFbCsUErqIq7dYtuvVglzBBUKnjyNX7bURWOPeFfIX7QY2L3JuludEJ1kjncmlqwz9Es0N0-PFi-fgiQdr5HXuMwTO4iDWhoAngV3UuVqkUJgh1H5RGTjNVycL26Q2c5s3WnUogkwSHi-fKVG9eVo3S0o1I2RvbZ1e7cOkX1LM_oI5Ub9WYZm8"/>
+<div class="font-bold text-xl text-white">You</div>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-center">
+<div class="text-white text-2xl font-black font-headline">127 pts</div>
+<div class="flex items-center justify-center gap-1 text-[#00ff88] text-[12px] font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+                                    ↑ 3 positions
+                                </div>
+</div>
+<div class="text-right">
+<div class="bg-[#00ff88]/10 text-[#00ff88] px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-tighter border border-[#00ff88]/20 mb-1">
+                                    In prize zone ✅
+                                </div>
+<div class="text-[#00ff88] text-xl font-black font-headline">0.8 SOL</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Leaderboard -->
+<div class="bg-[#0f0f1a] border border-[#1e1e30] rounded-2xl overflow-hidden shadow-2xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50 text-[11px] font-black uppercase tracking-[0.2em] text-[#5a5a75]">
+<th class="px-6 py-5">Rank</th>
+<th class="px-6 py-5">Player</th>
+<th class="px-6 py-5">Captain</th>
+<th class="px-6 py-5">Points</th>
+<th class="px-6 py-5">Prize</th>
+<th class="px-6 py-5 text-center">Live</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#1e1e30]">
+<!-- Row 1 -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-yellow-500 text-xl" data-icon="emoji_events">emoji_events</span>
+<span class="font-headline font-bold text-white text-lg">#1</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Player 1" class="w-8 h-8 rounded-full" data-alt="vibrant digital art portrait of a pro gamer with glowing cyan highlights and techwear aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2lY3YvsBmtx-6l3c1bsjPTeovBf3fbvqDRKsEyZUPx_z7zrvAZkVNmFip4e7VOmw9nxEpR4D3o2jVJ9P3B7oZhgwLUpcIDdSVttyhWm8fHl9O1V7haKWs9W0zBtV8kRMpGwcUmstK9Q4LIkuXnBB7NtWmddYTvNeZk2wNh61G0I3dNMNqdjZ-tggVGI9JeoXOGFT1fDPiHZqkM8ZrG3Rm7DVp9EYq2BMo2-OPuXKPDSGqR4QWnLTJrE9A1QiW3phmsF_arICZOEaF"/>
+<span class="font-bold text-white">ShadowStriker</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-[#d2bbff]/10 text-[#d2bbff] px-2 py-1 rounded text-[10px] font-bold">Haaland</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-white font-bold text-lg font-headline">245</span>
+<span class="text-[#00ff88] text-[10px] font-bold">+8</span>
+</div>
+</td>
+<td class="px-6 py-5 font-headline font-bold text-white">3.5 SOL</td>
+<td class="px-6 py-5 text-center">
+<span class="material-symbols-outlined text-primary animate-pulse" data-icon="bolt" data-weight="fill">bolt</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-5">
+<span class="font-headline font-bold text-slate-400 text-lg">#2</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Player 2" class="w-8 h-8 rounded-full" data-alt="minimalist 2D avatar of a sports enthusiast with sleek dark glasses and cybernetic details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf7WMf-rpX45XVBdixsbo4KmlMcl2UmmOr3UztAELRF4mr_pztCyql3DQ0rdutFGz5PWiFklKkQOBNru9GRcWHd0lp0rtlw-NJ9jQuV8WvA9mgnUruCSghDNpYbynF3Ug6Y7jm2we-zoRiSrauqV6IxL9CextlqIQJvVZbCCx8J4i7P0hReDC1aWiG9xPlqN--mzbp9Jri7WpvYPmUi7OwG4S-kwiMq4UJo3CqVvdzaWdaJqWfBS4qE3uFqrjMtAZNSMgp3p_LCw9T"/>
+<span class="font-bold text-white">CryptoChamp</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-[#d2bbff]/10 text-[#d2bbff] px-2 py-1 rounded text-[10px] font-bold">Saka</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-white font-bold text-lg font-headline">212</span>
+<span class="text-[#00ff88] text-[10px] font-bold">+12</span>
+</div>
+</td>
+<td class="px-6 py-5 font-headline font-bold text-white">2.0 SOL</td>
+<td class="px-6 py-5 text-center">
+<span class="material-symbols-outlined text-primary" data-icon="bolt" data-weight="fill">bolt</span>
+</td>
+</tr>
+<!-- Your Row (#7 Highlighted) -->
+<tr class="bg-[#00d4ff]/10 border-l-4 border-primary">
+<td class="px-6 py-5">
+<span class="font-headline font-black text-primary text-xl">#7</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Me" class="w-8 h-8 rounded-full border border-primary" data-alt="stylized 3D avatar of a professional digital sports analyst with neon blue accents and sleek headset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOxU6T-BaAxfkPhBO5yHAKOhJkX07MEsZGAehTwmtJVJssINlq0PJFG6zxNhhcW-an6fjvaS_8l8GQFpfkY1x4AsvvKPoHBerrHLQgT3yM7fPM9l458bIeUlGBdMiGxjIUXriDtHiNemIJs3Puznlu0zmj8f8SnIXWWLHYk8A4aS-DHrJPVtattdxzNPMAmjE4jPk8jEh4u1fPEa_-fjmpBFGyBfNeZ90Ao17RpZGJAtFI1iM-qh5Ckz7zwO7AYpuKK2vVLbxyZqo_"/>
+<span class="font-black text-white">You</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-primary text-on-primary px-2 py-1 rounded text-[10px] font-black uppercase">KDB</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-white font-black text-xl font-headline">127</span>
+<span class="text-[#00ff88] text-[10px] font-black">+14</span>
+</div>
+</td>
+<td class="px-6 py-5 font-headline font-black text-primary">0.8 SOL</td>
+<td class="px-6 py-5 text-center">
+<span class="material-symbols-outlined text-primary scale-125" data-icon="bolt" data-weight="fill">bolt</span>
+</td>
+</tr>
+<!-- Iterating more placeholder rows -->
+<tr class="hover:bg-white/[0.02] transition-colors opacity-80">
+<td class="px-6 py-5"><span class="font-headline font-bold text-slate-500">#8</span></td>
+<td class="px-6 py-5"><div class="flex items-center gap-3"><img class="w-8 h-8 rounded-full" data-alt="modern avatar of a data scientist with holographic elements and dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFvoSUBVZEqNw_J4bfMaiaVpD0G5UBV-eHmbAvxvenM9IaXu9MDUy0VNO7vy2aaap7ZEgiINEweQIzvxT1A961uPdjkohuyRqeGAg4_fFqWzXk5haGODSQyfMsHR2LswyLi5Vip47Dm4wTV54SsWW1Oo3Tl5SE18fqNQ-2gBlJFOzEWU8z3Md5j9bKl5Un2B-c17Mje-kQbuekKqC_KfK-fdJx-6IQtWspNYB9SIAdy9hulfZaCe6qcAsJ4rFLfuUNZcI-nobVtQ3P"/><span class="font-bold text-white">GrealishFan</span></div></td>
+<td class="px-6 py-5"><span class="bg-[#d2bbff]/10 text-[#d2bbff] px-2 py-1 rounded text-[10px] font-bold">Foden</span></td>
+<td class="px-6 py-5"><span class="text-white font-bold font-headline">115</span></td>
+<td class="px-6 py-5 font-headline font-bold text-slate-400">0.4 SOL</td>
+<td class="px-6 py-5 text-center"><span class="material-symbols-outlined text-slate-600" data-icon="bolt">bolt</span></td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors opacity-70">
+<td class="px-6 py-5"><span class="font-headline font-bold text-slate-500">#9</span></td>
+<td class="px-6 py-5"><div class="flex items-center gap-3"><img class="w-8 h-8 rounded-full" data-alt="cyberpunk style avatar with electric blue hair and digital interface overlays" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIPvOxgurDVqRx3JSWJgBWFHA2URLzNzaiuqXr-ZICYxNvXQTrYrCE6mQq0Q1YEzWsWjdEzYDrPsMekoYNr0-QI_9DKibtfLXSoYJENr-UJcjc_WQzMfy1Z_Oaq-Ru191s64zK_ibLaC5SU0IdraMwqhApC6fWbLybFQnmlU3_ruYsqMisLrqQxsI3ijB9LvxLcgGurM7kXdpp5oMxYhxOvPgOj7t7pKQ48-5Ru-enYOgxxTsz4cyACAuJOLkzN8Of07ImQzsk89DF"/><span class="font-bold text-white">GunnerX</span></div></td>
+<td class="px-6 py-5"><span class="bg-[#d2bbff]/10 text-[#d2bbff] px-2 py-1 rounded text-[10px] font-bold">Rice</span></td>
+<td class="px-6 py-5"><span class="text-white font-bold font-headline">108</span></td>
+<td class="px-6 py-5 font-headline font-bold text-slate-400">0.2 SOL</td>
+<td class="px-6 py-5 text-center"><span class="material-symbols-outlined text-slate-600" data-icon="bolt">bolt</span></td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors opacity-60">
+<td class="px-6 py-5"><span class="font-headline font-bold text-slate-500">#10</span></td>
+<td class="px-6 py-5"><div class="flex items-center gap-3"><img class="w-8 h-8 rounded-full" data-alt="abstract vector portrait of a futuristic athlete with glowing geometric patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTKRkgm7v5hmh6uAIzuy-nxkEwb0yxMO4mEO6GR6Sv4vHBechP69fgALm0mBinmV6k1RRR_cuV7sfHrN_ANypY9_8C6Z1WLZ-JQFw0vnOJP-pAxa1lFvgpyHB9_-v-mbs5ncXnVuTQyr5pjriw7djt5E5DsYbz7SWV4h_qFng7gzwiRwmes-zCSGFuN2lVxEcy-SRYkxej8_R1VCw-AcW02o7m3TWaMTdgg3FXTvb6yneOauF6cqbFZVNF2eon7x6MKtBEsgBwE0aY"/><span class="font-bold text-white">BlueMoon99</span></div></td>
+<td class="px-6 py-5"><span class="bg-[#d2bbff]/10 text-[#d2bbff] px-2 py-1 rounded text-[10px] font-bold">Rodri</span></td>
+<td class="px-6 py-5"><span class="text-white font-bold font-headline">94</span></td>
+<td class="px-6 py-5 font-headline font-bold text-slate-400">0.1 SOL</td>
+<td class="px-6 py-5 text-center"><span class="material-symbols-outlined text-slate-600" data-icon="bolt">bolt</span></td>
+</tr>
+</tbody>
+</table>
+<div class="px-6 py-4 bg-surface-container-low text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-primary transition-colors">
+                        View all 142 players
+                    </div>
+</div>
+</div>
+<!-- Match Feed Sidebar -->
+<aside class="w-full xl:w-[320px] shrink-0">
+<div class="bg-[#0f0f1a] border border-[#1e1e30] rounded-2xl overflow-hidden flex flex-col h-fit sticky top-24 shadow-xl">
+<div class="px-6 py-5 border-b border-[#1e1e30] bg-surface-container-high/30 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary scale-90" data-icon="rss_feed">rss_feed</span>
+<h2 class="text-sm font-black text-white uppercase tracking-widest">Live Match Feed</h2>
+</div>
+<span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+</div>
+<div class="flex flex-col p-4 gap-4 max-h-[600px] overflow-y-auto">
+<!-- Event 1 -->
+<div class="flex gap-4 group">
+<div class="flex flex-col items-center">
+<div class="text-[10px] font-black font-headline text-primary mb-1">74'</div>
+<div class="w-px flex-1 bg-[#1e1e30]"></div>
+</div>
+<div class="bg-surface-container-high rounded-xl p-3 flex-1 border border-transparent group-hover:border-primary/20 transition-all">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-green-500 text-sm" data-icon="sports_soccer">sports_soccer</span>
+<span class="text-[11px] font-black uppercase text-white">Goal</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+<span class="text-white font-bold">Erling Haaland</span> (MCI) finds the bottom corner. Assist by KDB.
+                                </p>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="flex gap-4 group">
+<div class="flex flex-col items-center">
+<div class="text-[10px] font-black font-headline text-slate-500 mb-1">68'</div>
+<div class="w-px flex-1 bg-[#1e1e30]"></div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 flex-1 border border-transparent group-hover:border-yellow-500/20 transition-all">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-yellow-500 text-sm" data-icon="square" data-weight="fill">square</span>
+<span class="text-[11px] font-black uppercase text-white">Yellow Card</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+<span class="text-white font-bold">William Saliba</span> (ARS) carded for a tactical foul.
+                                </p>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="flex gap-4 group">
+<div class="flex flex-col items-center">
+<div class="text-[10px] font-black font-headline text-slate-500 mb-1">62'</div>
+<div class="w-px flex-1 bg-[#1e1e30]"></div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="published_with_changes">published_with_changes</span>
+<span class="text-[11px] font-black uppercase text-white">Substitution</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+<span class="text-white font-bold">Phil Foden</span> (MCI) OFF <br/>
+<span class="text-primary font-bold">Jeremy Doku</span> (MCI) ON
+                                </p>
+</div>
+</div>
+<!-- Event 4 -->
+<div class="flex gap-4 group">
+<div class="flex flex-col items-center">
+<div class="text-[10px] font-black font-headline text-slate-500 mb-1">45'</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-slate-500 text-sm" data-icon="timer">timer</span>
+<span class="text-[11px] font-black uppercase text-white">Half Time</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Score MCI 1 - 1 ARS at the break.</p>
+</div>
+</div>
+</div>
+<button class="m-4 py-3 bg-[#1b1b20] border border-[#1e1e30] text-slate-400 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-[#2a292f] hover:text-white transition-all">
+                        Full Commentary
+                    </button>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 lg:hidden bg-[#131318]/90 backdrop-blur-2xl border-t border-[#a8e8ff]/10 shadow-[0_-10px_30px_rgba(0,212,255,0.15)] rounded-t-3xl">
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-tighter mt-1">Lobby</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff]/20 to-[#d2bbff]/10 text-[#a8e8ff] rounded-2xl px-6 py-2 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-tighter mt-1">Live</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-tighter mt-1">My XI</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-tighter mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

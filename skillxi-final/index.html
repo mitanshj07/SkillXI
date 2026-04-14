@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SkillXI | AI Fantasy Sports Platform</title>
+    <meta name="description" content="SkillXI — The AI-powered fantasy sports platform where skill wins over luck. Build lineups, analyze players, and compete in contests."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error-container": "#ffdad6", "secondary-fixed-dim": "#d2bbff",
+                        "outline": "#859398", "primary": "#a8e8ff", "surface": "#131318",
+                        "tertiary-fixed-dim": "#00e479", "surface-container": "#1f1f25",
+                        "on-secondary-container": "#c9aeff", "error-container": "#93000a",
+                        "on-primary-container": "#00586b", "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary": "#3f008e", "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed": "#60ff99", "on-surface": "#e4e1e9",
+                        "surface-container-highest": "#35343a", "on-background": "#e4e1e9",
+                        "on-surface-variant": "#bbc9cf", "surface-container-lowest": "#0e0e13",
+                        "secondary": "#d2bbff", "on-primary-fixed": "#001f27",
+                        "error": "#ffb4ab", "secondary-fixed": "#eaddff",
+                        "surface-tint": "#3cd7ff", "surface-container-low": "#1b1b20",
+                        "inverse-on-surface": "#303036", "tertiary-container": "#00df76",
+                        "surface-container-high": "#2a292f", "secondary-container": "#6001d1",
+                        "primary-fixed": "#b4ebff", "on-tertiary-fixed": "#00210c",
+                        "inverse-surface": "#e4e1e9", "surface-variant": "#35343a",
+                        "surface-bright": "#39383e", "background": "#131318",
+                        "primary-container": "#00d4ff", "on-primary": "#003642",
+                        "tertiary": "#00ff88", "on-primary-fixed-variant": "#004e5f",
+                        "surface-dim": "#131318", "on-tertiary-fixed-variant": "#005228",
+                        "on-error": "#690005", "inverse-primary": "#00677e",
+                        "outline-variant": "#3c494e", "on-tertiary": "#003919",
+                        "on-tertiary-container": "#005d2d", "primary-fixed-dim": "#3cd7ff"
+                    },
+                    borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "9999px" },
+                    fontFamily: { headline: ["Space Grotesk"], body: ["Inter"], label: ["Inter"] }
+                },
+            },
+        }
+    </script>
+    <!-- Solana Web3 Integrations -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
+    <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen">
+
+<!-- ===== TOP NAV BAR ===== -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+    <div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+        <div class="flex items-center gap-8">
+            <a href="index.html" class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-['Space_Grotesk']">SkillXI</a>
+            <div class="hidden md:flex gap-6">
+                <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="index.html">Home</a>
+                <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="contests.html">Contests</a>
+                <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="lineup.html">Squads</a>
+                <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="pre-match.html">Intelligence</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="wallet.html" class="p-2 rounded-full hover:bg-[#a8e8ff]/10 transition-all duration-300 active:scale-95">
+                <span class="material-symbols-outlined text-[#a8e8ff]">account_balance_wallet</span>
+            </a>
+            <button class="p-2 rounded-full hover:bg-[#a8e8ff]/10 transition-all duration-300 active:scale-95">
+                <span class="material-symbols-outlined text-[#a8e8ff]">notifications</span>
+            </button>
+            <a href="profile.html" class="w-10 h-10 rounded-full border-2 border-[#a8e8ff]/30 overflow-hidden">
+                <img alt="User Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuWHy486rZWdwY1x41y0EEiakZeMKzCtels-E4FhYeP6C8L5eXU4ad4CDChNvgUAdFJkEvHni22VQsfSQ8SR2AuvdePWlbmTt5wm5GpkYQZ0OFhBf51CrQScJqioPhDKpNZGzQyyUWUet8n14uUIAonLXrVgs-Q9p-RsWdj6iqE9rHZ28JcC6Ju78M30mUbwcg0Zk5-FxsA0lFfGgEzhm7PmL7hCSH5NQ6azaPkSleSlSxq-hOv190dPle36yV_Up7g1_au8L2CLqt"/>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== SIDE NAV BAR (Desktop) ===== -->
+<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 border-r border-[#ffffff0f] bg-[#0e0e13] flex-col py-8 z-40">
+    <div class="px-6 mb-12 mt-20">
+        <h2 class="text-[#d2bbff] font-black text-xl font-headline tracking-tighter">KINETIC AI</h2>
+        <p class="text-[10px] text-[#5a5a75] tracking-[0.2em] font-bold">V3.2 ACTIVE</p>
+    </div>
+    <div class="flex flex-col flex-1">
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="index.html">
+            <span class="material-symbols-outlined">grid_view</span>
+            <span class="font-headline font-bold">Home</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="ai-chat.html">
+            <span class="material-symbols-outlined">psychology</span>
+            <span class="font-headline font-bold">AI Analyst</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="contests.html">
+            <span class="material-symbols-outlined">emoji_events</span>
+            <span class="font-headline font-bold">Contests</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="lineup.html">
+            <span class="material-symbols-outlined">database</span>
+            <span class="font-headline font-bold">Squad Builder</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="leaderboard.html">
+            <span class="material-symbols-outlined">leaderboard</span>
+            <span class="font-headline font-bold">Leaderboard</span>
+        </a>
+        <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="profile.html">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-headline font-bold">Settings</span>
+        </a>
+    </div>
+    <div class="px-6 mt-auto">
+        <a href="subscription.html" class="w-full block text-center bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-extrabold py-3 rounded-full shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-[1.02] transition-transform active:scale-95">
+            UPGRADE TO PRO
+        </a>
+        <div class="mt-8 flex flex-col gap-4">
+            <a class="text-[#5a5a75] hover:text-white flex items-center gap-4 transition-all" href="#">
+                <span class="material-symbols-outlined">help</span>
+                <span class="font-headline font-bold">Support</span>
+            </a>
+            <a class="text-[#5a5a75] hover:text-white flex items-center gap-4 transition-all" href="#">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-headline font-bold">Logout</span>
+            </a>
+        </div>
+    </div>
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="ml-0 lg:ml-64 pt-4 pb-24 px-4 md:px-12 relative min-h-screen overflow-hidden">
+    <!-- Abstract Background Blurs -->
+    <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]"></div>
+    <div class="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px]"></div>
+
+    <!-- Hero Header -->
+    <section class="relative z-10 mb-12">
+        <div class="flex flex-col md:flex-row items-start gap-8 mb-12">
+            <div class="flex-1">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    AI-POWERED INSIGHTS
+                </span>
+                <h1 class="text-5xl md:text-7xl font-extrabold font-headline tracking-tighter text-white mb-4">
+                    SKILL OVER <span class="text-gradient-primary">LUCK</span>
+                </h1>
+                <p class="text-on-surface-variant text-lg max-w-xl mb-8">
+                    The next-generation AI fantasy sports platform. Build data-driven lineups, analyze player performance, and compete in skill-based contests.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="contests.html" class="bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold px-8 py-4 rounded-full shadow-[0_0_30px_rgba(0,212,255,0.3)] hover:scale-[1.02] active:scale-95 transition-all">
+                        Browse Contests
+                    </a>
+                    <a href="lineup.html" class="bg-surface-container-high border border-outline-variant text-white font-headline font-bold px-8 py-4 rounded-full hover:bg-surface-variant transition-all">
+                        Build Lineup
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Cards -->
+    <section class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <a href="ai-chat.html" class="group bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10 hover:border-primary/30 transition-all">
+            <span class="material-symbols-outlined text-secondary text-4xl mb-4 block" style="font-variation-settings: 'FILL' 1;">psychology</span>
+            <h3 class="font-headline font-bold text-xl mb-2 group-hover:text-primary transition-colors">AI Analyst Chat</h3>
+            <p class="text-on-surface-variant text-sm">Get real-time AI recommendations for captain picks, lineup optimization, and match intelligence.</p>
+        </a>
+        <a href="pre-match.html" class="group bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10 hover:border-primary/30 transition-all">
+            <span class="material-symbols-outlined text-primary text-4xl mb-4 block" style="font-variation-settings: 'FILL' 1;">analytics</span>
+            <h3 class="font-headline font-bold text-xl mb-2 group-hover:text-primary transition-colors">Pre-Match Intel</h3>
+            <p class="text-on-surface-variant text-sm">Tactical breakdowns, AI score predictions, and player analysis reports before every match.</p>
+        </a>
+        <a href="leaderboard.html" class="group bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10 hover:border-primary/30 transition-all">
+            <span class="material-symbols-outlined text-tertiary text-4xl mb-4 block" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+            <h3 class="font-headline font-bold text-xl mb-2 group-hover:text-primary transition-colors">Global Leaderboard</h3>
+            <p class="text-on-surface-variant text-sm">Compete against the best analysts worldwide and climb the prestige ranking system.</p>
+        </a>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="player-analysis.html" class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-secondary/30 transition-all text-center">
+            <span class="material-symbols-outlined text-secondary text-3xl mb-2 block">person_search</span>
+            <span class="font-headline font-bold text-sm">Player Analysis</span>
+        </a>
+        <a href="payout.html" class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-tertiary/30 transition-all text-center">
+            <span class="material-symbols-outlined text-tertiary text-3xl mb-2 block">payments</span>
+            <span class="font-headline font-bold text-sm">Payouts</span>
+        </a>
+        <a href="subscription.html" class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-primary/30 transition-all text-center">
+            <span class="material-symbols-outlined text-primary text-3xl mb-2 block">workspace_premium</span>
+            <span class="font-headline font-bold text-sm">Subscription</span>
+        </a>
+        <a href="nexus-feed.html" class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-secondary/30 transition-all text-center">
+            <span class="material-symbols-outlined text-secondary text-3xl mb-2 block">hub</span>
+            <span class="font-headline font-bold text-sm">Nexus Feed</span>
+        </a>
+    </section>
+    <!-- Privacy First Highlight -->
+    <div style="
+      background: linear-gradient(135deg, 
+        rgba(124,58,237,0.08), rgba(0,212,255,0.04));
+      border: 1px solid rgba(124,58,237,0.15);
+      border-radius: 20px;
+      padding: 36px;
+      max-width: 900px;
+      margin: 48px auto;
+      text-align: center;
+    ">
+      <div style="font-size:36px; margin-bottom:12px;">🔐</div>
+      <h2 style="color:#fff; font-size:28px; font-weight:800; 
+                 margin-bottom:12px;">
+        Privacy-First Fantasy Sports
+      </h2>
+      <p style="color:#a0a0b8; font-size:16px; 
+                max-width:560px; margin:0 auto 24px; 
+                line-height:1.7;">
+        SkillXI is the first fantasy sports platform 
+        to integrate Umbra Privacy Protocol. Your 
+        contest entries, lineups, and prize payouts 
+        are completely private on Solana.
+      </p>
+      <div style="display:flex; gap:16px; 
+                  justify-content:center; flex-wrap:wrap;">
+        <div style="
+          background:#13131f; border:1px solid #1e1e30;
+          border-radius:12px; padding:16px 20px;
+          min-width:140px;
+        ">
+          <div style="font-size:24px; margin-bottom:6px;">
+            🕵️
+          </div>
+          <div style="color:#fff; font-size:13px; 
+                      font-weight:600;">
+            Hidden Entries
+          </div>
+        </div>
+        <div style="
+          background:#13131f; border:1px solid #1e1e30;
+          border-radius:12px; padding:16px 20px;
+          min-width:140px;
+        ">
+          <div style="font-size:24px; margin-bottom:6px;">
+            💰
+          </div>
+          <div style="color:#fff; font-size:13px; 
+                      font-weight:600;">
+            Private Payouts
+          </div>
+        </div>
+        <div style="
+          background:#13131f; border:1px solid #1e1e30;
+          border-radius:12px; padding:16px 20px;
+          min-width:140px;
+        ">
+          <div style="font-size:24px; margin-bottom:6px;">
+            🧠
+          </div>
+          <div style="color:#fff; font-size:13px; 
+                      font-weight:600;">
+            Strategy Protected
+          </div>
+        </div>
+        <div style="
+          background:#13131f; border:1px solid #1e1e30;
+          border-radius:12px; padding:16px 20px;
+          min-width:140px;
+        ">
+          <div style="font-size:24px; margin-bottom:6px;">
+            ✅
+          </div>
+          <div style="color:#fff; font-size:13px; 
+                      font-weight:600;">
+            Compliance Ready
+          </div>
+        </div>
+      </div>
+      <a href="privacy.html" style="
+        display:inline-block; margin-top:24px;
+        border:1px solid rgba(124,58,237,0.4);
+        color:#9d5cf5; padding:10px 24px;
+        border-radius:10px; text-decoration:none;
+        font-size:14px; font-weight:600;
+        transition:all 0.2s;
+      ">Learn How Privacy Works →</a>
+    </div>
+</main>
+
+<!-- ===== BOTTOM NAV BAR (Mobile) ===== -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#131318]/90 backdrop-blur-2xl md:hidden z-50 rounded-t-[2rem] border-t border-[#ffffff1a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+    <a class="bottom-nav-link flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="index.html">
+        <span class="material-symbols-outlined">sports_kabaddi</span>
+        <span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Home</span>
+    </a>
+    <a class="bottom-nav-link flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="pre-match.html">
+        <span class="material-symbols-outlined">auto_awesome</span>
+        <span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Intel</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-4 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all" href="lineup.html">
+        <span class="material-symbols-outlined text-3xl">add_circle</span>
+    </a>
+    <a class="bottom-nav-link flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="leaderboard.html">
+        <span class="material-symbols-outlined">analytics</span>
+        <span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+    </a>
+    <a class="bottom-nav-link flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="wallet.html">
+        <span class="material-symbols-outlined">account_balance_wallet</span>
+        <span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Wallet</span>
+    </a>
+</nav>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

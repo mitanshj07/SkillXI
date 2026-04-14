@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Upgrade to Kinetic AI | SkillXI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "outline": "#859398",
+                        "primary": "#a8e8ff",
+                        "surface": "#131318",
+                        "tertiary-fixed-dim": "#00e479",
+                        "surface-container": "#1f1f25",
+                        "on-secondary-container": "#c9aeff",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#00586b",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary": "#3f008e",
+                        "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed": "#60ff99",
+                        "on-surface": "#e4e1e9",
+                        "surface-container-highest": "#35343a",
+                        "on-background": "#e4e1e9",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-container-lowest": "#0e0e13",
+                        "secondary": "#d2bbff",
+                        "on-primary-fixed": "#001f27",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#eaddff",
+                        "surface-tint": "#3cd7ff",
+                        "surface-container-low": "#1b1b20",
+                        "inverse-on-surface": "#303036",
+                        "tertiary-container": "#00df76",
+                        "surface-container-high": "#2a292f",
+                        "secondary-container": "#6001d1",
+                        "primary-fixed": "#b4ebff",
+                        "on-tertiary-fixed": "#00210c",
+                        "inverse-surface": "#e4e1e9",
+                        "surface-variant": "#35343a",
+                        "surface-bright": "#39383e",
+                        "background": "#131318",
+                        "primary-container": "#00d4ff",
+                        "on-primary": "#003642",
+                        "tertiary": "#00ff88",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "surface-dim": "#131318",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "on-error": "#690005",
+                        "inverse-primary": "#00677e",
+                        "outline-variant": "#3c494e",
+                        "on-tertiary": "#003919",
+                        "on-tertiary-container": "#005d2d",
+                        "primary-fixed-dim": "#3cd7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(27, 27, 32, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #a8e8ff 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+<link rel="stylesheet" href="assets/css/style.css"/>
+    <!-- Solana Web3 Integrations -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
+    <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-['Space_Grotesk']">SkillXI</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Lobby</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Research</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Squads</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Intelligence</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#a8e8ff] hover:bg-[#a8e8ff]/10 rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<button class="p-2 text-[#a8e8ff] hover:bg-[#a8e8ff]/10 rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="User Profile Avatar" data-alt="close up headshot of a futuristic digital avatar with neon blue accents and sleek dark hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyITbt3G9KgxEgh0xQZdkgZWW0pFfza5hxvq6BG5fmqLZEXW39gJgoDx-hcG9ku7i7OKJ-lMGnkPoOuiogL_rnQew_tEc4sCtFYeFM9Qk4waZWncyzAXB41FkFU2DtXim92qyFUlBE5QCX_OQQ7P8lXuzEXOkV8tN4ZedjemCk7Fki14zM9yxzj1ULKUpSCrZ9MDxtk8fb5m1Qw8m28Vjd_0tl4OaaGJHl3PxGciXgSmZVf4nETNPcKc4CuiY6fUW1NM5DiPB2Tv52"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-[#ffffff0f] bg-[#0e0e13] hidden lg:flex flex-col py-8 z-40">
+<div class="px-6 mb-12">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary to-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-surface text-sm" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<div class="text-[#d2bbff] font-black font-['Space_Grotesk'] text-sm tracking-widest">KINETIC AI</div>
+<div class="text-[10px] text-outline uppercase tracking-tighter">V3.2 Active</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 font-['Space_Grotesk'] font-bold active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">grid_view</span> Home
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 font-['Space_Grotesk'] font-bold active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">psychology</span> AI Analyst
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 font-['Space_Grotesk'] font-bold active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">database</span> Market
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 font-['Space_Grotesk'] font-bold active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">emoji_events</span> Contests
+            </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 font-['Space_Grotesk'] font-bold active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">leaderboard</span> Leaderboard
+            </a>
+<a class="bg-gradient-to-r from-[#a8e8ff1a] to-transparent text-[#a8e8ff] border-r-4 border-[#a8e8ff] flex items-center gap-4 px-6 py-4 font-['Space_Grotesk'] font-bold active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-4 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-full shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-95 transition-all text-xs tracking-widest uppercase">
+                UPGRADE TO PRO
+            </button>
+<div class="mt-8 space-y-2">
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 py-2 text-sm font-bold" href="#">
+<span class="material-symbols-outlined text-lg">help</span> Support
+                </a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 py-2 text-sm font-bold" href="#">
+<span class="material-symbols-outlined text-lg">logout</span> Logout
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:pl-64 pt-20 pb-24 md:pb-12 min-h-screen">
+<div class="max-w-6xl mx-auto px-6 py-12">
+<!-- Hero Header -->
+<header class="text-center mb-16 relative">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/5 blur-[120px] -z-10 rounded-full"></div>
+<div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-secondary/10 text-secondary border border-secondary/20 mb-6">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-[10px] font-bold tracking-widest uppercase font-label">The Future of Fantasy</span>
+</div>
+<h1 class="text-5xl md:text-7xl font-extrabold font-headline tracking-tighter mb-4 text-gradient-primary">
+                    UNLEASH KINETIC INTEL
+                </h1>
+<p class="text-outline text-lg max-w-2xl mx-auto font-body">
+                    Move beyond luck. Access AI-driven real-time projections, advanced ownership analytics, and the industry's most accurate solver.
+                </p>
+</header>
+<!-- Pricing Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 items-end">
+<!-- Starter Plan -->
+<div class="bg-surface-container-low p-8 rounded-[2rem] border border-outline-variant/10 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">rocket_launch</span>
+</div>
+<h3 class="text-xl font-headline font-bold mb-2">Starter</h3>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-4xl font-extrabold font-headline">$0</span>
+<span class="text-outline text-sm">/month</span>
+</div>
+<p class="text-outline text-sm mb-8">Perfect for exploring the SkillXI ecosystem.</p>
+<ul class="space-y-4 mb-10 text-sm">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>Standard Match Center</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>Basic Squad Builder</span>
+</li>
+<li class="flex items-center gap-3 text-outline">
+<span class="material-symbols-outlined text-lg">block</span>
+<span>AI Performance Predictions</span>
+</li>
+</ul>
+<button class="w-full py-4 border border-outline-variant hover:bg-surface-container-high transition-all rounded-full font-bold uppercase tracking-widest text-[10px]">
+                        Current Plan
+                    </button>
+</div>
+<!-- Pro Analyst (Featured) -->
+<div class="bg-surface-container-high p-10 rounded-[2.5rem] border-2 border-primary/30 relative shadow-[0_0_40px_rgba(0,212,255,0.1)] scale-105 z-10">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-primary-container px-6 py-1 rounded-full text-on-primary text-[10px] font-black uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(0,212,255,0.4)]">
+                        Most Popular
+                    </div>
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-primary/10 blur-[60px] -z-10 rounded-full"></div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-2xl font-headline font-bold">Pro Analyst</h3>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-5xl font-extrabold font-headline">$9.99</span>
+<span class="text-outline text-sm">/month</span>
+</div>
+<p class="text-on-surface/80 text-sm mb-8">Advanced tools for the serious competitor.</p>
+<ul class="space-y-4 mb-10 text-sm">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Kinetic AI Projections</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Advanced Ownership Data</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Multi-Lineup Optimizer</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Historical Performance Lab</span>
+</li>
+</ul>
+<button class="w-full py-5 bg-gradient-to-br from-primary to-primary-container text-on-primary font-black rounded-full shadow-[0_0_30px_rgba(0,212,255,0.4)] hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-xs">
+                        Start 7-Day Free Trial
+                    </button>
+</div>
+<!-- Elite Oracle -->
+<div class="bg-surface-container-low p-8 rounded-[2rem] border border-outline-variant/10 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">workspace_premium</span>
+</div>
+<h3 class="text-xl font-headline font-bold mb-2">Elite Oracle</h3>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-4xl font-extrabold font-headline">$24.99</span>
+<span class="text-outline text-sm">/month</span>
+</div>
+<p class="text-outline text-sm mb-8">Maximum edge for high-stakes professionals.</p>
+<ul class="space-y-4 mb-10 text-sm">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-lg">verified</span>
+<span>Everything in Pro Analyst</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-lg">verified</span>
+<span>Real-time Exposure Tracking</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-lg">verified</span>
+<span>Priority Server Access</span>
+</li>
+</ul>
+<button class="w-full py-4 bg-surface-container-highest hover:bg-surface-bright transition-all rounded-full font-bold uppercase tracking-widest text-[10px] text-secondary">
+                        Go Elite
+                    </button>
+</div>
+</div>
+<!-- Comparison Table -->
+<section class="mb-24">
+<h2 class="text-3xl font-headline font-extrabold mb-12 text-center">Feature Breakdown</h2>
+<div class="bg-surface-container-low rounded-[2rem] overflow-hidden border border-outline-variant/10">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="p-6 font-headline uppercase tracking-widest text-[10px] text-outline">Features</th>
+<th class="p-6 font-headline uppercase tracking-widest text-[10px] text-center">Starter</th>
+<th class="p-6 font-headline uppercase tracking-widest text-[10px] text-center text-primary">Pro</th>
+<th class="p-6 font-headline uppercase tracking-widest text-[10px] text-center text-secondary">Elite</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr>
+<td class="p-6 text-sm font-medium">Kinetic AI Engine v3.2</td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-outline/30">remove</span></td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-secondary">check</span></td>
+</tr>
+<tr>
+<td class="p-6 text-sm font-medium">Real-time Projections</td>
+<td class="p-6 text-center"><span class="text-[10px] font-bold text-outline">DAILY</span></td>
+<td class="p-6 text-center"><span class="text-[10px] font-bold text-primary">INSTANT</span></td>
+<td class="p-6 text-center"><span class="text-[10px] font-bold text-secondary">INSTANT</span></td>
+</tr>
+<tr>
+<td class="p-6 text-sm font-medium">Multi-Lineup Builder</td>
+<td class="p-6 text-center"><span class="text-[10px] font-bold text-outline">1 LINEUP</span></td>
+<td class="p-6 text-center"><span class="text-[10px] font-bold text-primary">20 LINEUPS</span></td>
+<td class="p-6 text-center"><span class="text-[10px] font-bold text-secondary">UNLIMITED</span></td>
+</tr>
+<tr>
+<td class="p-6 text-sm font-medium">Global Contest Leaderboards</td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-secondary">check</span></td>
+</tr>
+<tr>
+<td class="p-6 text-sm font-medium">Custom Scripting Engine</td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-outline/30">remove</span></td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-outline/30">remove</span></td>
+<td class="p-6 text-center"><span class="material-symbols-outlined text-secondary">check</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Testimonials & Trust -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24">
+<div class="space-y-8">
+<h2 class="text-3xl font-headline font-extrabold leading-tight">Trusted by over 50,000 SkillXI Analysts globally.</h2>
+<div class="flex flex-wrap gap-8 items-center opacity-60 grayscale hover:grayscale-0 transition-all">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+<span class="font-headline font-bold text-lg tracking-tighter">SECUREPAY</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-3xl">shield</span>
+<span class="font-headline font-bold text-lg tracking-tighter">SAFECLOUD</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-3xl">database</span>
+<span class="font-headline font-bold text-lg tracking-tighter">DATAGUARD</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-8 rounded-[2rem] border border-outline-variant/10 relative">
+<span class="material-symbols-outlined text-primary/20 text-6xl absolute top-4 right-8">format_quote</span>
+<div class="flex gap-1 mb-6">
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-lg italic mb-8 relative z-10">
+                        "Kinetic AI completely changed how I build my lineups. The Pro Analyst projections are scary accurate. I've been in the green for 8 weeks straight."
+                    </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<img alt="Marcus Thompson" data-alt="portrait of a focused professional gamer wearing high-end headphones in a dimly lit tech room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEqBcg7R09M_AyBtoZqJbYg2LxmZI3mfGfkLMq9EFirhTeAvofzbcmekDDWQ61rmie4UGZPHmKdIWfzdGfwq9KuR4MblAg3Ym5sPHiFl5YeY6H94DYGcc_OoEaDgZsedTam0wDzfAngL_ESN1G_yNCW-ufL2oDS6M6MpefujnVkbjaJlGSxYWBfQUv880egA-xPd8kMTJ8NHAtGP2LtrMcPLIwszaHSbT8P39t_2O9pTHxmUJf6CiEovNNCp-uRBSqCMFEkA2DtTZh"/>
+</div>
+<div>
+<div class="font-bold font-headline">Marcus Thompson</div>
+<div class="text-[10px] text-primary uppercase tracking-widest font-black">Elite Member</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#131318]/90 backdrop-blur-2xl z-50 md:hidden rounded-t-[2rem] border-t border-[#ffffff1a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">sports_kabaddi</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Lobby</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Intel</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-3 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Wallet</span>
+</a>
+</nav>
+<script src="assets/js/main.js"></script>
+</body></html>

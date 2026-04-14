@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillXI | Active Contests Browser</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;family=Inter:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-card {
+      background: rgba(31, 31, 37, 0.6);
+      backdrop-filter: blur(20px);
+    }
+    .text-glow-blue {
+      text-shadow: 0 0 10px rgba(168, 232, 255, 0.5);
+    }
+    .bg-grid-pattern {
+      background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.03) 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed": "#25005a",
+            "on-primary": "#003642",
+            "on-tertiary": "#003919",
+            "on-secondary": "#3f008e",
+            "inverse-primary": "#00677e",
+            "secondary-fixed": "#eaddff",
+            "surface-tint": "#3cd7ff",
+            "primary-container": "#00d4ff",
+            "tertiary": "#00ff88",
+            "tertiary-container": "#00df76",
+            "surface-variant": "#35343a",
+            "on-primary-fixed-variant": "#004e5f",
+            "surface-container-highest": "#35343a",
+            "surface": "#131318",
+            "secondary": "#d2bbff",
+            "on-primary-fixed": "#001f27",
+            "surface-container-low": "#1b1b20",
+            "surface-container": "#1f1f25",
+            "outline-variant": "#3c494e",
+            "on-tertiary-fixed-variant": "#005228",
+            "surface-container-lowest": "#0e0e13",
+            "surface-container-high": "#2a292f",
+            "inverse-on-surface": "#303036",
+            "on-secondary-container": "#c9aeff",
+            "on-tertiary-fixed": "#00210c",
+            "surface-dim": "#131318",
+            "secondary-fixed-dim": "#d2bbff",
+            "outline": "#859398",
+            "error": "#ffb4ab",
+            "tertiary-fixed-dim": "#00e479",
+            "on-surface": "#e4e1e9",
+            "error-container": "#93000a",
+            "secondary-container": "#6001d1",
+            "on-background": "#e4e1e9",
+            "primary-fixed-dim": "#3cd7ff",
+            "on-error": "#690005",
+            "surface-bright": "#39383e",
+            "primary-fixed": "#b4ebff",
+            "inverse-surface": "#e4e1e9",
+            "on-tertiary-container": "#005d2d",
+            "on-secondary-fixed-variant": "#5a00c6",
+            "background": "#131318",
+            "on-primary-container": "#00586b",
+            "on-error-container": "#ffdad6",
+            "primary": "#a8e8ff",
+            "tertiary-fixed": "#60ff99",
+            "on-surface-variant": "#bbc9cf"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "headline": ["Space Grotesk"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-surface text-on-surface font-body leading-relaxed bg-grid-pattern">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full h-[72px] z-50 bg-[#131318]/80 backdrop-blur-md shadow-[0_20px_40px_rgba(0,212,255,0.08)] flex justify-between items-center px-8 w-full max-w-[1920px] mx-auto">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-extrabold bg-gradient-to-r from-[#a8e8ff] to-[#d2bbff] bg-clip-text text-transparent font-headline tracking-tight">SkillXI</span>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#a8e8ff] border-b-2 border-[#a8e8ff] pb-1 font-bold tracking-tight font-headline" href="#">Contests</a>
+<a class="text-slate-400 font-medium hover:text-[#a8e8ff] transition-colors duration-300" href="#">My Lineup</a>
+<a class="text-slate-400 font-medium hover:text-[#a8e8ff] transition-colors duration-300" href="#">Leaderboard</a>
+<a class="text-slate-400 font-medium hover:text-[#a8e8ff] transition-colors duration-300" href="#">AI Analyst</a>
+<a class="text-slate-400 font-medium hover:text-[#a8e8ff] transition-colors duration-300" href="#">Reports</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-1.5 rounded-full border border-outline-variant/20">
+<span class="text-[#a8e8ff] font-bold text-sm">0.00 SOL</span>
+</div>
+<button class="bg-gradient-to-r from-primary-container to-secondary-container text-on-primary font-bold px-6 py-2 rounded-full shadow-lg shadow-primary-container/20 active:scale-95 transition-transform">
+        Connect Wallet
+      </button>
+<div class="flex items-center gap-4 ml-2">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors">notifications</span>
+<img alt="User Avatar" class="w-8 h-8 rounded-full border border-primary/20" data-alt="close-up of a modern holographic user avatar with glowing digital elements on a dark tech background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEe8nAwULxxEJXmHyjP81xewWPXp_pbtsiNNFfLh2Vwpk_BnPwirk5UwE3qnVXSvqytxpJDcglxeOIzVsLksd1Ngqek0hlhGsqXV5_DfPaxDiwDkDRmr_cCqq3loIjne6q3l_nParX8TLIImaJ5tWwm19tHspk6Pt_CERxBKI8BIVRhPugXWD3y2_qPTLfpTcVTc4xU65P5VQ5RMZFU7Ppp9wMs2FVemdOoJNC5RQ5YOMAx6UnjGC7WA2-Tv1LYY8EW5C4FfqmYvHs"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="pt-[72px] min-h-screen flex flex-col">
+<!-- Hero Header Section -->
+<header class="bg-[#0a0a0f] relative overflow-hidden py-12 px-8">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-secondary/10 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="max-w-7xl mx-auto relative z-10">
+<nav class="flex mb-4 gap-2 text-xs font-medium text-[#5a5a75] uppercase tracking-wider">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span>/</span>
+<span class="text-primary-fixed-dim">Contests</span>
+</nav>
+<h1 class="text-4xl md:text-5xl font-headline font-bold text-white mb-3">Active Contests</h1>
+<p class="text-[#a0a0b8] text-lg max-w-2xl mb-8">Join skill-based fantasy contests. AI-assisted lineup building. On-chain payouts.</p>
+<div class="flex flex-wrap gap-4">
+<div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-tertiary/10 border border-tertiary/20 text-tertiary text-[13px] font-bold">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+            14 Live Contests
+          </div>
+<div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 text-[13px] font-bold">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+            6 Starting Soon
+          </div>
+<div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-[13px] font-bold">
+<span class="material-symbols-outlined text-[14px]">emoji_events</span>
+            142.5 SOL in Prizes
+          </div>
+</div>
+</div>
+</header>
+<!-- Filter Bar -->
+<section class="sticky top-[72px] z-40 bg-[#0f0f1a] border-b border-[#1e1e30] px-8 py-4">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 items-center justify-between">
+<!-- Left: Sports -->
+<div class="flex items-center bg-surface-container-lowest p-1 rounded-xl">
+<button class="bg-[#7c3aed] text-white px-5 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">
+            All Sports <span class="material-symbols-outlined text-sm">check</span>
+</button>
+<button class="text-[#a0a0b8] px-5 py-2 rounded-lg text-sm font-semibold hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">sports_soccer</span> Football
+          </button>
+<button class="text-[#a0a0b8] px-5 py-2 rounded-lg text-sm font-semibold hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">sports_cricket</span> Cricket
+          </button>
+<button class="text-[#a0a0b8] px-5 py-2 rounded-lg text-sm font-semibold hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">sports_basketball</span> Basketball
+          </button>
+</div>
+<!-- Middle: Difficulty -->
+<div class="flex items-center gap-3">
+<span class="text-xs uppercase text-[#5a5a75] font-bold tracking-widest">Difficulty:</span>
+<div class="flex gap-2">
+<button class="px-4 py-1 rounded-full border border-primary/40 bg-primary/10 text-primary text-xs font-bold">All</button>
+<button class="px-4 py-1 rounded-full border border-[#2a2a40] text-[#a0a0b8] text-xs font-bold hover:border-tertiary transition-colors">Beginner</button>
+<button class="px-4 py-1 rounded-full border border-[#2a2a40] text-[#a0a0b8] text-xs font-bold hover:border-primary transition-colors">Pro</button>
+<button class="px-4 py-1 rounded-full border border-[#2a2a40] text-[#a0a0b8] text-xs font-bold hover:border-secondary transition-colors">Elite</button>
+</div>
+</div>
+<!-- Right: Sort & Range -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<span class="text-xs uppercase text-[#5a5a75] font-bold tracking-widest">Fee:</span>
+<div class="text-white text-sm font-bold bg-surface-container px-3 py-1.5 rounded-lg border border-[#2a2a40]">
+              0.05 — 5 SOL
+            </div>
+</div>
+<div class="relative group">
+<button class="bg-[#13131f] border border-[#2a2a40] text-white px-4 py-2 rounded-lg flex items-center gap-4 text-sm font-medium hover:border-outline transition-colors">
+              Sort by: Prize Pool
+              <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Content Grid & Sidebar -->
+<div class="max-w-7xl mx-auto w-full px-8 py-10 flex flex-col lg:flex-row gap-10">
+<!-- Contests Column -->
+<div class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-6">
+<!-- Contest Card 1: Man City vs Arsenal -->
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-[16px] p-5 flex flex-col gap-5 hover:border-primary/25 hover:shadow-[0_8px_40px_rgba(0,212,255,0.08)] hover:-translate-y-0.5 transition-all duration-300 group">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 border border-tertiary/20 text-tertiary text-[11px] font-bold uppercase tracking-wider">⚽ FOOTBALL</span>
+<span class="text-[#5a5a75] text-[12px] font-medium">Premier League</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-tertiary/10 border border-tertiary/20 text-tertiary text-[11px] font-bold uppercase">BEGINNER</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-sky-300 flex items-center justify-center p-0.5 border border-white/10" data-alt="professional football team crest for manchester city with futuristic shield elements and light blue colors">
+<img alt="City" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzo5Gez9XIFN6qzKh8c9XZLOGUWa8OJNO_s-5aBB9bMc67jcK8wtEFX3tA-kYDIDESSSviRu9wiOM4kpXrxmMMLSGTYmG-jZ2pqecycvYZptsjiHsfzksLrMcuDHWarNeLiqvq6clZhXf_weYDeqDvC2hXMTZKxbWJnjElvJOnN005Kwo2G6UIhvD9yyLvV41jxKy5WIgbJjmWlecWwDFTO015vzGzSCEHPFQiVO64btOnuu_tka9O-7vd2m02OSYgESe-4EQlkbud"/>
+</div>
+<span class="text-lg font-bold text-white">Man City</span>
+</div>
+<div class="px-4 py-1 bg-surface-container-high rounded-lg text-[#5a5a75] font-bold text-sm tracking-widest italic">VS</div>
+<div class="flex items-center gap-4 flex-1 justify-end text-right">
+<span class="text-lg font-bold text-white">Arsenal</span>
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-red-400 flex items-center justify-center p-0.5 border border-white/10" data-alt="professional football team crest for arsenal with metallic finish and glowing red accent colors">
+<img alt="Arsenal" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChIUYL7hfV-HdmdaNzNmx5DAcD_MGT8mhVzGEKtqzzwwNfvaFMpxHNoh49Zu6Jv3VVfUNBkpjeb0jaVFLDhHcylnly-7unCPEcQXYPBB9Mk6_FoMNCCTzoju6jiVi-NozEJNtomgjNs09_3DukeG6SqhgVPnXH-2ZZ3yMNjjfOG_Y6wyDxFQS881lVnGitoGQJ8jZCaQSs-7LrJcyZL7cKH0qeoAWsUWsNCtmzYOZ22e-YAk0z-HHfE6GSn79NcJLIn7rRGBfMhfLX"/>
+</div>
+</div>
+</div>
+<div class="text-center -mt-2">
+<span class="text-[12px] text-[#5a5a75]">📅 Gameweek 28 · Tonight 20:30 IST</span>
+</div>
+<div class="grid grid-cols-3 gap-4 pt-2">
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">PRIZE POOL</p>
+<p class="text-2xl font-headline font-bold text-white">8.5 SOL</p>
+<p class="text-[12px] text-[#5a5a75] font-medium">≈ $1,105</p>
+</div>
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">ENTRY FEE</p>
+<p class="text-2xl font-headline font-bold text-primary">0.1 SOL</p>
+<p class="text-[12px] text-[#5a5a75] font-medium">≈ $13</p>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">PLAYERS</p>
+<p class="text-2xl font-headline font-bold text-white">142/200</p>
+<div class="w-full h-[5px] bg-[#1e1e30] rounded-full overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 71%"></div>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 border-y border-[#1e1e30] -mx-5 px-5 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<p class="text-[13px] text-[#a0a0b8] italic">AI: Haaland &amp; Saka are must-haves.</p>
+</div>
+<a class="text-primary text-[13px] font-bold hover:underline" href="#">Analysis →</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-[#5a5a75] text-[13px] font-medium whitespace-nowrap">⏱ Locks in:</span>
+<div class="flex gap-2">
+<div class="flex flex-col items-center">
+<div class="w-7 h-7 bg-[#1a1a2e] rounded flex items-center justify-center text-white text-sm font-bold">04</div>
+<span class="text-[10px] text-[#5a5a75] uppercase">H</span>
+</div>
+<span class="text-[#5a5a75] pt-0.5">:</span>
+<div class="flex flex-col items-center">
+<div class="w-7 h-7 bg-[#1a1a2e] rounded flex items-center justify-center text-white text-sm font-bold">23</div>
+<span class="text-[10px] text-[#5a5a75] uppercase">M</span>
+</div>
+<span class="text-[#5a5a75] pt-0.5">:</span>
+<div class="flex flex-col items-center">
+<div class="w-7 h-7 bg-[#1a1a2e] rounded flex items-center justify-center text-white text-sm font-bold">15</div>
+<span class="text-[10px] text-[#5a5a75] uppercase">S</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded bg-[#1a1a2e] text-[#5a5a75] text-[11px] font-medium">📊 Stats Available</span>
+<span class="px-2 py-0.5 rounded bg-[#1a1a2e] text-[#5a5a75] text-[11px] font-medium">🔒 Secure Escrow</span>
+</div>
+<div class="flex gap-3">
+<button class="border border-[#2a2a40] text-[#a0a0b8] px-4 py-2 rounded-lg text-[13px] font-medium hover:text-white transition-colors">Preview →</button>
+<button class="bg-gradient-to-br from-[#7c3aed] to-[#9d5cf5] text-white px-5 py-2 rounded-lg text-[14px] font-bold shadow-lg shadow-[#7c3aed]/20 hover:shadow-[#7c3aed]/40 active:scale-95 transition-all">Join Contest</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Real Madrid vs Barca -->
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-[16px] p-5 flex flex-col gap-5 relative hover:border-primary/25 hover:shadow-[0_8px_40px_rgba(0,212,255,0.08)] hover:-translate-y-0.5 transition-all duration-300">
+<div class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-lg shadow-red-500/20 z-10">HOT 🔥</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 border border-tertiary/20 text-tertiary text-[11px] font-bold uppercase tracking-wider">⚽ FOOTBALL</span>
+<span class="text-[#5a5a75] text-[12px] font-medium">La Liga</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-bold uppercase">PRO</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center p-0.5 border border-white/10" data-alt="real madrid football club crest with golden details and white base on dark textured background">
+<img alt="Real" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI4s9-oLrIIDV1NSuYOstg-hvxJWKdCCmp4gaaiv6F824PHkc8q_ppnBH3aI9Uob1k3sLN_xu1Zjm7bW1utohyR18K1U5iGC8x30K_JeQZuIMXh5iBvQ7zMc6IXzDzQHlKt17MsSNr_dLlS21qteLQMQYuaiVWZZBt7tNr6AVabugqdGbdpIwjYtj64S6pZSNZtVILGSu0FqTY31cQosPk9lbzU4cYRi15MCZObuaISVHF6nd_x27p6KXLsTJVZ14AFMxJJyKCyWCp"/>
+</div>
+<span class="text-lg font-bold text-white">R. Madrid</span>
+</div>
+<div class="px-4 py-1 bg-surface-container-high rounded-lg text-[#5a5a75] font-bold text-sm tracking-widest italic">VS</div>
+<div class="flex items-center gap-4 flex-1 justify-end text-right">
+<span class="text-lg font-bold text-white">Barcelona</span>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center p-0.5 border border-white/10" data-alt="fc barcelona football club crest with iconic blue and red stripes and yellow accents">
+<img alt="Barca" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt28WHjez2eKhyJaFUx-xSAUA_5mT4mDzBRtSj29Ek3GeEnv3e4qezZVvBdLiv2QwOivNiVAaO4Gb0gl_k7JFDl-CHawRbXSCPW17IM4jxJ9EVg3EdGx_B9u0WNMxM4bShhPIgPsIYXxC8gFS8y-rslYfLNaJzLHZj41lIVKLKv6gojbH2vFIrAWs48E4LHfZyMBvjvx_rAS6OOWgZsrz5IVuG879kjKuDm12n8Of990IHhbRauUijVn5iQKgoZMMjK-jhhORjYPSx"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 pt-2">
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">PRIZE POOL</p>
+<p class="text-2xl font-headline font-bold text-white">45 SOL</p>
+<p class="text-[12px] text-[#5a5a75] font-medium">≈ $5,850</p>
+</div>
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">ENTRY FEE</p>
+<p class="text-2xl font-headline font-bold text-primary">0.5 SOL</p>
+<p class="text-[12px] text-[#5a5a75] font-medium">≈ $65</p>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">PLAYERS</p>
+<p class="text-2xl font-headline font-bold text-white">89/100</p>
+<div class="w-full h-[5px] bg-[#1e1e30] rounded-full overflow-hidden">
+<div class="h-full bg-red-400" style="width: 89%"></div>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 border-y border-[#1e1e30] -mx-5 px-5 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<p class="text-[13px] text-[#a0a0b8] italic">AI: Vini Jr. likely to explode today.</p>
+</div>
+<a class="text-primary text-[13px] font-bold hover:underline" href="#">Analysis →</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-[#5a5a75] text-[13px] font-medium whitespace-nowrap">⏱ Locks in:</span>
+<div class="flex gap-2 text-red-400">
+<div class="flex flex-col items-center">
+<div class="w-7 h-7 bg-red-400/10 border border-red-400/20 rounded flex items-center justify-center text-red-400 text-sm font-bold">01</div>
+<span class="text-[10px] opacity-60 uppercase">H</span>
+</div>
+<span class="pt-0.5">:</span>
+<div class="flex flex-col items-center">
+<div class="w-7 h-7 bg-red-400/10 border border-red-400/20 rounded flex items-center justify-center text-red-400 text-sm font-bold">05</div>
+<span class="text-[10px] opacity-60 uppercase">M</span>
+</div>
+<span class="pt-0.5">:</span>
+<div class="flex flex-col items-center">
+<div class="w-7 h-7 bg-red-400/10 border border-red-400/20 rounded flex items-center justify-center text-red-400 text-sm font-bold">44</div>
+<span class="text-[10px] opacity-60 uppercase">S</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded bg-[#1a1a2e] text-[#5a5a75] text-[11px] font-medium">🔥 High Liquidity</span>
+</div>
+<div class="flex gap-3">
+<button class="border border-[#2a2a40] text-[#a0a0b8] px-4 py-2 rounded-lg text-[13px] font-medium hover:text-white transition-colors">Preview →</button>
+<button class="bg-gradient-to-br from-[#7c3aed] to-[#9d5cf5] text-white px-5 py-2 rounded-lg text-[14px] font-bold shadow-lg shadow-[#7c3aed]/20">Join Contest</button>
+</div>
+</div>
+</div>
+<!-- Card 3: Champions League Final (Special) -->
+<div class="bg-[#13131f] border-2 border-yellow-500/30 rounded-[16px] p-5 flex flex-col gap-5 relative shadow-[0_0_40px_rgba(255,215,0,0.05)] col-span-1 xl:col-span-2">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-500 text-black text-[11px] font-black px-4 py-1 rounded-full uppercase tracking-tighter">FEATURED ⭐ EVENT</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-[11px] font-bold uppercase tracking-wider">🏆 UCL FINAL</span>
+<span class="text-[#5a5a75] text-[12px] font-medium">Wembley Stadium</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-[11px] font-bold uppercase">ELITE</span>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-around py-4 gap-8">
+<div class="flex flex-col items-center gap-4">
+<div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center p-2 border-4 border-yellow-500/20" data-alt="royal madrid club logo in gold and white with 3d glowing effect for a featured contest">
+<img alt="Real" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvhl4dy98F2ykk2TBeZ0EsRhb7JEt422WU1eWvsOOWDcbyUYmLZJhCmfKHyMT7k-kJ9o1_bS-98N56Ys-fYB-lUiz_0hhupAVZ6R9aBGydGlsMDMx-HbRcUMvWLwEzEHNTZrqdXVKtwcKaI2MosbSnpQnOwIU2EfEw4uKutDuGKg6If4VzObP_0ytGuuk0D6QaNAFRvwBWe3EmKoxRwaI3I37eskIOj2F_-r9ruOE2QvNVukUJUL3EjEsCmeYQDdWdqoQ39Pcz12bB"/>
+</div>
+<span class="text-2xl font-black text-white font-headline">R. MADRID</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="text-4xl font-black text-white/10 italic">FINAL</div>
+<div class="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center text-yellow-500 font-bold border border-yellow-500/20">VS</div>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center p-2 border-4 border-yellow-500/20" data-alt="borussia dortmund club logo in black and yellow with glossy finish for a big final event">
+<img alt="Dortmund" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ1KMR7xyuhC5kg8BeY6YoRCywukCbPhcseOQbF0iEQ_cY_cgAdP8eeIEj3J71HaciSQY552kfezIn3_mBPZmptaKbvqi1hYiFE09e6RX0PqShRH7TJGTtU9AzF5IU3S2tcjncKgSPvCE0n5W0CpafV5J8z_iyHtAGYefTE8DLLGFci_FglLLbFhrmrU7vWPHvDpGuN8IbETx6iB3fDMv9-0GHCbiVeKcEyNz5owie-GYZi0kR7xGdLGKXtoWz0o61AZ8J0rXRS_Rq"/>
+</div>
+<span class="text-2xl font-black text-white font-headline">DORTMUND</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 bg-surface-container-low/50 p-6 rounded-2xl border border-white/5">
+<div class="text-center">
+<p class="text-[12px] text-[#5a5a75] font-bold tracking-[0.2em] mb-2 uppercase">GRAND PRIZE</p>
+<p class="text-4xl font-headline font-black text-white text-glow-blue">500 SOL</p>
+<p class="text-[14px] text-tertiary font-bold mt-1">≈ $65,000.00</p>
+</div>
+<div class="text-center md:border-x border-white/5">
+<p class="text-[12px] text-[#5a5a75] font-bold tracking-[0.2em] mb-2 uppercase">ENTRY COST</p>
+<p class="text-4xl font-headline font-black text-primary">5 SOL</p>
+<p class="text-[14px] text-[#5a5a75] font-medium mt-1">≈ $650.00</p>
+</div>
+<div class="text-center">
+<p class="text-[12px] text-[#5a5a75] font-bold tracking-[0.2em] mb-2 uppercase">REMAINING SLOTS</p>
+<p class="text-4xl font-headline font-black text-white">39 / 50</p>
+<div class="w-3/4 mx-auto h-[6px] bg-[#1e1e30] rounded-full overflow-hidden mt-3">
+<div class="h-full bg-gradient-to-r from-primary to-secondary" style="width: 22%"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 mt-2">
+<div class="flex flex-col items-center md:items-start gap-1">
+<span class="text-[#5a5a75] text-[13px] font-bold uppercase tracking-widest">Countdown to Kickoff</span>
+<div class="flex gap-3">
+<div class="px-3 py-2 bg-[#1a1a2e] rounded-lg text-white font-bold text-xl">23</div>
+<span class="text-2xl text-white/20">:</span>
+<div class="px-3 py-2 bg-[#1a1a2e] rounded-lg text-white font-bold text-xl">58</div>
+<span class="text-2xl text-white/20">:</span>
+<div class="px-3 py-2 bg-[#1a1a2e] rounded-lg text-white font-bold text-xl">12</div>
+</div>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<button class="flex-1 md:px-8 py-4 border border-[#2a2a40] text-white rounded-full font-bold uppercase tracking-widest hover:bg-white/5 transition-colors">Team Stats</button>
+<button class="flex-1 md:px-12 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-black rounded-full font-black uppercase tracking-widest shadow-xl shadow-yellow-500/20 hover:scale-105 transition-transform">Enter Final</button>
+</div>
+</div>
+</div>
+<!-- Card 4: PSG vs Bayern -->
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-[16px] p-5 flex flex-col gap-5 hover:border-primary/25 hover:shadow-[0_8px_40px_rgba(0,212,255,0.08)] hover:-translate-y-0.5 transition-all duration-300">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 border border-tertiary/20 text-tertiary text-[11px] font-bold uppercase tracking-wider">⚽ FOOTBALL</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-[11px] font-bold uppercase">ELITE</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center p-0.5 border border-white/10" data-alt="psg paris saint germain club logo with clean vector lines and blue colors">
+<img alt="PSG" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqToAz4G_yVJ-RlSbgTG2LDQqJySRnfHBj0zPE-xB4QZGOSVhLBtC1LU_QG-0i0g26dSgMFTuir8ADVh_J5ZR-D9RRXDW3_u8D3y8DX-a6rbrFngQX0YwLAmCsFBh_TjE1hQgR9hckPewcTQzr49GqHfGtxQy7zna1j574wSrEWtkU7fP2If5eaVIH9u9kc4pVyfga9vo0wLl52os6o4C1qTJPcF_-ljfH1mavTtAbxIDAs7HuzyKqEvC7Zpver1IfqJXYv8BPs9O_"/>
+</div>
+<span class="text-lg font-bold text-white">PSG</span>
+</div>
+<div class="px-4 py-1 bg-surface-container-high rounded-lg text-[#5a5a75] font-bold text-sm tracking-widest italic">VS</div>
+<div class="flex items-center gap-4 flex-1 justify-end text-right">
+<span class="text-lg font-bold text-white">Bayern</span>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center p-0.5 border border-white/10" data-alt="bayern munchen club logo with iconic circular design and red white colors">
+<img alt="Bayern" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8x6cKGuTHSj-QRsQwMg8NesA2YlK0zgzeOh97AzI8VHBBjW74QM98Y8xco63OKkNdUHd20m0REsM9rGJG2g8M48XGuefzXOMPTD3bSpkUbBeOyBeWZ194b9FGn1O07f9qfW1GC52mXR9XbJUs8tyfM-y4Mexh_0NuQdI5JcAM3Tkpc_yw8a6CRrXyXvykOWyo1Isi4ymfNjTuRQS52AZt2IxZ0PSB38EK75GybHubBbx4K2LOn2RdNv6Jbi-hY9JBJxsaYe_TGIaJ"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">PRIZE POOL</p>
+<p class="text-2xl font-headline font-bold text-white">200 SOL</p>
+</div>
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">ENTRY FEE</p>
+<p class="text-2xl font-headline font-bold text-primary">2 SOL</p>
+</div>
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">PLAYERS</p>
+<p class="text-2xl font-headline font-bold text-white">23/50</p>
+</div>
+</div>
+<div class="bg-primary/5 border-y border-[#1e1e30] -mx-5 px-5 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[16px]">psychology</span>
+<p class="text-[13px] text-[#a0a0b8] italic">AI: Expect a high-scoring game.</p>
+</div>
+<a class="text-primary text-[13px] font-bold hover:underline" href="#">Analysis →</a>
+</div>
+<div class="flex items-center justify-between mt-1">
+<span class="text-[#5a5a75] text-[13px] font-medium">⏱ 06h 42m remaining</span>
+<button class="bg-gradient-to-br from-[#7c3aed] to-[#9d5cf5] text-white px-5 py-2 rounded-lg text-[14px] font-bold">Join Contest</button>
+</div>
+</div>
+<!-- Card 5: Liverpool vs Spurs -->
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-[16px] p-5 flex flex-col gap-5 hover:border-primary/25 transition-all">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 border border-tertiary/20 text-tertiary text-[11px] font-bold uppercase tracking-wider">⚽ FOOTBALL</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[11px] font-bold uppercase">ALMOST FULL</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center p-0.5" data-alt="liverpool football club crest with red bird on white circular background">
+<img alt="LIV" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjlOcfdZ9jipGkAN64yUUNgVhMJ6aIEfckAdZjcFo2ObnClrGivNtgSdXRsYJg2PH4efJq-IsuID0fjp4voXE9dl-6Ot5AIIdoQXN5p7oQxwPgtRzGWg4FQIsZHQUv_GPOGnEU7b6mdUKCKH7cOeEVYXdD8pbK-7tCf_LEAYjunylVSCQ4R0uoUpmsLU9uIEhfbir-USTAf7w6yNqyHDSpgMFAw2JGXc6zo2sXu_4CFUwm9rtMFdbtqNQ-HLHrWDdTRJ0i6Up_iNEk"/>
+</div>
+<span class="text-lg font-bold text-white">Liverpool</span>
+</div>
+<div class="px-3 py-1 bg-surface-container-high rounded-lg text-[#5a5a75] text-xs font-bold">VS</div>
+<div class="flex items-center gap-4 flex-1 justify-end">
+<span class="text-lg font-bold text-white">Spurs</span>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center p-0.5" data-alt="tottenham hotspur football club crest with iconic cockerel on ball logo">
+<img alt="TOT" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqyCZGTmHfztGV2w2_n155YcZ5cU8qCHIGibFJauJceSV_WUdzI5DKCM3qb0IK94WgumzDX8n0KonnL14bhtwkvCYbpwRnaszuNOOk6I53UzDdvWQiw-Cp6H3pyRGcLwJ0o3Q9h-f0PZOC9vHE18CxqLN6Kday_I9x2ygNKJggYOb5peSwy2-hJILPX6GzkLZQHBUuc9i-h-Qk9lc5gOye2JNZF7PbrSNaTngYJbZyTV3WarvpybWjsOQeDCZE4AyhKsXuVqz3hBC-"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">PRIZE</p>
+<p class="text-xl font-headline font-bold text-white">12 SOL</p>
+</div>
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">FEE</p>
+<p class="text-xl font-headline font-bold text-primary">0.15 SOL</p>
+</div>
+<div>
+<p class="text-[10px] text-[#5a5a75] font-bold tracking-[0.08em]">SLOTS</p>
+<p class="text-xl font-headline font-bold text-orange-500">178/200</p>
+</div>
+</div>
+<button class="w-full bg-surface-container text-on-surface py-2 rounded-lg font-bold text-sm border border-outline-variant/10">Join Now</button>
+</div>
+<!-- Card 6: India vs Aus (Cricket) -->
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-[16px] p-5 flex flex-col gap-5 hover:border-primary/25 transition-all">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] font-bold uppercase tracking-wider">🏏 CRICKET</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-bold uppercase">PRO</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-12 h-12 rounded-full bg-blue-900 flex items-center justify-center p-1 border border-white/20" data-alt="indian national cricket team logo with wheel and radiating spokes in blue and yellow">
+<img alt="IND" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwizW7ULeKcu4BZhBcDyYtuzaxRg2divh1QphZ-GeCxTJvo91dKCNSWbqOhvhqv2kOkhnwCU99bw_qw132nECgXzSPC5B0sXrREMw_K6OWCqFEFX3hGtch5aiTknlfB6DzRrgBE3k412acS-GH8YHjwmkKIb4dPCEFy_8edgbo72s6wKNYPM5VuTm0GvZxiI6Ga8JjaE-5i1ehXntaUJ1MYfbI5ITI_DbF-0UCnUSxHyVBw_t0N4YB76lg3ItlfdWd4WSG20RKxplB"/>
+</div>
+<span class="text-sm font-bold text-white uppercase">India</span>
+</div>
+<div class="text-[#5a5a75] font-bold">T20I</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center p-1 border border-white/20" data-alt="australian national cricket team logo with kangaroo and stars in green and gold">
+<img alt="AUS" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZtj6SrAdrQKyeHj4i8r4BoVRlBlzRALayCDa5TlerXGm0egzVMVKjeq7JiNCoXdDRv1jBtYKPoBgDHsSdqiXWf6sE99vuxD7QCQ-FycYK1WDgxyjit7pNsx8-D1nZsYy7xezj1j5UQvbAilZYRXWoPLiwls3u-uX-PEvBLqjKgjmGmD-WwhF7lAHd0lFYBuZPu_C-CI3EV74dkMCBpboDokrqQyJ0MZQ5yc59-HDIif2rf4qW1rCGiAtxsTFPO8DwRbzuRLf-PnTd"/>
+</div>
+<span class="text-sm font-bold text-white uppercase">Australia</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-3 rounded-xl border border-white/5">
+<p class="text-[10px] text-[#5a5a75] font-bold">PRIZE POOL</p>
+<p class="text-xl font-headline font-bold text-white">100 SOL</p>
+</div>
+<div class="bg-surface-container-low p-3 rounded-xl border border-white/5">
+<p class="text-[10px] text-[#5a5a75] font-bold">ENTRY FEE</p>
+<p class="text-xl font-headline font-bold text-primary">1 SOL</p>
+</div>
+</div>
+<button class="w-full bg-gradient-to-r from-primary-container to-secondary-container text-on-primary py-3 rounded-xl font-bold uppercase tracking-widest text-xs">Join Series</button>
+</div>
+</div>
+<!-- Sidebar -->
+<aside class="hidden lg:flex flex-col gap-8 w-[320px]">
+<!-- My Active Contests -->
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-2xl overflow-hidden shadow-xl">
+<div class="bg-surface-container-high px-5 py-4 border-b border-white/5">
+<h3 class="font-headline font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">stadia_controller</span>
+              My Active Contests
+            </h3>
+</div>
+<div class="p-4 flex flex-col gap-4">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl border border-white/5">
+<div>
+<p class="text-xs font-bold text-white">UCL: PSG vs Bayern</p>
+<p class="text-[10px] text-[#5a5a75]">Rank #124 / 500</p>
+</div>
+<div class="text-right">
+<p class="text-xs font-black text-tertiary">452 pts</p>
+<p class="text-[10px] text-primary">Live 🟢</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl border border-white/5">
+<div>
+<p class="text-xs font-bold text-white">PL: Man City vs Arsenal</p>
+<p class="text-[10px] text-[#5a5a75]">Rank #12 / 200</p>
+</div>
+<div class="text-right">
+<p class="text-xs font-black text-tertiary">128 pts</p>
+<p class="text-[10px] text-white/40">Starting ⏱</p>
+</div>
+</div>
+<button class="w-full py-2.5 text-xs font-bold text-[#a0a0b8] hover:text-white transition-colors border-t border-white/5">View All My Lineups</button>
+</div>
+</div>
+<!-- Top Earners -->
+<div class="bg-[#13131f] border border-[#1e1e30] rounded-2xl p-5 shadow-xl">
+<h3 class="font-headline font-bold text-white flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-yellow-500 text-lg">military_tech</span>
+            Top Earners Today
+          </h3>
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-10 h-10 rounded-full border-2 border-yellow-500" data-alt="close-up of a high-energy futuristic gaming profile picture with neon highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeFd7GUPLGV403sMEoT_heA58eUxg8l73warX87fIDGvYO130OifiSrX9M61yL7t9kY9SLu48mAoZUkWIih3zJapTEpJYK_MB07aeb3HJPwKcR8IRUhJxw-x9OcAZTr0DaNBegDZuov_xCdX1MtUXFMFit8fOeP0TXXMa4N73Xa1ANVA9_h-arCsvM34N88TTH0gpfhxWY2CJugWoaGVVMfYKW3IgYDVPL9DPKYHskBTzK_Ojiw74ff6HQ_awcFtGKhB06z6vUX53D"/>
+<span class="absolute -top-1 -right-1 bg-yellow-500 text-black text-[10px] font-black w-4 h-4 flex items-center justify-center rounded-full">1</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white">CryptoWhale</p>
+<p class="text-[10px] text-[#5a5a75]">12 Wins Today</p>
+</div>
+</div>
+<p class="text-sm font-black text-white">12.5 SOL</p>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-10 h-10 rounded-full border-2 border-slate-400" data-alt="vibrant digital art of a female gamer profile with sleek cyberpunk aesthetics" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdl6h7rA454xv3ZQQ1vt4WDgecC81Jyq-8eTbt_gcI8YVYEnw4g6ATp1uO0D5x3k04uyGYqjmhfTlL8V47jBoMKFaH6jCgyghmW97THrw6HGvVL5b2kiJ6cxRPDsjsbsKqQWbiUyokL4oq1L1UqG5hnrQBuU_X56ZbGPfGyHeoHBeSuS9Ya3ptNjXVDEB14zZCBZ7_S8mVgJHW6tEjH7B4fKpTSZiuYNoD5ptvn7aiAHfLYBP-pGqu4nbcxJt8F-P8_HLpsd-NyBj4"/>
+<span class="absolute -top-1 -right-1 bg-slate-400 text-black text-[10px] font-black w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white">SkillMaster_XI</p>
+<p class="text-[10px] text-[#5a5a75]">8 Wins Today</p>
+</div>
+</div>
+<p class="text-sm font-black text-white">8.2 SOL</p>
+</div>
+</div>
+</div>
+<!-- AI Tip -->
+<div class="bg-primary/5 border border-primary/20 rounded-2xl p-5 relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<h4 class="font-headline font-bold text-white text-sm">AI Tip of the Day</h4>
+</div>
+<p class="text-xs text-[#a0a0b8] leading-relaxed mb-4">"Lineups with at least 3 mid-range players ($0.2 SOL entry) have shown 24% higher ROI in Elite contests this week. Look for undervalued defenders."</p>
+<button class="text-primary text-xs font-bold flex items-center gap-1 hover:underline">Full Analysis Report <span class="material-symbols-outlined text-sm">north_east</span></button>
+</div>
+<!-- Referral -->
+<div class="bg-gradient-to-br from-[#7c3aed] to-[#3f008e] rounded-2xl p-6 shadow-xl shadow-purple-900/20">
+<h4 class="text-white font-headline font-black text-lg mb-2">EARN WITH SKILLXI</h4>
+<p class="text-white/70 text-xs mb-6">Invite friends and earn 10% of their contest fees in real-time, paid in SOL.</p>
+<button class="w-full bg-white text-purple-700 font-black text-xs py-3 rounded-xl uppercase tracking-widest shadow-lg active:scale-95 transition-transform">Get My Link</button>
+</div>
+</aside>
+</div>
+<!-- Footer -->
+<footer class="bg-[#0e0e13] border-t border-[#1b1b20] py-12 px-8 mt-auto">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-1">
+<span class="text-2xl font-bold text-[#a8e8ff] mb-4 block font-headline tracking-tighter">SkillXI</span>
+<p class="text-slate-500 text-sm leading-relaxed mb-6">The world's first AI-native fantasy sports platform on Solana. Built for experts, powered by data.</p>
+<div class="flex gap-4">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-slate-400 hover:text-white cursor-pointer transition-colors material-symbols-outlined text-sm">public</span>
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-slate-400 hover:text-white cursor-pointer transition-colors material-symbols-outlined text-sm">chat_bubble</span>
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-slate-400 hover:text-white cursor-pointer transition-colors material-symbols-outlined text-sm">code</span>
+</div>
+</div>
+<div>
+<h4 class="text-white font-headline font-bold mb-6 uppercase text-xs tracking-widest">Platform</h4>
+<ul class="flex flex-col gap-4 text-slate-500 text-sm">
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">Active Contests</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">How it Works</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">AI Analysis Tools</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">Staking</li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-headline font-bold mb-6 uppercase text-xs tracking-widest">Sports</h4>
+<ul class="flex flex-col gap-4 text-slate-500 text-sm">
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">Premier League</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">Champions League</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">NBA Basketball</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">ICC Cricket</li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-headline font-bold mb-6 uppercase text-xs tracking-widest">Legal</h4>
+<ul class="flex flex-col gap-4 text-slate-500 text-sm">
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">Terms of Service</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">Privacy Policy</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">Responsible Gaming</li>
+<li class="hover:text-[#d2bbff] cursor-pointer transition-colors">Whitepaper</li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 text-center">
+<p class="text-slate-500 text-xs">© 2024 SkillXI. The Kinetic Intelligence.</p>
+</div>
+</footer>
+</main>
+<!-- Mobile Navigation Bar -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-[#131318] border-t border-white/5 py-3 px-8 flex justify-between items-center z-50">
+<div class="flex flex-col items-center gap-1 text-[#a8e8ff]">
+<span class="material-symbols-outlined text-2xl">sports_esports</span>
+<span class="text-[10px] font-bold">Contests</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined text-2xl">assignment</span>
+<span class="text-[10px] font-bold">My Lineup</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined text-2xl">psychology</span>
+<span class="text-[10px] font-bold">AI Analyst</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined text-2xl">account_circle</span>
+<span class="text-[10px] font-bold">Profile</span>
+</div>
+</div>
+</body></html>

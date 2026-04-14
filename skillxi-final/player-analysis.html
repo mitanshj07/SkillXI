@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "outline": "#859398",
+                        "primary": "#a8e8ff",
+                        "surface": "#131318",
+                        "tertiary-fixed-dim": "#00e479",
+                        "surface-container": "#1f1f25",
+                        "on-secondary-container": "#c9aeff",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#00586b",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary": "#3f008e",
+                        "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed": "#60ff99",
+                        "on-surface": "#e4e1e9",
+                        "surface-container-highest": "#35343a",
+                        "on-background": "#e4e1e9",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-container-lowest": "#0e0e13",
+                        "secondary": "#d2bbff",
+                        "on-primary-fixed": "#001f27",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#eaddff",
+                        "surface-tint": "#3cd7ff",
+                        "surface-container-low": "#1b1b20",
+                        "inverse-on-surface": "#303036",
+                        "tertiary-container": "#00df76",
+                        "surface-container-high": "#2a292f",
+                        "secondary-container": "#6001d1",
+                        "primary-fixed": "#b4ebff",
+                        "on-tertiary-fixed": "#00210c",
+                        "inverse-surface": "#e4e1e9",
+                        "surface-variant": "#35343a",
+                        "surface-bright": "#39383e",
+                        "background": "#131318",
+                        "primary-container": "#00d4ff",
+                        "on-primary": "#003642",
+                        "tertiary": "#00ff88",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "surface-dim": "#131318",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "on-error": "#690005",
+                        "inverse-primary": "#00677e",
+                        "outline-variant": "#3c494e",
+                        "on-tertiary": "#003919",
+                        "on-tertiary-container": "#005d2d",
+                        "primary-fixed-dim": "#3cd7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(27, 27, 32, 0.7);
+            backdrop-filter: blur(20px);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 20px rgba(168, 232, 255, 0.15);
+        }
+        .asymmetric-bleed {
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+    </style>
+<link rel="stylesheet" href="assets/css/style.css"/>
+    <!-- Solana Web3 Integrations -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
+    <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen">
+<!-- TopNavBar Implementation -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-['Space_Grotesk']">SkillXI</span>
+<div class="hidden md:flex gap-6">
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Lobby</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Research</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Squads</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Intelligence</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-[#a8e8ff]/10 transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined text-[#a8e8ff]">account_balance_wallet</span>
+</button>
+<button class="p-2 rounded-full hover:bg-[#a8e8ff]/10 transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined text-[#a8e8ff]">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-[#a8e8ff]/30 overflow-hidden">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="portrait of a focused professional gamer with futuristic lighting highlights in blue and purple tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuWHy486rZWdwY1x41y0EEiakZeMKzCtels-E4FhYeP6C8L5eXU4ad4CDChNvgUAdFJkEvHni22VQsfSQ8SR2AuvdePWlbmTt5wm5GpkYQZ0OFhBf51CrQScJqioPhDKpNZGzQyyUWUet8n14uUIAonLXrVgs-Q9p-RsWdj6iqE9rHZ28JcC6Ju78M30mUbwcg0Zk5-FxsA0lFfGgEzhm7PmL7hCSH5NQ6azaPkSleSlSxq-hOv190dPle36yV_Up7g1_au8L2CLqt"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar Implementation -->
+<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 border-r border-[#ffffff0f] bg-[#0e0e13] flex-col py-8 z-40">
+<div class="px-6 mb-12">
+<h2 class="text-[#d2bbff] font-black text-xl font-headline tracking-tighter">KINETIC AI</h2>
+<p class="text-[10px] text-[#5a5a75] tracking-[0.2em] font-bold">V3.2 ACTIVE</p>
+</div>
+<div class="flex flex-col flex-1">
+<a class="bg-gradient-to-r from-[#a8e8ff1a] to-transparent text-[#a8e8ff] border-r-4 border-[#a8e8ff] flex items-center gap-4 px-6 py-4 transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-headline font-bold">Home</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-headline font-bold">AI Analyst</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="font-headline font-bold">Market</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+<span class="font-headline font-bold">Contests</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-headline font-bold">Leaderboard</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-headline font-bold">Settings</span>
+</a>
+</div>
+<div class="px-6 mt-auto">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-extrabold py-3 rounded-full shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-[1.02] transition-transform active:scale-95">
+                UPGRADE TO PRO
+            </button>
+<div class="mt-8 flex flex-col gap-4">
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-headline font-bold">Support</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-headline font-bold">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas (Blurred Background) -->
+<main class="ml-0 lg:ml-64 pt-20 pb-24 px-4 md:px-12 relative min-h-screen overflow-hidden">
+<!-- Abstract Background Shapes -->
+<div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px]"></div>
+<!-- Backdrop Overlay for Modal -->
+<div class="fixed inset-0 bg-[#0e0e13]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+<!-- Player Analysis Detail Modal -->
+<div class="relative w-full max-w-5xl glass-panel rounded-[2.5rem] border border-[#ffffff0f] shadow-[0_40px_80px_rgba(0,0,0,0.6)] overflow-hidden">
+<!-- Close Button -->
+<button class="absolute top-6 right-8 z-[60] text-white/50 hover:text-white p-2">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+<div class="flex flex-col lg:flex-row">
+<!-- Left: Player Visual and AI Verdict -->
+<div class="lg:w-2/5 relative bg-surface-container-low overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface-container-low z-10"></div>
+<img alt="Erling Haaland Profile" class="w-full h-[300px] lg:h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700" data-alt="dramatic professional sports photography of Erling Haaland in action with intense concentration and cool toned studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXh9aZEUT6Hlalry3wM_ECDKRJd0H3exllxW_zSqpFoczxwT30T2CYbAe-SLasp7RAbTd54ntwXKoI9e_h0Qowsfvqtm2HmALg7gvK19lR7nbVtbl2C1YfxU2_68nEwuxhQ3_FJH4faLGqaz9LorkfkJpOjigvZ61vS1vIry2HwQWNnLyk_QdvM6f-Rs4VzhS2ftnoYqH7g-eU2FIoiTkG_qnOxEZkC1YZk-S8eRvKg0F4Y7kG4_WFWYR-welXUyCMXZIQXqB9BEve"/>
+<div class="absolute bottom-8 left-8 right-8 z-20">
+<span class="text-label text-[10px] tracking-[0.3em] font-bold text-primary mb-2 block uppercase">Current Form</span>
+<div class="flex gap-2">
+<span class="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary font-bold text-xs">W</span>
+<span class="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary font-bold text-xs">W</span>
+<span class="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary font-bold text-xs">W</span>
+<span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white font-bold text-xs">D</span>
+<span class="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary font-bold text-xs">W</span>
+</div>
+</div>
+<!-- AI Verdict Banner -->
+<div class="absolute top-8 left-0 z-20 bg-gradient-to-r from-secondary to-primary-container px-6 py-3 rounded-r-full shadow-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-on-primary-container uppercase tracking-widest">AI Verdict</span>
+<span class="text-2xl font-black text-on-primary-container leading-none font-headline">9.8/10</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Analysis and Stats -->
+<div class="lg:w-3/5 p-8 lg:p-12">
+<!-- Header -->
+<div class="mb-8">
+<div class="flex items-center gap-4 mb-2">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-primary tracking-widest uppercase">Forward</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-secondary tracking-widest uppercase">Manchester City</span>
+</div>
+<h1 class="text-5xl lg:text-7xl font-black font-headline tracking-tighter mb-4 text-white">HAALAND</h1>
+</div>
+<!-- Analysis Grid -->
+<div class="grid grid-cols-2 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-6 rounded-3xl border border-white/5">
+<span class="text-[10px] text-[#5a5a75] font-bold tracking-widest uppercase block mb-2">Exp. Points Range</span>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black font-headline text-primary">12-18</span>
+<span class="text-sm text-tertiary mb-1 font-bold">+2.4 vs Avg</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-3xl border border-white/5">
+<span class="text-[10px] text-[#5a5a75] font-bold tracking-widest uppercase block mb-2">Global Ownership</span>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black font-headline text-secondary">84.2%</span>
+<span class="text-sm text-[#5a5a75] mb-1 font-bold">V. High</span>
+</div>
+</div>
+</div>
+<!-- AI Deep Dive -->
+<div class="mb-8 p-6 rounded-3xl bg-surface-container/50 border border-secondary/10 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h3 class="font-headline font-bold text-secondary mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">bolt</span>
+                                KINETIC ANALYSIS
+                            </h3>
+<p class="text-sm leading-relaxed text-[#bbc9cf] font-medium">
+                                Haaland displays an unprecedented <span class="text-primary">94% clinical conversion rate</span> against top-four opposition. Current tactical simulation suggests Man City's mid-block transition will favor high-volume penalty box entries. AI recommends <span class="text-secondary">Captaincy Lock</span> given the 0.82 xG trajectory for the upcoming fixture.
+                            </p>
+</div>
+<!-- Stats Table -->
+<div class="mb-10">
+<div class="flex justify-between items-end mb-4">
+<span class="text-[10px] text-[#5a5a75] font-bold tracking-widest uppercase">Season Efficiency</span>
+<span class="text-[10px] text-primary font-bold uppercase">View full metrics</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<span class="w-24 text-xs font-bold text-[#5a5a75]">GOALS</span>
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[92%] rounded-full"></div>
+</div>
+<span class="w-8 text-right text-xs font-bold">28</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-24 text-xs font-bold text-[#5a5a75]">ASSISTS</span>
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[45%] rounded-full"></div>
+</div>
+<span class="w-8 text-right text-xs font-bold">06</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-24 text-xs font-bold text-[#5a5a75]">XG RATIO</span>
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[88%] rounded-full"></div>
+</div>
+<span class="w-8 text-right text-xs font-bold">1.2</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="flex-1 bg-[#ffd700] text-black font-headline font-black py-4 rounded-full flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_20px_rgba(255,215,0,0.3)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                MAKE CAPTAIN
+                            </button>
+<button class="flex-1 bg-gradient-to-r from-secondary to-secondary-container text-white font-headline font-black py-4 rounded-full flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_20px_rgba(210,187,255,0.3)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                                ADD TO TEAM
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Implementation -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#131318]/90 backdrop-blur-2xl md:hidden z-50 rounded-t-[2rem] border-t border-[#ffffff1a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">sports_kabaddi</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Lobby</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Intel</span>
+</a>
+<div class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-4 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl">add_circle</span>
+</div>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Wallet</span>
+</a>
+</nav>
+<script src="assets/js/main.js"></script>
+</body></html>

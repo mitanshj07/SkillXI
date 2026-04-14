@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillXI - Contest Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "outline": "#859398",
+                        "primary": "#a8e8ff",
+                        "surface": "#131318",
+                        "tertiary-fixed-dim": "#00e479",
+                        "surface-container": "#1f1f25",
+                        "on-secondary-container": "#c9aeff",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#00586b",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary": "#3f008e",
+                        "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed": "#60ff99",
+                        "on-surface": "#e4e1e9",
+                        "surface-container-highest": "#35343a",
+                        "on-background": "#e4e1e9",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-container-lowest": "#0e0e13",
+                        "secondary": "#d2bbff",
+                        "on-primary-fixed": "#001f27",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#eaddff",
+                        "surface-tint": "#3cd7ff",
+                        "surface-container-low": "#1b1b20",
+                        "inverse-on-surface": "#303036",
+                        "tertiary-container": "#00df76",
+                        "surface-container-high": "#2a292f",
+                        "secondary-container": "#6001d1",
+                        "primary-fixed": "#b4ebff",
+                        "on-tertiary-fixed": "#00210c",
+                        "inverse-surface": "#e4e1e9",
+                        "surface-variant": "#35343a",
+                        "surface-bright": "#39383e",
+                        "background": "#131318",
+                        "primary-container": "#00d4ff",
+                        "on-primary": "#003642",
+                        "tertiary": "#00ff88",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "surface-dim": "#131318",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "on-error": "#690005",
+                        "inverse-primary": "#00677e",
+                        "outline-variant": "#3c494e",
+                        "on-tertiary": "#003919",
+                        "on-tertiary-container": "#005d2d",
+                        "primary-fixed-dim": "#3cd7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .silver-gradient {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 50%, #8a8a8a 100%);
+        }
+        .neon-glow {
+            text-shadow: 0 0 20px rgba(168, 232, 255, 0.4);
+        }
+        .glass-panel {
+            background: rgba(27, 27, 32, 0.6);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-headline">SkillXI</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline tracking-tight" href="#">Lobby</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline tracking-tight" href="#">Research</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline tracking-tight" href="#">Squads</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline tracking-tight" href="#">Intelligence</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="p-2 hover:bg-[#a8e8ff]/10 rounded-full transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined text-[#a8e8ff]" data-icon="account_balance_wallet">account_balance_wallet</span>
+</button>
+<button class="p-2 hover:bg-[#a8e8ff]/10 rounded-full transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined text-[#a8e8ff]" data-icon="notifications">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile Avatar" data-alt="professional cyberpunk male avatar portrait with subtle neon lighting and minimalist tech background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXU0SAIPfmbyK-oLc-rozvD3S9VjWeYNBq9Xq8oU7dS24zwDZYKJohBoska0i6nq__n3YwexGFNC3ug70X5BrMvw-92wLY44qV4AERJRt3C0xqHUq13Qs8Pc8up7WEwm-M29dALHAxey3iqfcH_CRaO2Omy4_ZAvZJtMpnIxZZHgQRKyT2k0by7rXNs-OHk-Bo_aym49966LSwsjRQu78SOzDX1Ola1ycyhZGP2yrWsmJYoF59_s0UESPipldiazHdCdQD8mbDf51Y"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-20 pb-24 md:pb-8 min-h-screen">
+<div class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+<!-- Hero Section: Celebration -->
+<section class="relative mb-16 overflow-hidden rounded-[2.5rem] bg-surface-container-low p-8 md:p-16 flex flex-col md:flex-row items-center gap-12">
+<!-- Background decorative elements -->
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
+<img alt="Celebration particles" class="object-cover w-full h-full" data-alt="abstract geometric digital silver particles exploding in celebratory energy with a futuristic aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgMVdEPZ88X8_gsTStvulF31VMn91hbpYknAsJEVhbE6_vSOICKE9P5Fs9pvlES7P1md9p01-Fim8QGzOZtbd9qqto12QcsWxDRkjRKnIpqmrMB_diVdXer1FQQCOBFczSfPPl-9kKJ8qa8Ftk_c5YdV1ZMoXrw_lHUFjvEjYqKW1XYzUqQd3UyO88ViO69Ss5pTrUdQ4d2J0usJ3yOC2urA1w2j-jOJ-7l7g_N757Yd5JIGB_gnFXDgucZOuDFvi2BoIEDIBtDQXf"/>
+</div>
+<div class="relative z-10 flex-1 text-center md:text-left">
+<div class="inline-flex items-center gap-2 bg-secondary/10 border border-secondary/20 text-secondary px-4 py-1.5 rounded-full text-xs font-bold tracking-widest mb-6">
+                        CONTEST FINALIZED <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+</div>
+<h1 class="text-6xl md:text-8xl font-black font-headline tracking-tighter mb-4 italic">
+                        SILVER <span class="text-transparent bg-clip-text silver-gradient">FINISH</span>
+</h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-xl font-medium leading-relaxed">
+                        Incredible performance. You outperformed 94% of the intelligence pool in the <span class="text-primary font-bold">KINETIC SERIES #214</span>.
+                    </p>
+</div>
+<!-- Large #2 Rank Badge -->
+<div class="relative z-10 w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
+<div class="absolute inset-0 bg-white/5 rounded-full blur-3xl"></div>
+<div class="relative flex items-center justify-center w-full h-full border-8 border-white/10 rounded-full">
+<span class="text-[10rem] md:text-[14rem] font-black font-headline text-transparent bg-clip-text silver-gradient leading-none drop-shadow-2xl">#2</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Stats Section -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16">
+<!-- Prize Announcement -->
+<div class="md:col-span-7 lg:col-span-5 bg-surface-container-high rounded-[2rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:bg-surface-container-highest transition-all duration-500">
+<div class="relative z-10">
+<span class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-2 block">Earnings Claimed</span>
+<div class="flex items-baseline gap-2">
+<h2 class="text-6xl font-black font-headline text-primary tracking-tight">4.5</h2>
+<span class="text-2xl font-bold text-primary-fixed">SOL</span>
+</div>
+</div>
+<div class="relative z-10 mt-8">
+<button class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-black font-headline rounded-full shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-[1.02] active:scale-95 transition-all">
+                            CLAIM TO WALLET
+                        </button>
+</div>
+<!-- Subtle background icon -->
+<span class="absolute -bottom-10 -right-10 material-symbols-outlined text-white/5 text-[15rem] pointer-events-none group-hover:rotate-12 transition-transform duration-700" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<!-- Skill Score Update -->
+<div class="md:col-span-5 lg:col-span-3 bg-surface-container-high rounded-[2rem] p-8 flex flex-col justify-between border-t-4 border-secondary">
+<div>
+<span class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-2 block">Skill Rating</span>
+<div class="flex items-center gap-3">
+<h2 class="text-5xl font-black font-headline text-on-surface leading-none">2,840</h2>
+<div class="flex items-center gap-1 text-tertiary font-bold bg-tertiary/10 px-2 py-1 rounded-full text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+                                +97
+                            </div>
+</div>
+</div>
+<div class="mt-8">
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                            Your <span class="text-secondary">Strategic Intelligence</span> metric increased by 12% following this finish.
+                        </p>
+</div>
+</div>
+<!-- Shareable Results -->
+<div class="md:col-span-12 lg:col-span-4 bg-surface-container-high rounded-[2rem] p-8 flex flex-col justify-center items-center text-center border-2 border-dashed border-outline-variant hover:border-primary/50 transition-colors cursor-pointer">
+<div class="w-16 h-16 bg-surface-container-lowest rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="share">share</span>
+</div>
+<h3 class="text-xl font-bold font-headline mb-2">Flaunt the Silver</h3>
+<p class="text-on-surface-variant text-sm mb-6">Download a customized performance card for your socials.</p>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="photo_camera">photo_camera</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Performance Breakdown -->
+<section>
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-black font-headline tracking-tight uppercase">Squad performance</h3>
+<div class="h-[1px] flex-1 bg-outline-variant/30 mx-6"></div>
+<span class="text-sm font-bold text-on-surface-variant tracking-widest uppercase">782 Total Pts</span>
+</div>
+<div class="space-y-4">
+<!-- Player Item 1 -->
+<div class="grid grid-cols-12 items-center bg-surface-container-low hover:bg-surface-container-high p-4 rounded-2xl transition-all group">
+<div class="col-span-6 flex items-center gap-4">
+<div class="relative w-14 h-14 bg-surface-container-lowest rounded-full overflow-hidden border-2 border-primary/30">
+<img alt="Player Avatar" class="object-cover w-full h-full" data-alt="cyberpunk footballer portrait with dynamic lighting and neon blue highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXjjI_sCQAsoIU-uMqy8aJtTky5jqG4UwwZs4G-NDiAxnd87dS6NlXgQe1x_Q1licfHLZ2QTa_GVXCzgnetEjJQyOrTD3XuLWHHIhICmoAWK_ThTyCoPtwjb53U_PfASFVTYnEtaYRKm0c7P23YvRMLg8oH7v-to1yN2lXjaRcINVBs0BbA_rBBlviTj4Lo9zAPJ9yDZWbHudFAo4O2Uj7sWK-Sq_AIY-UORmbEhTMFeD9HhonReqbZLLAdZbPhCHDRWIivhSHRGvg"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface group-hover:text-primary transition-colors">Marcus Sterling</h4>
+<span class="text-xs text-on-surface-variant font-bold uppercase tracking-widest">Captain • Midfielder</span>
+</div>
+</div>
+<div class="col-span-3 text-center">
+<span class="text-xs text-on-surface-variant block mb-1">Impact</span>
+<div class="flex justify-center">
+<div class="bg-tertiary/20 text-tertiary px-3 py-1 rounded-full text-[10px] font-black tracking-tighter">AI-OPTIMIZED</div>
+</div>
+</div>
+<div class="col-span-3 text-right">
+<div class="text-2xl font-black font-headline">242.5</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Points</span>
+</div>
+</div>
+<!-- Player Item 2 -->
+<div class="grid grid-cols-12 items-center bg-surface-container-low hover:bg-surface-container-high p-4 rounded-2xl transition-all group">
+<div class="col-span-6 flex items-center gap-4">
+<div class="relative w-14 h-14 bg-surface-container-lowest rounded-full overflow-hidden border-2 border-outline-variant">
+<img alt="Player Avatar" class="object-cover w-full h-full" data-alt="futuristic soccer player profile with neon purple glitch aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4e5-hkWbfh48reDAHLO5j9ii0MBY4loOUm4uy0IxBfV-y2XBAzTTVraPCQH8TtkMo8yELdRxvjkfIFVRjO-9isBSX-rkXD-guoBMu9RYraOr_z9QErE7h7815LDjoedwyW9DxXxl3-Xn-jjCJjEjkHoNQeQmsj4_yEIwtZOSVcLhag-T3hys60saPJK9Fxdm4QOaaWz1_NOiq_Trr4Si-4Wr_Uh1X92exg2_Nvpi8HC-5KFDNO7ifr1wJJNh4QDSsWSsDXtHAqSIW"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface group-hover:text-primary transition-colors">Lucas Vance</h4>
+<span class="text-xs text-on-surface-variant font-bold uppercase tracking-widest">Striker</span>
+</div>
+</div>
+<div class="col-span-3 text-center">
+<span class="text-xs text-on-surface-variant block mb-1">Impact</span>
+<div class="flex justify-center">
+<div class="bg-secondary/20 text-secondary px-3 py-1 rounded-full text-[10px] font-black tracking-tighter">HIGH EFFICIENCY</div>
+</div>
+</div>
+<div class="col-span-3 text-right">
+<div class="text-2xl font-black font-headline">188.0</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Points</span>
+</div>
+</div>
+<!-- Player Item 3 -->
+<div class="grid grid-cols-12 items-center bg-surface-container-low hover:bg-surface-container-high p-4 rounded-2xl transition-all group">
+<div class="col-span-6 flex items-center gap-4">
+<div class="relative w-14 h-14 bg-surface-container-lowest rounded-full overflow-hidden border-2 border-outline-variant">
+<img alt="Player Avatar" class="object-cover w-full h-full" data-alt="athlete headshot with futuristic holographic overlay and tech wear styling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPiRsn7why3lURx_QlzI-KKUo2ATrp_1N3IcUFsplDy5_mNyWBVnBzCXeO_czr5ajngiJQCPLiwlXv4M1xkCIGi0fd8MbzGo78S6vhZ_Jfq65aMScZ7xnZvnFux6Jt9hU2FHdhaQxlU0UcGPWCNf7e1bLAKXIARPmrqgKbGWlSGIHgYRF8gb7JU3C0GOImYTx_B8MBAt2v6L7tavMeQmwKIEnuCleZxdAPa0g0psMfsz5yvUG8m_WklqU9wa8gxqyJdXQpGHsGJSvr"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface group-hover:text-primary transition-colors">Elena Rodriguez</h4>
+<span class="text-xs text-on-surface-variant font-bold uppercase tracking-widest">Defender</span>
+</div>
+</div>
+<div class="col-span-3 text-center">
+<span class="text-xs text-on-surface-variant block mb-1">Impact</span>
+<div class="flex justify-center">
+<div class="bg-outline-variant/30 text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-black tracking-tighter">CONSISTENT</div>
+</div>
+</div>
+<div class="col-span-3 text-right">
+<div class="text-2xl font-black font-headline">94.2</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Points</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden rounded-t-[2rem] bg-[#131318]/90 backdrop-blur-2xl border-t border-[#ffffff1a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<div class="flex justify-around items-center px-4 py-3 pb-safe">
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="sports_kabaddi">sports_kabaddi</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Lobby</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Intelligence</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-3 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="sr-only">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Build</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Wallet</span>
+</a>
+</div>
+</nav>
+</body></html>

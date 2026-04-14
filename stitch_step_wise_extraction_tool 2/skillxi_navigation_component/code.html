@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#00ff88",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "inverse-primary": "#00677e",
+                    "outline": "#859398",
+                    "on-background": "#e4e1e9",
+                    "on-surface": "#e4e1e9",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-container": "#00df76",
+                    "secondary": "#d2bbff",
+                    "surface-bright": "#39383e",
+                    "on-primary-fixed-variant": "#004e5f",
+                    "primary-fixed": "#b4ebff",
+                    "surface-container": "#1f1f25",
+                    "secondary-fixed": "#eaddff",
+                    "inverse-on-surface": "#303036",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#0e0e13",
+                    "primary-container": "#00d4ff",
+                    "surface": "#131318",
+                    "on-tertiary-fixed-variant": "#005228",
+                    "on-primary": "#003642",
+                    "surface-tint": "#3cd7ff",
+                    "on-secondary": "#3f008e",
+                    "on-surface-variant": "#bbc9cf",
+                    "on-primary-fixed": "#001f27",
+                    "tertiary-fixed-dim": "#00e479",
+                    "surface-container-highest": "#35343a",
+                    "tertiary-fixed": "#60ff99",
+                    "on-secondary-container": "#c9aeff",
+                    "surface-container-low": "#1b1b20",
+                    "surface-container-high": "#2a292f",
+                    "inverse-surface": "#e4e1e9",
+                    "background": "#131318",
+                    "primary": "#a8e8ff",
+                    "on-tertiary-fixed": "#00210c",
+                    "primary-fixed-dim": "#3cd7ff",
+                    "on-primary-container": "#00586b",
+                    "secondary-container": "#6001d1",
+                    "on-error": "#690005",
+                    "surface-dim": "#131318",
+                    "on-tertiary-container": "#005d2d",
+                    "error-container": "#93000a",
+                    "surface-variant": "#35343a",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "on-tertiary": "#003919",
+                    "outline-variant": "#3c494e",
+                    "on-secondary-fixed": "#25005a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-nav {
+            background: rgba(19, 19, 24, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .xi-gradient {
+            background: linear-gradient(135deg, #a8e8ff 0%, #d2bbff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        .primary-gradient-btn {
+            background: linear-gradient(135deg, #a8e8ff 0%, #00d4ff 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 h-[72px] glass-nav shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex justify-between items-center px-8 h-full w-full max-w-screen-2xl mx-auto">
+<!-- Branding -->
+<div class="flex items-center gap-2 group cursor-pointer transition-transform active:scale-95">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 border border-primary/30 shadow-[0_0_15px_rgba(168,232,255,0.2)]">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div class="font-headline text-2xl font-black tracking-tighter flex items-baseline">
+<span class="text-white">Skill</span>
+<span class="xi-gradient">XI</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="hidden md:flex items-center gap-8 font-headline uppercase tracking-widest text-sm">
+<a class="text-primary border-b-2 border-primary pb-1 transition-colors duration-300" href="#">Contests</a>
+<a class="text-slate-400 font-medium hover:text-primary transition-colors duration-300" href="#">My Lineup</a>
+<a class="text-slate-400 font-medium hover:text-primary transition-colors duration-300" href="#">Leaderboard</a>
+<div class="relative flex items-center gap-1.5">
+<a class="text-slate-400 font-medium hover:text-primary transition-colors duration-300" href="#">AI Analyst</a>
+<span class="px-1.5 py-0.5 rounded-full bg-secondary-container text-secondary text-[10px] font-bold tracking-normal uppercase">Pro</span>
+</div>
+<a class="text-slate-400 font-medium hover:text-primary transition-colors duration-300" href="#">Reports</a>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex flex-col items-end">
+<span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Wallet Balance</span>
+<span class="text-primary font-headline font-bold">2.45 SOL</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-slate-400 hover:text-white transition-colors">notifications</button>
+<button class="primary-gradient-btn text-on-primary font-headline font-bold text-sm px-6 py-2.5 rounded-full shadow-[0_0_20px_rgba(0,212,255,0.4)] transition-transform active:scale-90 flex items-center gap-2">
+<span>Connect Wallet</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary/30 p-0.5 hover:border-primary transition-colors cursor-pointer">
+<img class="w-full h-full rounded-full object-cover" data-alt="close-up portrait of a stylish young man with a focused expression against a dark neon-lit background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA1U4NGf5EFrD5IB8UkDnZhgWD-5p98VVdoB_fogwVFOKvoPaaGkOdZiDMB9thgqUi2pw1LM-2jrnHeKI1ULGgernCHUNLDu_SeMRAM127yFSTkpm9MphdDVIJ2DVEmd5NXOE7hGJqYkNQBr-BMHh6bvCYqkgVH8MRXRcju1l0n2bTch-6QbPh66VG_mTogk9u5kra5eqKdzqZYgIZ5CQsK1zNpNDrT30n0a2n4s7EEFGypqFWxUR6wVZ3DTIG8R9Y-fykDTY78_nH"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-[72px] min-h-screen">
+<!-- Hero Section -->
+<section class="relative h-[500px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent z-10"></div>
+<img class="w-full h-full object-cover opacity-40" data-alt="futuristic digital arena background with floating holographic data screens and neon blue light trails" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMWHfTzKJbmPJ6VNY0ZNW-4bMcZI6MUlJemwCXqnX5ZRhqJ__tudhRvwZJDcgC4S2jIrSx1sPscRT8xZwC0h7Bqm6HKVjzhHgO_S3iTsiomy2tRr7BA-e2brHFKjIEykwk68OUUHbSmy24PSE7PSVbwrxCWLUCL1qj3J3OADDH31NzhU0n0Hv7A5gnAiUJcGYpnl6YyCwv5YgnewuY0wSquK39bx8QYW4UpldYS8HHuoo54ahgXgfHy_cNVjhyg1rxais51CrdUELo"/>
+</div>
+<div class="relative z-20 max-w-screen-2xl mx-auto px-8 w-full">
+<div class="max-w-2xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 mb-6">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-secondary text-xs font-bold uppercase tracking-widest">AI Analyst Live</span>
+</div>
+<h1 class="font-headline text-7xl font-extrabold text-white leading-tight mb-4 tracking-tighter">
+                        SKILL OVER <br/><span class="text-primary italic">LUCK.</span>
+</h1>
+<p class="text-lg text-on-surface-variant font-medium mb-8 max-w-lg leading-relaxed">
+                        Dominate the arena with real-time kinetic intelligence. SkillXI combines deep-data AI with fantasy sports to give you the ultimate competitive edge.
+                    </p>
+<div class="flex gap-4">
+<button class="primary-gradient-btn text-on-primary font-headline font-bold px-10 py-4 rounded-full shadow-[0_0_30px_rgba(0,212,255,0.3)] transition-transform active:scale-95">
+                            Enter Contest
+                        </button>
+<button class="bg-surface-container-high text-primary border border-primary/20 font-headline font-bold px-10 py-4 rounded-full transition-colors hover:bg-surface-container-highest">
+                            View Roadmap
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Grid -->
+<section class="max-w-screen-2xl mx-auto px-8 py-20">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-full">
+<!-- Live Contest Bento -->
+<div class="md:col-span-8 bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8">
+<span class="material-symbols-outlined text-tertiary animate-pulse" style="font-variation-settings: 'FILL' 1;">sensors</span>
+</div>
+<h3 class="font-headline text-3xl font-bold mb-2">Grand Masters League</h3>
+<p class="text-on-surface-variant mb-8 font-medium">Top 11 analysts win a share of 500 SOL prize pool.</p>
+<div class="flex items-end justify-between mt-12">
+<div class="flex -space-x-4">
+<img class="w-12 h-12 rounded-full border-2 border-surface shadow-xl" data-alt="avatar of a player" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUrIiZWZTqRDGZ6Ll__JMRHlhevyUIBHRBKL8wL-TYGkAz-U4XU4EfWurad81KPYvVrThSL-zsMRP234h78tAqj0gywzFOgVXNw11TzkUSEsUDbZqM7r-P_AjVW9MZP74kbk7nTQZ5l4J6dei76p45iSXC3QgH1C6ysKyFN2eeYs1X06rFhmQeWjGLVRugPuh-N-vPkQFIBbfuF-uCCiq85OGHiy73u7eaA6RA3m4kxPnvSG3cDmqwWAYwWTy-FaP0P8SX8pggoVZH"/>
+<img class="w-12 h-12 rounded-full border-2 border-surface shadow-xl" data-alt="avatar of a player" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA43Lw4wJ7zTEQpQUIvTEW2aM14AwQVvMOQpIWPqG0n4xkd7mA13aQG5T8Uhis1rgzEavb3SlOnhdSkgHScRU7-LBqgvMRZ9llni06VbSBM9j1MEc3iMwKWjEbXkVvM7_d3sGm3MNBQ5iwkUWQUN67MuJ1Ee74qHF5WHPwNRRjPYIOtA9FOxLsESydvyLajm5Ua-7CXcv8Caps4OVmVsPHou0h22ALKv1V91FJa6ZBho2ytuZDPdQh5Z7WYeIW38SFz5lRhGdJFwadq"/>
+<img class="w-12 h-12 rounded-full border-2 border-surface shadow-xl" data-alt="avatar of a player" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf6dWQ5YTfAfONHmFh5_HONA4JSSv5CHyv4pmMtTvnOjY0Gg1MAsYM5O2ldtUz6s2lnFfuNLROjZC8pmGV1a7c6kNSXnOKTVYSTh8yk07v11SUr_XZiam4g7hzZsO_5ZymbHdLzngXLyEwdFSOAT6YqKpSboiO3PxJUdlO-EzyDnebnUo3DQGI0xitvBK1oGztrHv6UeTicxZACyNPclSUg9OzXCmM0PKgM9dvLNJu8KpMmTbKY2ELRAiuv6HK-9i_k3vnuoa_41qW"/>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-xs font-bold text-primary">+842</div>
+</div>
+<div class="text-right">
+<span class="block text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Time Remaining</span>
+<span class="font-headline text-2xl font-bold text-white tracking-widest">04:12:44</span>
+</div>
+</div>
+</div>
+<!-- Small Stats Bento -->
+<div class="md:col-span-4 bg-secondary-container/5 rounded-3xl p-8 border border-secondary/10 flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">bolt</span>
+<h4 class="font-headline text-xl font-bold text-secondary mb-2">Kinetic Prediction</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">AI models predict a 68% volatility in upcoming player performance indices.</p>
+</div>
+<button class="text-secondary font-headline font-bold text-sm flex items-center gap-2 group">
+                        Unlock Analytics <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Secondary Data Grid -->
+<div class="md:col-span-4 bg-surface-container-high rounded-3xl p-8 border border-outline-variant/5">
+<span class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-6 block">Current Leader</span>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-highest overflow-hidden p-1">
+<img class="w-full h-full rounded-xl object-cover" data-alt="professional esports player avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5PysdfvaF0UBk-tzjRrpCA7HG0P4k_06lJReOsuRNPALMrpYJYYMh_qtWtomVNRHma3_MLCeq3k2jmhMTSskVNZIUU0LmGZ4LYkZ-X2wqySVXQKjsTzX34y4pV3-JPXMFDJKKILcWZU4IxzM33HketkWWSWmE3UZEJKQr8NKyE6_BE7-okRhMHLcHHKj8p-51l_nzDT9FOqTirMja44EE5LhsDkNRI6dUJgH0ByX4K5pl0jl_0zHUny7SqYOZPoqOzE0rJgaBeP6G"/>
+</div>
+<div>
+<h5 class="font-headline font-bold text-lg">CryptoNinja_99</h5>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_10px_#00ff88]"></span>
+<span class="text-sm font-bold text-tertiary">98.4 Skill Score</span>
+</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-8 bg-surface-container rounded-3xl p-8 border border-outline-variant/10 flex items-center gap-12">
+<div class="flex-1">
+<h4 class="font-headline text-xl font-bold mb-2">Market Sentiment</h4>
+<div class="w-full h-4 bg-surface-container-highest rounded-full overflow-hidden mt-4">
+<div class="h-full bg-primary shadow-[0_0_15px_rgba(168,232,255,0.5)]" style="width: 72%"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] uppercase font-black text-primary">Bullish 72%</span>
+<span class="text-[10px] uppercase font-black text-slate-500">Bearish 28%</span>
+</div>
+</div>
+<div class="hidden lg:block w-px h-16 bg-outline-variant/20"></div>
+<div class="flex-1 text-center md:text-left">
+<span class="block text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Total Volume</span>
+<span class="font-headline text-3xl font-black text-white">12.8M SOL</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-8 bg-surface-container-lowest border-t border-outline-variant/10">
+<div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col gap-4">
+<div class="font-headline text-xl font-bold flex items-baseline">
+<span class="text-white">Skill</span>
+<span class="xi-gradient">XI</span>
+</div>
+<p class="font-body text-xs text-slate-500">© 2024 SkillXI. The Kinetic Intelligence.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 text-xs font-bold uppercase tracking-widest text-slate-500">
+<a class="hover:text-primary transition-colors duration-300" href="#">Terms</a>
+<a class="hover:text-primary transition-colors duration-300" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors duration-300" href="#">Discord</a>
+<a class="hover:text-primary transition-colors duration-300" href="#">Twitter</a>
+<a class="hover:text-primary transition-colors duration-300" href="#">Support</a>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant/10 hover:border-primary/50 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">language</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant/10 hover:border-primary/50 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">terminal</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

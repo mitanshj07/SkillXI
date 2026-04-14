@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillXI | Active Contests</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#00ff88",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "inverse-primary": "#00677e",
+                    "outline": "#859398",
+                    "on-background": "#e4e1e9",
+                    "on-surface": "#e4e1e9",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-container": "#00df76",
+                    "secondary": "#d2bbff",
+                    "surface-bright": "#39383e",
+                    "on-primary-fixed-variant": "#004e5f",
+                    "primary-fixed": "#b4ebff",
+                    "surface-container": "#1f1f25",
+                    "secondary-fixed": "#eaddff",
+                    "inverse-on-surface": "#303036",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#0e0e13",
+                    "primary-container": "#00d4ff",
+                    "surface": "#131318",
+                    "on-tertiary-fixed-variant": "#005228",
+                    "on-primary": "#003642",
+                    "surface-tint": "#3cd7ff",
+                    "on-secondary": "#3f008e",
+                    "on-surface-variant": "#bbc9cf",
+                    "on-primary-fixed": "#001f27",
+                    "tertiary-fixed-dim": "#00e479",
+                    "surface-container-highest": "#35343a",
+                    "tertiary-fixed": "#60ff99",
+                    "on-secondary-container": "#c9aeff",
+                    "surface-container-low": "#1b1b20",
+                    "surface-container-high": "#2a292f",
+                    "inverse-surface": "#e4e1e9",
+                    "background": "#131318",
+                    "primary": "#a8e8ff",
+                    "on-tertiary-fixed": "#00210c",
+                    "primary-fixed-dim": "#3cd7ff",
+                    "on-primary-container": "#00586b",
+                    "secondary-container": "#6001d1",
+                    "on-error": "#690005",
+                    "surface-dim": "#131318",
+                    "on-tertiary-container": "#005d2d",
+                    "error-container": "#93000a",
+                    "surface-variant": "#35343a",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "on-tertiary": "#003919",
+                    "outline-variant": "#3c494e",
+                    "on-secondary-fixed": "#25005a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(42, 41, 47, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .neon-glow:hover {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/60 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex justify-between items-center px-8 py-4 w-full max-w-screen-2xl mx-auto">
+<div class="text-2xl font-black tracking-tighter text-[#a8e8ff] font-headline">SkillXI</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#a8e8ff] border-b-2 border-[#a8e8ff] pb-1 font-headline uppercase tracking-widest text-sm transition-colors duration-300" href="#">Contests</a>
+<a class="text-slate-400 font-medium font-headline uppercase tracking-widest text-sm hover:text-[#a8e8ff] transition-colors duration-300" href="#">My Lineup</a>
+<a class="text-slate-400 font-medium font-headline uppercase tracking-widest text-sm hover:text-[#a8e8ff] transition-colors duration-300" href="#">Leaderboard</a>
+<a class="text-slate-400 font-medium font-headline uppercase tracking-widest text-sm hover:text-[#a8e8ff] transition-colors duration-300" href="#">AI Analyst</a>
+<a class="text-slate-400 font-medium font-headline uppercase tracking-widest text-sm hover:text-[#a8e8ff] transition-colors duration-300" href="#">Reports</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:block px-4 py-2 rounded-full bg-surface-container-high border border-outline-variant/20 text-xs font-bold tracking-tight">
+                    0.00 ETH
+                </div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2 rounded-full text-sm font-bold font-headline uppercase tracking-wider scale-95 active:scale-90 transition-transform">
+                    Connect Wallet
+                </button>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-12 px-8 max-w-screen-2xl mx-auto grid grid-cols-12 gap-8">
+<!-- Main Content Area -->
+<div class="col-span-12 lg:col-span-9 space-y-8">
+<!-- Header & Stats Section -->
+<section class="flex flex-col md:flex-row justify-between items-end gap-6">
+<div>
+<h1 class="text-5xl font-extrabold font-headline tracking-tighter text-white">Active Contests</h1>
+<p class="text-slate-500 mt-2 font-medium tracking-tight">The Kinetic Intelligence: 142 events live now.</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-low px-4 py-3 rounded-xl border-l-2 border-tertiary">
+<span class="block text-[10px] uppercase tracking-widest text-slate-500 font-bold">Live</span>
+<span class="text-xl font-headline font-bold text-tertiary">24</span>
+</div>
+<div class="bg-surface-container-low px-4 py-3 rounded-xl border-l-2 border-primary">
+<span class="block text-[10px] uppercase tracking-widest text-slate-500 font-bold">Starting Soon</span>
+<span class="text-xl font-headline font-bold text-primary">118</span>
+</div>
+<div class="bg-surface-container-low px-4 py-3 rounded-xl border-l-2 border-secondary">
+<span class="block text-[10px] uppercase tracking-widest text-slate-500 font-bold">Prizes</span>
+<span class="text-xl font-headline font-bold text-secondary">2.5 ETH</span>
+</div>
+</div>
+</section>
+<!-- Filter Bar -->
+<section class="bg-surface-container-low rounded-2xl p-4 flex flex-col md:flex-row items-center gap-6 border border-outline-variant/10">
+<div class="flex bg-surface-container-lowest p-1 rounded-full w-full md:w-auto">
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary text-xs font-bold font-headline tracking-widest uppercase">Football</button>
+<button class="px-6 py-2 rounded-full text-slate-500 text-xs font-bold font-headline tracking-widest uppercase hover:text-white transition-colors">Basketball</button>
+<button class="px-6 py-2 rounded-full text-slate-500 text-xs font-bold font-headline tracking-widest uppercase hover:text-white transition-colors">Cricket</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30 hidden md:block"></div>
+<div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-outline-variant/20 bg-surface-container-high text-[10px] font-bold uppercase tracking-tighter text-slate-300">Rookie</button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-[10px] font-bold uppercase tracking-tighter text-primary">Pro Specialist</button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-outline-variant/20 bg-surface-container-high text-[10px] font-bold uppercase tracking-tighter text-slate-300">Elite Tier</button>
+</div>
+<div class="ml-auto flex items-center gap-3 w-full md:w-auto">
+<span class="text-xs text-slate-500 font-medium whitespace-nowrap">Sort by:</span>
+<select class="bg-surface-container-highest border-none rounded-lg text-xs font-bold focus:ring-1 focus:ring-primary py-2 pr-10">
+<option>Highest Prize Pool</option>
+<option>Entry Fee: Low to High</option>
+<option>Time: Soonest First</option>
+</select>
+</div>
+</section>
+<!-- Contest Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Contest Card 1 -->
+<div class="glass-card rounded-2xl p-6 border border-outline-variant/10 neon-glow transition-all group overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="flex items-center gap-1 bg-secondary/20 text-secondary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter border border-secondary/30">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">bolt</span> AI Insight
+                        </span>
+</div>
+<div class="flex justify-between items-center mb-6">
+<div class="flex -space-x-3">
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="close up of an english premier league club crest with sharp metallic details and professional sport branding" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALd4fseEOix8AMm6PqsrC7IaXBGY14H8e3NOe58Ld2bNM426Q-mofbVEW-_ftxdjaO6gJYSFJhsPFptjV5SxoyPOb5fIU0iQCYGASrLQMUNQc8bxVYEfqWdUszLq_mpqBrvEs9Uvnj_F1QKoQF5BvK1aJwzHchZJpcYz_DR75UfWBRXsf5x35XZ0wp0Tr_95YLB97cR_bFfKQeWB2u0fY02n84BxIY1DzJ1LiycbN3YWD84Is_cuVvcJ2I-Or0fUUZ36IO9Q_gs29X"/>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="close up of a spanish la liga football club crest with intricate gold embroidery and heraldic symbols" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzrar78bSmHTM5eNjtuXCFL8BfpVCUHOGJj3yo4hwaWM9Tdzcxnj6nKK-vQ8C4uDiKwiCCVl7dXMog2Ni1XTM0uax56d02_PJrEW5Zx6v0oh3EGPlnS9cbhhnlSJBwBIAPiCwmBVsP2fYUmQpTrvnSdaXCiAB6fsvibsNrk0TqE0YXAX07e8QQyg1wzVB-8XvzvPdYA8z1lOvxfQjl1wgV_vYzCHGCaxOs9c8l6CxUgCWd37ymM_3KHGpV82gWm0EBKQJp5Tgb7XbL"/>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Starts In</p>
+<p class="text-xl font-headline font-bold text-white tracking-tighter">04:12:33</p>
+</div>
+</div>
+<h3 class="text-lg font-bold font-headline mb-4 group-hover:text-primary transition-colors">Manchester Derby Elite Cup</h3>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Prize Pool</p>
+<p class="text-sm font-bold text-tertiary">0.85 ETH</p>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Entry Fee</p>
+<p class="text-sm font-bold text-white">0.02 ETH</p>
+</div>
+</div>
+<div class="space-y-2 mb-6">
+<div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase">
+<span>842/1000 Spots</span>
+<span class="text-primary">84% Full</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[84%]"></div>
+</div>
+</div>
+<button class="w-full py-3 rounded-full bg-surface-container-highest text-white font-bold text-xs uppercase tracking-widest border border-outline-variant/20 hover:bg-primary hover:text-on-primary transition-all">Enter Contest</button>
+</div>
+<!-- Repeat for other cards with slight variations -->
+<!-- Card 2 -->
+<div class="glass-card rounded-2xl p-6 border border-outline-variant/10 neon-glow transition-all group overflow-hidden relative">
+<div class="flex justify-between items-center mb-6">
+<div class="flex -space-x-3">
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="german bundesliga club logo icon on a circular dark shield background with professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCssBfdqCAeQK_mN6vgHCsvzs87xotmta6spISAjNJdephuYlik45d77xqNY2K35vd3i3lV9dQdlNp8aepTctOfm19e6AiaekBds8DY_Meo33zwwLnrUFggVa4XvJpWQzYNm-Bxxelb1UliAIozMjfohckjxZjKXLxYzuayIB39IAO3uGfRVVp4tP42y_y53vVwcwMiTMg9KUMdDrkTSYS_AyiJ_EIrGCp-pt46tuWUvsNsfDtO8d3b_wgm9vBoXFzXepWTaIInb1gl"/>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="french ligue 1 football club emblem with royal fleur-de-lis and modern geometric shapes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJmsuLDuN9F_zxXZ-36JgUcCou8q6cGWd4LwwCMbVmpMsY44N_1Hm_UGIvdL6spbr4x3iC_fPVEzJj6QYYQHxGVR0B_2y-bcVileH2_orYmaOJXnE9tABXuXnuS8U0bbU-b7LAE2vVjBoSnzHPAk567_qfqgL4y7tN1aByYNqZo5yARqwLADGzSSRWvjDiBj9jxfI3Hx92NKTo7m24u2yWyBxqlKJU-PIxxoCqAgFKgzAXA2YVbZbSgTCv27kj1meuxGwR1ocm1cmK"/>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Starts In</p>
+<p class="text-xl font-headline font-bold text-white tracking-tighter">01:05:12</p>
+</div>
+</div>
+<h3 class="text-lg font-bold font-headline mb-4 group-hover:text-primary transition-colors">European Giants Showdown</h3>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Prize Pool</p>
+<p class="text-sm font-bold text-tertiary">1.20 ETH</p>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Entry Fee</p>
+<p class="text-sm font-bold text-white">0.05 ETH</p>
+</div>
+</div>
+<div class="space-y-2 mb-6">
+<div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase">
+<span>210/500 Spots</span>
+<span class="text-primary">42% Full</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[42%]"></div>
+</div>
+</div>
+<button class="w-full py-3 rounded-full bg-surface-container-highest text-white font-bold text-xs uppercase tracking-widest border border-outline-variant/20 hover:bg-primary hover:text-on-primary transition-all">Enter Contest</button>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-2xl p-6 border border-outline-variant/10 neon-glow transition-all group overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="flex items-center gap-1 bg-tertiary/20 text-tertiary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter border border-tertiary/30">
+                            LIVE NOW
+                        </span>
+</div>
+<div class="flex justify-between items-center mb-6">
+<div class="flex -space-x-3">
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="italian serie a soccer team badge with elegant shield design and vibrant club colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzoqPltnKvXKS5jqW2WcGMGduu4zrfHVINQBZnCGO3Dxap-XzZkmhzqc3ONYUOUcu0Y2KrHnUXN_aoHpAUDH8BzJd45-dTakaxz5pOOq0pKhJw3EoaMjUx3dVwp3IGF2Rkq25R-Qdh0kxybhZn4Xh4Ekob66ouHSE9Be5zk_cbgAIVKiNaFE3L-iS2oAbr6KV762kk7uIKCIST9a-q9bHf-2Ty1I3zm_L9R08LcmILldsHLzO9skxGy6XX3Lmnf9Q1fdSpM3pLKzlj"/>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="portuguese football club logo featuring traditional naval symbols and sharp modern typography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpT5w_-tmalze0oTdOLrleEsEC2R1_zOKCOhAOpR1viYgTB6BVnKRSkDzhamDlyhYorO_wZXNOLYnagXWXkM2KruYHk8SIP7_TX4ZMtAsU98YIzz04THKR27xUkiEl3GTJ2LvOgSAE8Pasz1ydREWLe1lEIaebn_0TgIQcb3gGld8mdaGTn00snARghBHO-L_rZ1Dmp4GQ4bB1zeipIli6nmj8DObScLbpAdHs6yxupMixvDwBoRthVFLYpveMYPtn69OKyGEefqUI"/>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Ending In</p>
+<p class="text-xl font-headline font-bold text-white tracking-tighter">00:45:00</p>
+</div>
+</div>
+<h3 class="text-lg font-bold font-headline mb-4 group-hover:text-primary transition-colors">Midweek Madness Pro</h3>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Prize Pool</p>
+<p class="text-sm font-bold text-tertiary">0.50 ETH</p>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Entry Fee</p>
+<p class="text-sm font-bold text-white">FREE</p>
+</div>
+</div>
+<div class="space-y-2 mb-6">
+<div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase">
+<span>4,500/5,000 Spots</span>
+<span class="text-primary">90% Full</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[90%]"></div>
+</div>
+</div>
+<button class="w-full py-3 rounded-full bg-primary text-on-primary font-bold text-xs uppercase tracking-widest border border-primary transition-all">View Leaderboard</button>
+</div>
+<!-- Card 4 -->
+<div class="glass-card rounded-2xl p-6 border border-outline-variant/10 neon-glow transition-all group overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="flex items-center gap-1 bg-secondary/20 text-secondary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter border border-secondary/30">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">bolt</span> AI Insight
+                        </span>
+</div>
+<div class="flex justify-between items-center mb-6">
+<div class="flex -space-x-3">
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="netherlands eredivisie club logo with minimalist lion design and bright orange accent colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgEW1JMtlCZG3docstNO3jRh97UHC9waVhw9awQRko12Et69rs5kkNr_dXhU27yZhePd7NxcAD1uexmG2agwXTXxzqCXV4qXjgXJnnprCERvuqwbw_hOpiSGamuwZjI6H66wiVvec5AW-RWd77hG77BwjKnC0ujbkoYCh2laZwvxGfkW5wgqYX2NP3ifhFtOutZ9X8pKSr0F6D4iKwbo3Gf3qSr4YpNMkDlwdN4gtL1uOnV5a1s-E4aUIb6XkOjVo8vqVt9tlBguVi"/>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="belgian pro league team crest with bold heraldry and professional sports vector art style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuCQQJt19En3t_Lnm7nNad6jLdhfX_HvyMu3emyCQDVcVn2Ft-iXlyBLUs1KSdM-_1RhgssNz6FIwPy41PdFGijTQeNuq_ilOpHoY5MC457a1O7faJWFMKP5Rc3U_GRsE5t3iKvLpTWza_nj_CgaV8gpwf4U4v7pDneP2RXtYxwEKv1dxhh7ypyJ73stx64iQ-XTMt7UQgR6FRmt6yHLUtlyP3F_hcxhKPWTE-ufppTSxAlaYmNpyCKN4ScJgTPSIALsQ9yP9M7ixp"/>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Starts In</p>
+<p class="text-xl font-headline font-bold text-white tracking-tighter">08:22:10</p>
+</div>
+</div>
+<h3 class="text-lg font-bold font-headline mb-4 group-hover:text-primary transition-colors">Lowlands Tactical League</h3>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Prize Pool</p>
+<p class="text-sm font-bold text-tertiary">0.30 ETH</p>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl">
+<p class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Entry Fee</p>
+<p class="text-sm font-bold text-white">0.01 ETH</p>
+</div>
+</div>
+<div class="space-y-2 mb-6">
+<div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase">
+<span>120/300 Spots</span>
+<span class="text-primary">40% Full</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[40%]"></div>
+</div>
+</div>
+<button class="w-full py-3 rounded-full bg-surface-container-highest text-white font-bold text-xs uppercase tracking-widest border border-outline-variant/20 hover:bg-primary hover:text-on-primary transition-all">Enter Contest</button>
+</div>
+<!-- More Cards Placeholder -->
+<div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 opacity-60">
+<!-- Simple variations for the remaining 4 cards -->
+<div class="glass-card rounded-2xl p-6 border border-outline-variant/5">
+<div class="h-12 w-12 bg-surface-container-highest rounded-full mb-4"></div>
+<div class="h-4 w-48 bg-surface-container-highest rounded mb-2"></div>
+<div class="h-32 bg-surface-container-lowest rounded-xl"></div>
+</div>
+<div class="glass-card rounded-2xl p-6 border border-outline-variant/5">
+<div class="h-12 w-12 bg-surface-container-highest rounded-full mb-4"></div>
+<div class="h-4 w-48 bg-surface-container-highest rounded mb-2"></div>
+<div class="h-32 bg-surface-container-lowest rounded-xl"></div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar -->
+<aside class="col-span-12 lg:col-span-3 space-y-8">
+<!-- Active/My Contests -->
+<div class="bg-surface-container p-6 rounded-2xl border border-outline-variant/10">
+<h4 class="text-xs font-black font-headline uppercase tracking-[0.2em] mb-6 text-primary flex items-center justify-between">
+                    Your Lineups
+                    <span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px]">3</span>
+</h4>
+<div class="space-y-4">
+<div class="bg-surface-container-high p-4 rounded-xl flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">analytics</span>
+</div>
+<div>
+<p class="text-xs font-bold text-white">PL Week 24</p>
+<p class="text-[10px] text-slate-500 font-medium">Rank: #142/10,000</p>
+</div>
+<div class="ml-auto">
+<span class="text-xs font-bold text-tertiary">+12.4</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+</div>
+<div>
+<p class="text-xs font-bold text-white">UCL Final XI</p>
+<p class="text-[10px] text-slate-500 font-medium">Starting in 2h</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Earners -->
+<div class="bg-surface-container p-6 rounded-2xl border border-outline-variant/10">
+<h4 class="text-xs font-black font-headline uppercase tracking-[0.2em] mb-6 text-secondary">Top Earners (24H)</h4>
+<div class="space-y-6">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-slate-800">
+<img alt="" class="w-full h-full object-cover" data-alt="portrait of a young professional male gamer with stylish glasses and focused expression high contrast lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8EkW3N6sNC3RP_Fhdgh7LimuSuJsaayFfCeU8Ix32JnY3i6D9Bj2MufacZ6G1XigRxGaHPCOWiNxQjoRLSpXHSgUxusHJXk9IXcUq_Jr-SVbCMfQO_wWpRmfzlYHparmkMzWY5zuRCjn0tp2PP3cYRYfV96INUKCvfC_rgXA1ZYtWaVwEOGwZUezGV0n1D8ddVqFPQ-UA3QEbwbhvnBJusYTHU9kmzptpPkDRFbrJ89oAUXFRux0jBdu4gisHeyifd_7UErHc5ySs"/>
+</div>
+<span class="absolute -bottom-1 -right-1 bg-gold w-4 h-4 rounded-full text-[8px] flex items-center justify-center bg-yellow-500 text-black font-bold">1</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold text-white">CryptoWhale_XI</p>
+<p class="text-[10px] text-slate-500 font-medium">9 Wins Today</p>
+</div>
+<p class="text-xs font-bold text-tertiary">2.4 ETH</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-slate-800">
+<img alt="" class="w-full h-full object-cover" data-alt="vibrant portrait of a modern woman with cyber-inspired fashion and neon background accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpNt3DCJz6BOGs--Ef6RsXLuNFNrasU6T96iaR_Z-2BOohjBnGwxDYfsRc9RFNyN1jI1zGGHn3InUgYQFX170iMpVaAU7SiiBqN6KLnsaERBUAhfKr0cHLhh4BDPqwqcOK2n6FG3MRk1WRBmxGgWsSksNVhUgorKI1Mwtrvv3gOkbuMnkR6B3eQZS9l4JiL2hLA2Q9EJOJvb3PtpZSMeKzsC6CIjJQ1LWzokkZzWHpGqcd2GBE3qF8M5kUpDlnvEafQzIMRiNuKH_o"/>
+</div>
+<span class="absolute -bottom-1 -right-1 bg-slate-400 w-4 h-4 rounded-full text-[8px] flex items-center justify-center text-black font-bold">2</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold text-white">SkillMaster_42</p>
+<p class="text-[10px] text-slate-500 font-medium">5 Wins Today</p>
+</div>
+<p class="text-xs font-bold text-tertiary">1.8 ETH</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-slate-800">
+<img alt="" class="w-full h-full object-cover" data-alt="close up headshot of a person with high-tech gaming headset and dramatic blue rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa5-TEFNJuIFRTZe-r91Rkl5yRGw1o0n0s8RGlp28WMCMNog8ndn16xHnfI6BVfEk-E_AIpa0ISJc63KEj-Qwk_-EOjlwLHs90g_rJoEVmSl8myRmMs1biEJOZ96Oxs8xHSqmv-dpYmNT-KBh34YVhW5MX742LXgshwxsGTeEjdpSOXiydCSChe0qjvrNS-UCf5TOejsrJubh6x6DdNsgFHCubS0sVFSzYiQA0VXX32sSdwwV56VptzkWtevCP6pk_tjkgVWyDdP3E"/>
+</div>
+<span class="absolute -bottom-1 -right-1 bg-orange-700 w-4 h-4 rounded-full text-[8px] flex items-center justify-center text-white font-bold">3</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold text-white">AlchemistTrade</p>
+<p class="text-[10px] text-slate-500 font-medium">12 Wins Today</p>
+</div>
+<p class="text-xs font-bold text-tertiary">1.2 ETH</p>
+</div>
+</div>
+<button class="w-full mt-8 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-white transition-colors">View All Time Leaderboard</button>
+</div>
+<!-- Promotion / AI Banner -->
+<div class="bg-gradient-to-br from-[#6001d1] to-[#3f008e] rounded-2xl p-6 relative overflow-hidden group">
+<div class="relative z-10">
+<span class="bg-white/20 text-white px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest mb-4 inline-block">Pro Feature</span>
+<h5 class="text-lg font-headline font-black text-white leading-tight mb-2">Upgrade to AI Analyst Elite</h5>
+<p class="text-xs text-secondary-fixed/80 mb-6">Get real-time probability shifts and lineup optimizations.</p>
+<button class="bg-white text-[#3f008e] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform">Get Access</button>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-white/10 text-9xl group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0e0e13] w-full py-12 px-8 border-t border-[#2a292f]/15">
+<div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-lg font-bold text-[#a8e8ff] font-headline">SkillXI</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-slate-500 font-body text-xs hover:text-white transition-colors uppercase tracking-widest" href="#">Terms</a>
+<a class="text-slate-500 font-body text-xs hover:text-white transition-colors uppercase tracking-widest" href="#">Privacy</a>
+<a class="text-slate-500 font-body text-xs hover:text-white transition-colors uppercase tracking-widest" href="#">Discord</a>
+<a class="text-slate-500 font-body text-xs hover:text-white transition-colors uppercase tracking-widest" href="#">Twitter</a>
+<a class="text-slate-500 font-body text-xs hover:text-white transition-colors uppercase tracking-widest" href="#">Support</a>
+</div>
+<div class="font-['Inter'] text-xs text-slate-500">© 2024 SkillXI. The Kinetic Intelligence.</div>
+</div>
+</footer>
+</body></html>

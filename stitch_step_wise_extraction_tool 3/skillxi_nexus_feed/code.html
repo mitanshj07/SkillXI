@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillXI | Nexus Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0e0e13",
+                        "surface": "#131318",
+                        "background": "#131318",
+                        "secondary": "#d2bbff",
+                        "on-surface-variant": "#bbc9cf",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "on-primary": "#003642",
+                        "tertiary": "#00ff88",
+                        "surface-variant": "#35343a",
+                        "surface-container-high": "#2a292f",
+                        "primary-container": "#00d4ff",
+                        "on-tertiary-container": "#005d2d",
+                        "on-error": "#690005",
+                        "surface-container": "#1f1f25",
+                        "primary": "#a8e8ff",
+                        "on-primary-container": "#00586b",
+                        "on-tertiary-fixed": "#00210c",
+                        "on-secondary": "#3f008e",
+                        "inverse-primary": "#00677e",
+                        "tertiary-fixed": "#60ff99",
+                        "tertiary-container": "#00df76",
+                        "surface-container-highest": "#35343a",
+                        "inverse-surface": "#e4e1e9",
+                        "inverse-on-surface": "#303036",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "surface-container-low": "#1b1b20",
+                        "secondary-container": "#6001d1",
+                        "on-background": "#e4e1e9",
+                        "outline-variant": "#3c494e",
+                        "on-primary-fixed": "#001f27",
+                        "surface-tint": "#3cd7ff",
+                        "outline": "#859398",
+                        "on-secondary-container": "#c9aeff",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "secondary-fixed": "#eaddff",
+                        "on-secondary-fixed": "#25005a",
+                        "primary-fixed-dim": "#3cd7ff",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "primary-fixed": "#b4ebff",
+                        "on-tertiary": "#003919",
+                        "surface-dim": "#131318",
+                        "tertiary-fixed-dim": "#00e479",
+                        "on-surface": "#e4e1e9",
+                        "surface-bright": "#39383e",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(53, 52, 58, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .neon-border-glow:hover {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #a8e8ff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopNavBar (Shared Component) -->
+<nav class="bg-[#131318]/80 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<a class="text-2xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#a8e8ff] to-[#00d4ff] font-headline cursor-pointer" href="{{DATA:SCREEN:SCREEN_28}}">SkillXI</a>
+<div class="hidden md:flex gap-6 font-['Space_Grotesk'] tracking-tight">
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Arena</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Exchange</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Leaderboard</a>
+<a class="text-[#a8e8ff] border-b-2 border-[#a8e8ff] pb-1" href="#">Social</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 mr-4">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<button class="bg-gradient-to-r from-[#a8e8ff] to-[#00d4ff] text-on-primary font-bold px-6 py-2 rounded-full scale-95 duration-200 ease-out hover:shadow-[0_0_20px_rgba(0,212,255,0.4)]">
+                    Connect Wallet
+                </button>
+</div>
+</div>
+</nav>
+<div class="flex max-w-[1440px] mx-auto">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 hidden lg:flex flex-col bg-[#0e0e13] border-r border-[#a8e8ff]/10 py-8 z-40">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3 p-3 bg-surface-container rounded-xl">
+<img alt="SkillXI AI Identity" class="w-10 h-10 rounded-full border-2 border-primary" data-alt="High-tech futuristic AI node interface with glowing blue neural network patterns and crystalline structure" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUg16MVaEbVpm9gSZb-0eALXXbx6fLR4xLYf9IJRjgtUYITyhd2uBGhN0_tgv1IkRD-1WdrpUC4Rx4UuWMoJZSvWsJeJnEKcdRoic0Uq-3eMmO5z_ao-H17Q_koLe1nqusEJwfVPiPxxXs27VJ5sE9rAamQJLzE3dEzqM2WPzgpy_rfdvlxg6kD4ZHPb40Av2LTqrfUvMZi9dqfA_OZL5YQYIipWgdSJAR8rT2DV3yUhAzpSufuonL9BZ9mfwpn46j7M61dwXcy-Kh"/>
+<div>
+<p class="font-headline uppercase text-[10px] tracking-widest text-primary">KINETIC INTEL</p>
+<p class="text-[10px] text-slate-500 font-medium">AI Node Active</p>
+</div>
+</div>
+</div>
+<nav class="flex-grow space-y-2 px-4">
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Command Center
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span>
+                    Roster Lab
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="{{DATA:SCREEN:SCREEN_10}}">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                    Vault
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 bg-[#1b1b20] text-[#a8e8ff] border-r-4 border-[#a8e8ff] transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+                    Nexus Feed
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+                    Governance
+                </a>
+</nav>
+<div class="px-4 mt-auto space-y-6">
+<a class="w-full bg-gradient-to-br from-primary to-secondary text-on-primary font-bold py-3 rounded-full flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(168,232,255,0.3)] transition-all" href="{{DATA:SCREEN:SCREEN_32}}">
+<span class="material-symbols-outlined text-sm" data-icon="rocket_launch">rocket_launch</span>
+                    Deploy Squad
+                </a>
+<div class="space-y-1">
+<a class="flex items-center gap-4 px-4 py-2 text-slate-500 hover:text-slate-200 transition-colors font-headline uppercase text-xs tracking-widest" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+                        Settings
+                    </a>
+<a class="flex items-center gap-4 px-4 py-2 text-slate-500 hover:text-slate-200 transition-colors font-headline uppercase text-xs tracking-widest" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+                        Support
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow lg:ml-64 p-6 md:p-10 mb-20 lg:mb-0">
+<header class="mb-10 relative">
+<div class="absolute -top-10 -left-10 w-64 h-64 bg-primary/5 blur-[120px] rounded-full"></div>
+<h1 class="text-4xl md:text-6xl font-extrabold font-headline tracking-tighter mb-2">NEXUS <span class="text-gradient-primary">FEED</span></h1>
+<p class="text-on-surface-variant font-medium tracking-wide">Real-time intelligence and community maneuvers from the XI ecosystem.</p>
+</header>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+<!-- Feed Column -->
+<div class="xl:col-span-8 space-y-6">
+<!-- Feed Post: AI Pick -->
+<div class="bg-surface-container-low rounded-2xl overflow-hidden relative group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary shadow-[0_0_15px_rgba(210,187,255,0.5)]"></div>
+<div class="p-6">
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img alt="AI Analyst" class="w-12 h-12 rounded-full object-cover border-2 border-secondary" data-alt="Cybernetic AI avatar portrait with flowing digital hair and glowing violet eyes in a high-tech laboratory setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdsZqZBWfDTdafBAq4C8a8B1nri0F9bMAs0BWFwhaQsUY6TBNKERlOn-6QB3YVrS1WVofNoCkVt039Loh8N_cDw9_dz8onfzKyWVDkqrBzVXP7eu7ZyutXwVw7cJ_OMMOYWF1ClD7GCUAucSIpggqffgaF_uw9_SCSEqUA1fG1Q5yhdba3lX_TXxhqvU211A_Xnqqm5ktsIZRmNW2JEqIaOvNSlxloiBWL2GkD3VYjtwW-ThTn3HDsFZ0nQwImiiILsLMGtyCrtUNf"/>
+<span class="absolute -bottom-1 -right-1 bg-secondary text-on-secondary text-[8px] font-bold px-1.5 py-0.5 rounded-full">AI</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg leading-tight">AI Analyst</h3>
+<p class="text-xs text-slate-500 font-label">PROPHET NODE • 2m ago</p>
+</div>
+</div>
+<div class="px-3 py-1 glass-panel rounded-full border border-secondary/20">
+<span class="text-[10px] font-bold text-secondary uppercase tracking-widest">Hot Pick</span>
+</div>
+</div>
+<p class="text-on-surface text-lg mb-6 leading-relaxed">
+                                Strategy update detected. My predictive algorithms suggest a high-impact rotation. <span class="text-primary font-bold">Erling Haaland</span> is showing a 94% performance probability for the upcoming matchday.
+                            </p>
+<div class="bg-surface-container-high rounded-xl p-4 mb-6 flex items-center gap-4 group-hover:bg-surface-container-highest transition-colors">
+<img alt="Erling Haaland" class="w-16 h-16 rounded-lg object-cover" data-alt="Close-up intense cinematic portrait of Erling Haaland on a blue-tinted stadium background with neon sparks" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJUNBUsICmywARTUA-iE-PUxhNXhaBTgxTGLRi7q3IhNSz3fdy60LcxvNqAjNfdVB4cZTXJVXqPShHcYZWfCnBEIcmda5nBKWYs6IDon6b__rPLOpi8cGViCsZ4iYDf_w2EPU66iXnQPn288Pj-A8tML8GU2eZjOgDy568TJFimv9yqvWMoB0QUFqx1Nz_dFFYnYEbNnCcs7KmL9glYuebNqVOuOVEmOnVzgNcB5gemwuKR3QojqOKW_QAsaf9n5O85UGSC-rmCei6"/>
+<div class="flex-grow">
+<h4 class="font-headline font-bold uppercase tracking-tight">Erling Haaland</h4>
+<div class="flex gap-4 mt-1">
+<div class="text-[10px] uppercase tracking-tighter text-slate-400">Projected: <span class="text-tertiary font-bold">14.2 PTS</span></div>
+<div class="text-[10px] uppercase tracking-tighter text-slate-400">Ownership: <span class="text-primary font-bold">68%</span></div>
+</div>
+</div>
+<button class="bg-primary/10 text-primary p-2 rounded-full hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<div class="flex items-center gap-6 pt-4 border-t border-outline-variant/10">
+<button class="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+<span class="text-xs font-bold font-label">1.2k</span>
+</button>
+<button class="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+<span class="text-xs font-bold font-label">245</span>
+</button>
+<button class="ml-auto flex items-center gap-2 text-primary hover:underline font-label uppercase text-[10px] font-bold tracking-widest">
+                                    View Full Analysis
+                                    <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Feed Post: User Activity -->
+<div class="bg-surface-container-low rounded-2xl overflow-hidden relative group border border-outline-variant/10 hover:border-primary/20 transition-all">
+<div class="p-6">
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-3">
+<img alt="User A" class="w-12 h-12 rounded-full object-cover border border-outline" data-alt="Portrait of a young pro-gamer with neon headset and atmospheric dark lighting with blue highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf5X0gueJ6YUTo6XQpKIntTOawP7BCEB1vxZjqGE7qXR22IVU-C8U5kx_8j75Q2MT_Gs2kvSAEH_8R_zkW6ZGOzfRGUBoPx4-IeJdVNEkOtZVtc_XLXyHuRj1MqJm-GxxkSwrZZekuKwOOXk_HSb-up8uMA5ooDisNz47oq_2XHGlsKbYZZs_QLTlE3FYWUn2MDJg4_pzL7Wxz2BONn2BBmIL_ZuvgaariZ9MSr5BnkLF4oTQnCWu6Z9KFDAm4Qty8BoYFAnhY53__"/>
+<div>
+<h3 class="font-headline font-bold text-lg leading-tight">CryptoTactician</h3>
+<p class="text-xs text-slate-500 font-label">RANK: MASTER • 15m ago</p>
+</div>
+</div>
+</div>
+<p class="text-on-surface text-lg mb-6 leading-relaxed">
+                                Strategy locked and loaded. Just finalized my lineup for <span class="text-primary-container font-semibold">MCI vs ARS</span>. Focusing on heavy defensive anchors this week.
+                            </p>
+<div class="grid grid-cols-5 gap-2 mb-6">
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg flex items-center justify-center border border-outline-variant/10">
+<img class="w-full h-full object-cover rounded-lg opacity-60" data-alt="Silhouette of a professional soccer player in action on a dark stylized blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcqlLQ5GgUaTqXv2s9MWbM8NzUQrA6N9rH2Q482UzmYg1YDtb5QOts_BBHNmuoVrR6cXhIddk4GuzeVqIW5tHeHkIZS2guELaROwu7YQtN6zvrQfNGFqwz_ThNLma9j6ZAQVB5h8MW2d5pZVqzWQ2auTSTXdpJxhbM_VIjbeXYyTcO7VyxlJk4ePyhVhPr8nmYl_1Td2pXd7sdvpiS57gsPfPAUEPdJ8QKvF2LyKE77WwZG-8dv8ubbYDNquiU0UvmRbqbVx3psThf"/>
+</div>
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg flex items-center justify-center border border-outline-variant/10">
+<img class="w-full h-full object-cover rounded-lg opacity-60" data-alt="Professional athlete profile photo with futuristic UI overlay elements and cyan color correction" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxFvVPUwDZ5nBVKNA5UoryuX8hJB91_m3SuHs4uUAbftnmQqejkqt5Y9HmK7jrDN0EN3etOpHIHGw_vKjPYmMcVpRPOH6Dx91oajUFxHhIxcsIha1npFwwl-4WzC59nbrfKANxlkALJ27qUAmdaKACAbat15SLs_y_vX61E1rExOXQv_kN0WiUGOOsGGZhwN9L-g01cfEgWm3uIOqrRoEfR-GCaaleF0-Fj4mVyoGCNLEfH0Z9uzbW25kdTj7_PzJjJqBGO8Y-DF0d"/>
+</div>
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg flex items-center justify-center border border-outline-variant/10">
+<img class="w-full h-full object-cover rounded-lg opacity-60" data-alt="Sports player card art style with glowing neon blue edges and dynamic motion blur background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCESIb-2A4tP5ymYrNnWUbYtSdyYUbRB0diK9AzO2Pg0CbYch4YOna_pqf07Aiul2v3FaeoBv5_gLg_043Hzraj5igY1eIvmr0xtRI-xyF7Q5IR_J84xHvYIsGEolVZMvrUInxMoCe3YufZhQG-2Y6T-HKKKsgWusAj9iK8MQFBqls1bOLkV1TWcokXfYB8ktQ6fZYZncqRPZvs2c2pbcS-cpfP_ty80Zwf47ga9fA_a-y2HJiYDdRrZHfp-ZEEKxJZWwUhz5yKJP_1"/>
+</div>
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg border-2 border-dashed border-outline-variant/30 flex items-center justify-center">
+<span class="text-slate-600 font-black">+2</span>
+</div>
+</div>
+<div class="flex items-center gap-6 pt-4 border-t border-outline-variant/10">
+<button class="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+<span class="text-xs font-bold font-label">88</span>
+</button>
+<button class="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+<span class="text-xs font-bold font-label">12</span>
+</button>
+<button class="ml-auto bg-primary text-on-primary px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest hover:shadow-[0_0_15px_rgba(168,232,255,0.4)] transition-all">
+                                    View Lineup
+                                </button>
+</div>
+</div>
+</div>
+<!-- Feed Post: Badge Earned -->
+<div class="bg-surface-container-low rounded-2xl overflow-hidden relative group border border-outline-variant/10">
+<div class="p-6 flex flex-col items-center text-center">
+<div class="mb-4 relative">
+<div class="absolute inset-0 bg-tertiary/20 blur-2xl rounded-full"></div>
+<span class="material-symbols-outlined text-6xl text-tertiary relative" data-icon="military_tech">military_tech</span>
+</div>
+<h3 class="font-headline font-bold text-xl mb-1">Badge Earned</h3>
+<p class="text-on-surface-variant mb-6 font-label">
+<span class="text-white font-bold">VortexGamer</span> just earned the <span class="text-tertiary font-bold tracking-tight">'Master Tactician'</span> badge for 5 consecutive wins.
+                            </p>
+<div class="flex items-center gap-6 w-full pt-4 border-t border-outline-variant/10">
+<button class="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+<span class="text-xs font-bold font-label">542</span>
+</button>
+<button class="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+<span class="text-xs font-bold font-label">67</span>
+</button>
+<button class="ml-auto flex items-center gap-2 text-primary hover:underline font-label uppercase text-[10px] font-bold tracking-widest">
+                                    View Achievements
+                                    <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Column -->
+<div class="xl:col-span-4 space-y-8">
+<!-- Trending AI Picks -->
+<section class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10">
+<h2 class="font-headline font-bold text-xl mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+                            Trending AI Picks
+                        </h2>
+<div class="space-y-4">
+<!-- Pick Item 1 -->
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="Portrait cutout of a pro footballer against a dark minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6xdyEpwYRBnDALW0Wz52ZsFlP0iGETqz15CwjuQ1f13cR39JCd0oCon08zHtbb4Qyph06so40ZdfvxRPJnnyjtlYk0bYJ88FW7Fy23dJvNP5y6wnflIRnAvGnX-OTYh1MiRSRsldvsyhrwAw0-F4_8OAhadEoxIKRjrNbTbd0ceBvNN9iRyqtHm20nkqa0cQAsMbfUo-sMspTJukMSzeKsxg75_M7-ef_J9duvappSc3wTk_jVNzBcQj6ugOPHTTU1HHAZO4jsHrh"/>
+</div>
+<div>
+<p class="font-bold text-sm leading-none">E. Haaland</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">MCITY • FWD</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-tertiary font-bold text-sm">84.2%</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Pick Rate</p>
+</div>
+</div>
+<!-- Pick Item 2 -->
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="Sports player profile photo with a slight magenta neon glow on the edges" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCICELBOh5RnOTK0-Tt-TtOfTex4PJRwxfOH0WYuF6VYTR0YRBbGALAfvDyB3VhfrakdBw5L8w9fg2_R-DakVjVXjMzvEJLRiDJTSWx5wsNuV9DpHKIFK1Omzi8aJSgy-A16UeCxk166uNhZoSH5rm-zaJ-5hrFu17cptrY1KUX7_knQNnTIXUIqN_X63G7NjLklHorqH2XfelE5ZcrVbK3vjER3RKQ4YpNI8TSXGaCE8S__wEp6gOhH9608j3VoUqcOcioQN0SOn5O"/>
+</div>
+<div>
+<p class="font-bold text-sm leading-none">M. Salah</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">LIV • MID</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-primary font-bold text-sm">76.1%</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Pick Rate</p>
+</div>
+</div>
+<!-- Pick Item 3 -->
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="Young athlete portrait in high-contrast cinematic lighting with a deep black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH6_zxtbD7p33W2xlYtYNu4ojeBtlHCmS3KdEuZykfEpoEQ9ugnt110HBTyX42X_hsorD-CvrNdXphitWbJJiCkw4bkcHcZx1A29nu9wbSYxbP3797mi4-e0PbtXC_bMzbdhKpMmR-UYbwhK7zZhmmUPt8lrc2lvJnBMGLkBWK7Cpp7MY3JQ_vxPXSCw50zE8DWDrHAm9wEUDqZxGX6VZNr3afnlg8VHx6lYvENRKtzjgoALlBxcucILPJBpwUtru9SmNMoWzgoeYs"/>
+</div>
+<div>
+<p class="font-bold text-sm leading-none">B. Saka</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">ARS • MID</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-secondary font-bold text-sm">62.8%</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Pick Rate</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-outline-variant/20 rounded-full text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-white hover:border-primary/40 transition-all">
+                            View All Predictions
+                        </button>
+</section>
+<!-- Top Analysts to Follow -->
+<section class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10">
+<h2 class="font-headline font-bold text-xl mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="groups">groups</span>
+                            Top Analysts
+                        </h2>
+<div class="space-y-6">
+<!-- Analyst 1 -->
+<div class="flex items-center gap-4">
+<img alt="Analyst" class="w-12 h-12 rounded-full border border-secondary" data-alt="Close-up face of a tech-savvy professional with digital data reflected in spectacles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCT8rzLTB1a3BFk2rgAi3xY3d-QNKvd9tKBrBE1zfnI7JH4DfKTy5Dgn23Yg3WXvqouvzc9WZ6VL9ptUqs6FNJyFbgBn5BsWXzS7tIadBB-fDb9LMWfoT3DBV1aBt4QKil58nYDOPww9781ip59ahRKZ7-iGk-RyDhoACVvJckfYs29SpKY54PCB2Nmmfp0r6wyOhbBLXF30XVYd9F4l6QivKVK0alGxNqtal_bynLy3YmUB2WB5UO5--BEmtNuimxWcyE3_0_81zF"/>
+<div class="flex-grow">
+<p class="font-bold text-sm">QuantMaster_XI</p>
+<p class="text-[10px] text-slate-500">14.2k Followers • 92% Win Rate</p>
+</div>
+<button class="px-4 py-1.5 rounded-full border border-primary text-primary text-[10px] font-bold uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all">
+                                    Follow
+                                </button>
+</div>
+<!-- Analyst 2 -->
+<div class="flex items-center gap-4">
+<img alt="Analyst" class="w-12 h-12 rounded-full border border-outline" data-alt="Serious expression of a female data analyst with a futuristic digital interface glow on her face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8QDHMCxAlIjfz8V4LccWebgJPEYiB1zr_bbKJrS7ezz5ziAelJ6YccChMrvfWdxjq9NpS77OvRXfmiHouhDtxKE8UrNBiv1Zh17T0Ot8AFCeh0qNp82kIkTBXmU-TfJiQCEk5TlCAUu9C3kAuR1cakD5ABt_RAAEi31CIr7hccJn5nYUNFrXe9nYz-jvgvSo2xv-y3YY1TQMeLslwPJBfBl1gYhDRViMpsiiC7bA-qZU63cSilAQ0YIQJLkei42i0QizQznkoEcXh"/>
+<div class="flex-grow">
+<p class="font-bold text-sm">NeuralStriker</p>
+<p class="text-[10px] text-slate-500">8.9k Followers • Top 10% Arena</p>
+</div>
+<button class="px-4 py-1.5 rounded-full border border-primary text-primary text-[10px] font-bold uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all">
+                                    Follow
+                                </button>
+</div>
+<!-- Analyst 3 -->
+<div class="flex items-center gap-4">
+<img alt="Analyst" class="w-12 h-12 rounded-full border border-outline" data-alt="Portrait of an older mentor figure with cybernetic implants and glowing blue accents in a dark void" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGhNy5F_u2NVmx106uGOrT_sYOdSGlUoAgTvIuwF5XayfHM-2z9Wgua7jiwOe-FNX3p0WVfaOWHFyGx3uU0_UPSGltDD4ByAudRxtGf12SRR_lkiZhPRusK_xJ5ed1nJRMHl1zgepOAGYwd11sUKVBS_eJDQh4HAkZkAJs9wPF_WmkGr4-zVm2Yl5WiFRizP-ClDUkDosypGkTfjDDQ2fDzHhYIJfd3FUimyFKd-je_zl3L1nt8Nfly73wkZVTB1pPc7mnLbAPs4ZA"/>
+<div class="flex-grow">
+<p class="font-bold text-sm">TheXI_Prophet</p>
+<p class="text-[10px] text-slate-500">22.5k Followers • Season MVP</p>
+</div>
+<button class="px-4 py-1.5 rounded-full border border-primary text-primary text-[10px] font-bold uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all">
+                                    Follow
+                                </button>
+</div>
+</div>
+</section>
+<!-- AI Ad/CTA -->
+<div class="bg-gradient-to-br from-secondary-container/30 to-surface-container-highest rounded-2xl p-6 border border-secondary/20 relative overflow-hidden group">
+<div class="absolute -right-10 -bottom-10 w-32 h-32 bg-secondary/10 blur-3xl rounded-full"></div>
+<h4 class="font-headline font-bold text-lg mb-2 text-secondary">Enhance Performance</h4>
+<p class="text-xs text-on-surface-variant mb-6 leading-relaxed">Unlock deep-level player metrics and AI simulation paths for the 24/25 Season.</p>
+<a class="w-full block text-center bg-secondary text-on-secondary py-3 rounded-full font-bold text-[10px] uppercase tracking-[0.2em] hover:brightness-110 transition-all" href="{{DATA:SCREEN:SCREEN_41}}">
+                            Upgrade Node
+                        </a>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Shared Component - Mobile Only) -->
+<div class="fixed bottom-0 w-full lg:hidden rounded-t-[2rem] z-50 bg-[#131318]/90 backdrop-blur-2xl shadow-[0_-10px_30px_rgba(0,212,255,0.15)] border-t border-[#a8e8ff]/20">
+<div class="flex justify-around items-center px-4 pb-6 pt-3">
+<div class="flex flex-col items-center justify-center text-slate-500 opacity-60">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] font-bold text-[10px] uppercase mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 opacity-60">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['Inter'] font-bold text-[10px] uppercase mt-1">Stats</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff]/20 to-[#d2bbff]/20 text-[#a8e8ff] rounded-full p-3 scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-['Inter'] font-bold text-[10px] uppercase mt-1">Social</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 opacity-60">
+<span class="material-symbols-outlined" data-icon="wallet">wallet</span>
+<span class="font-['Inter'] font-bold text-[10px] uppercase mt-1">Wallet</span>
+</div>
+</div>
+</div>
+</body></html>
