@@ -559,7 +559,7 @@ window.renderPlayerList = async function(posFilter = 'ALL', matchId = null) {
   filtered.forEach(p => {
     const isSelected = window.lineupManager.selectedPlayers.find(x => x.id === p.id);
     const card = document.createElement('div');
-    card.className = `flex items-center justify-between p-4 mb-2 rounded-xl transition-all border ${isSelected ? 'border-[#00ff88] bg-[#00ff88]/5' : 'border-white/5 bg-[#1a1a2e]'}`;
+    card.className = `kinetic-card flex items-center justify-between p-4 mb-2 rounded-xl transition-all border ${isSelected ? 'border-[#00ff88] bg-[#00ff88]/5' : 'border-white/5 bg-[#1a1a2e]'}`;
     
     card.innerHTML = `
       <div class="flex items-center gap-4">
@@ -578,7 +578,7 @@ window.renderPlayerList = async function(posFilter = 'ALL', matchId = null) {
         <div class="text-right">
            <p class="text-sm font-bold text-white">${p.price} <span class="text-[10px] text-slate-500">Cr</span></p>
         </div>
-        <button onclick="window.handlePlayerToggle('${p.id}')" class="w-8 h-8 rounded-full flex items-center justify-center ${isSelected ? 'bg-red-500/20 text-red-400' : 'bg-[#00ff88]/20 text-[#00ff88]'}">
+        <button onclick="window.handlePlayerToggle('${p.id}')" class="kinetic-button w-8 h-8 rounded-full flex items-center justify-center ${isSelected ? 'bg-red-500/20 text-red-400' : 'bg-[#00ff88]/20 text-[#00ff88]'}">
            <span class="material-symbols-outlined text-xl">${isSelected ? 'remove' : 'add'}</span>
         </button>
       </div>
@@ -679,7 +679,7 @@ window.renderContests = async function(filter = 'all') {
 
   filtered.forEach(c => {
     const card = document.createElement('div');
-    card.className = 'contest-card bg-[#131318] border border-[#2a2a40] rounded-2xl overflow-hidden hover:border-[#a8e8ff]/50 transition-all cursor-pointer group shadow-xl';
+    card.className = 'kinetic-card contest-card bg-[#131318] border border-[#2a2a40] rounded-2xl overflow-hidden hover:border-[#a8e8ff]/50 transition-all cursor-pointer group shadow-xl';
     card.onclick = () => window.location.href = `match-lobby.html?match=${c.id}`;
     
     // Countdown calculation
@@ -771,3 +771,35 @@ window.addEventListener('load', async () => {
     }
   }
 });
+// --- 10. COMPETITIVE HUB & SOCIAL LAYER HELPERS ---
+
+window.calculateROI = function(totalSpent, totalEarned) {
+    if (!totalSpent || totalSpent === 0) return 0;
+    return (((totalEarned - totalSpent) / totalSpent) * 100).toFixed(1);
+};
+
+window.getKineticXP = function(walletAddress) {
+    // Simulating XP based on skill_score and a multiplier
+    const baseXP = 1250; 
+    const randomMultiplier = Math.floor(Math.random() * 500); 
+    return baseXP + randomMultiplier; 
+};
+
+window.getTeamHistory = async function(walletAddress) {
+    // In a real scenario, this would fetch from Supabase 'entries' joined with 'matches'
+    // Mocking for now as per plan
+    return [
+        { id: 'h1', match: 'Man City vs Arsenal', rank: '#12', points: '142', date: '2 days ago', status: 'In Prize Zone', win: '0.5 SOL' },
+        { id: 'h2', match: 'Real Madrid vs Barc', rank: '#8', points: '198', date: '1 week ago', status: 'Elite', win: '2.2 SOL' },
+        { id: 'h3', match: 'PSG vs Bayern', rank: '#42', points: '98', date: '2 weeks ago', status: 'Participant', win: '0 SOL' }
+    ];
+};
+
+window.getFriendsLeaderboard = async function() {
+    // Mocking friends leaderboard as per plan
+    return [
+        { username: 'You', skill_score: 1337, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOxU6T-BaAxfkPhBO5yHAKOhJkX07MEsZGAehTwmtJVJssINlq0PJFG6zxNhhcW-an6fjvaS_8l8GQFpfkY1x4AsvvKPoHBerrHLQgT3yM7fPM9l458bIeUlGBdMiGxjIUXriDtHiNemIJs3Puznlu0zmj8f8SnIXWWLHYk8A4aS-DHrJPVtattdxzNPMAmjE4jPk8jEh4u1fPEa_-fjmpBFGyBfNeZ90Ao17RpZGJAtFI1iM-qh5Ckz7zwO7AYpuKK2vVLbxyZqo_' },
+        { username: 'CryptoKing', skill_score: 1250, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAf7WMf-rpX45XVBdixsbo4KmlMcl2UmmOr3UztAELRF4mr_pztCyql3DQ0rdutFGz5PWiFklKkQOBNru9GRcWHd0lp0rtlw-NJ9jQuV8WvA9mgnUruCSghDNpYbynF3Ug6Y7jm2we-zoRiSrauqV6IxL9CextlqIQJvVZbCCx8J4i7P0hReDC1aWiG9xPlqN--mzbp9Jri7WpvYPmUi7OwG4S-kwiMq4UJo3CqVvdzaWdaJqWfBS4qE3uFqrjMtAZNSMgp3p_LCw9T' },
+        { username: 'AlphaStrategist', skill_score: 980, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDv4WlVqDJVj9hxkFP2TkxR2LNmbN43mFOQkNu2o69QJdySCC87fj_WRPd0HMEAaR9n-KXUoRxAWg-cdTG1ZinjNU4L9aE3m2dYUHVrX9vC14x_vXNgIxV75n3vQztHI7mwT7tvbanKEgbrsn-IGFqe2fKd8V5w5ydyhf1lmBYx_fAhsAqjdkR2SHR8-NFjkgxRn757k8Q3HTkeswM5s_ccq9xVlgS5V4TQJQdylZFccS3DawuPPiaC4zyF3aVM3LfaaOXQj_3eDmp9' }
+    ];
+};

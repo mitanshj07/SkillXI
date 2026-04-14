@@ -175,11 +175,11 @@
 <div class="lg:col-span-2 relative overflow-hidden rounded-[2rem] bg-surface-container-low p-8 border border-outline-variant/10">
 <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-primary/10 blur-[100px] rounded-full"></div>
 <div class="relative z-10 flex flex-col md:flex-row items-center md:items-end justify-between h-full gap-8">
-<div>
-<span class="px-4 py-1.5 rounded-full bg-primary/20 text-primary font-headline text-xs font-bold tracking-widest uppercase mb-4 inline-block">Global Ranking: #412</span>
-<h1 class="text-6xl md:text-8xl font-headline font-extrabold text-on-surface tracking-tighter skill-score-glow mb-2">1,337</h1>
-<p class="text-2xl font-headline font-bold text-secondary tracking-tight">EXPERT TIER <span class="text-outline/50 ml-2">/ LEGENDARY</span></p>
-</div>
+                <div>
+                <span id="rank-badge" class="px-4 py-1.5 rounded-full bg-primary/20 text-primary font-headline text-xs font-bold tracking-widest uppercase mb-4 inline-block">Global Ranking: #412</span>
+                <h1 id="xp-display" class="text-6xl md:text-8xl font-headline font-extrabold text-on-surface tracking-tighter skill-score-glow mb-2 xp-glow">1,337</h1>
+                <p class="text-2xl font-headline font-bold text-secondary tracking-tight">EXPERT TIER <span class="text-outline/50 ml-2">/ LEGENDARY</span></p>
+                </div>
 <div class="flex-1 w-full max-w-md">
 <div class="flex justify-between text-sm font-bold font-headline mb-2">
 <span class="text-outline">Progress to Elite Tier</span>
@@ -227,13 +227,13 @@
 <span class="text-tertiary text-xs font-bold">+12%</span>
 </div>
 </div>
-<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
-<p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Win Rate</p>
-<div class="flex items-baseline gap-2">
-<h3 class="text-3xl font-headline font-bold">68.4%</h3>
-<span class="text-tertiary text-xs font-bold">Top 5%</span>
-</div>
-</div>
+        <div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
+          <p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">ROI (All Contests)</p>
+          <div class="flex items-baseline gap-2">
+            <h3 id="roi-stat" class="text-3xl font-headline font-bold">+24.8%</h3>
+            <span class="text-primary text-xs font-bold">ALPHA</span>
+          </div>
+        </div>
 <div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
 <p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Squads Created</p>
 <div class="flex items-baseline gap-2">
@@ -338,6 +338,16 @@
 </div>
 </div>
 </div>
+</div>
+<!-- New: Team History Section -->
+<div class="bg-surface-container-low rounded-[2rem] p-8 border border-outline-variant/10 mt-8">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="font-headline font-bold text-2xl tracking-tight">TEAM HISTORY</h2>
+        <button class="text-xs text-primary font-bold uppercase tracking-widest hover:underline">View All</button>
+    </div>
+    <div id="history-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Dynamic content -->
+    </div>
 </div>
 </main>
 <!-- BottomNavBar (Mobile Only) -->
