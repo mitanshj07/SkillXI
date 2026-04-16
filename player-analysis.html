@@ -253,7 +253,7 @@
 <div class="mb-10">
 <div class="flex justify-between items-end mb-4">
 <span class="text-[10px] text-[#5a5a75] font-bold tracking-widest uppercase">Season Efficiency</span>
-<span class="text-[10px] text-primary font-bold uppercase">View full metrics</span>
+<button onclick="window.triggerAgentXP('SCOUT_DIVE')" class="text-[10px] text-primary font-bold uppercase hover:underline cursor-pointer">Deep Scout Analysis →</button>
 </div>
 <div class="space-y-4">
 <div class="flex items-center gap-4">
@@ -318,4 +318,20 @@
 </a>
 </nav>
 <script src="assets/js/main.js"></script>
+<script>
+    window.triggerAgentXP = async function(type) {
+        const wallet = window.localStorage.getItem('skillxi_wallet');
+        if (!wallet) return;
+        
+        console.log('🧠 [Intelligence] Triggering XP for:', type);
+        if (window.calculateKineticXP) {
+            await window.calculateKineticXP(wallet, 'AGENT_CONSULT');
+            window.showWalletToast?.('🧠 Intelligence Sync: +15 XP', 'success');
+        }
+        
+        if (window.logActivity) {
+            window.logActivity(wallet, 'AI_ANALYSIS_SYNC', { type });
+        }
+    };
+</script>
 </body></html>
