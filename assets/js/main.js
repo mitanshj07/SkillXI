@@ -456,6 +456,18 @@ window.fetchWalletBalance = async function(pubKeyStr) {
   } catch (e) {}
 };
 
+window.injectDemoBanner = function() {
+    const banner = document.createElement('div');
+    banner.id = 'demo-banner';
+    banner.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:10000; background:#FFFBEB; border:1px solid #FEF3C7; color:#92400E; padding:10px 24px; border-radius:12px; font-size:12px; font-weight:700; font-family:Inter, sans-serif; box-shadow:0 4px 20px rgba(0,0,0,0.05); display:flex; align-items:center; gap:12px; white-space:nowrap;';
+    banner.innerHTML = `
+        <span style="font-size:16px;">🧪</span> 
+        <span>Demo Mode — Using sample data for hackathon preview</span>
+        <button onclick="this.parentElement.remove()" style="background:none; border:none; color:#92400E; cursor:pointer; font-size:16px; font-weight:900; padding:4px;">×</button>
+    `;
+    document.body.appendChild(banner);
+};
+
 // --- 5. REAL WEB3 PAYMENTS & UMBRA PRIVACY ---
 window.showPaymentStatement = function(amount, onConfirm) {
   const overlay = document.createElement('div');
@@ -831,13 +843,13 @@ window.renderContests = async function(filter = 'all') {
 
 window.filterContests = function(sport) {
   document.querySelectorAll('[id^="filter-"]').forEach(btn => {
-    btn.style.background = '#13131f';
-    btn.style.color = '#a0a0b8';
-    btn.style.border = '1px solid #2a2a40';
+    btn.style.background = '#FFFFFF';
+    btn.style.color = '#718096';
+    btn.style.border = '1px solid #EEEEEE';
   });
   const active = document.getElementById(`filter-${sport}`);
   if (active) {
-    active.style.background = '#7c3aed';
+    active.style.background = '#00D09C';
     active.style.color = '#fff';
     active.style.border = 'none';
   }
@@ -846,12 +858,25 @@ window.filterContests = function(sport) {
 
 // --- 8. PAGE ROUTING & INITIALIZATION ---
 window.addEventListener('load', async () => {
-  const page = window.location.pathname;
+  // 1. Always inject demo banner first for transparency
+  try { window.injectDemoBanner(); } catch(e) { console.error('Banner failed:', e); }
+
+  const path = window.location.pathname;
+  console.log('🏁 [Init] Current path:', path);
   
-  if (page.includes('contests.html')) {
-    await window.renderContests();
+  // 2. Page-specific rendering with try/catch
+  try {
+    if (path.includes('contests')) {
+      await window.renderContests();
+    } else if (path.includes('lineup')) {
+      await window.renderPlayerList();
+    } else if (path.includes('roster-lab')) {
+      // Roster lab specific init if needed
+    }
+  } catch (err) {
+    console.error('🚀 [Init] Page render error:', err);
   }
-  
+
   // Wallet re-sync
   const savedKey = window.localStorage.getItem('skillxi_wallet');
   const savedType = window.localStorage.getItem('skillxi_wallet_type') || 'phantom';
