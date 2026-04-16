@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -9,33 +9,22 @@
     <link rel="stylesheet" href="assets/css/style.css"/>
     <script id="tailwind-config">
         tailwind.config = {
-            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "on-error-container": "#ffdad6", "secondary-fixed-dim": "#d2bbff",
-                        "outline": "#859398", "primary": "#a8e8ff", "surface": "#131318",
-                        "tertiary-fixed-dim": "#00e479", "surface-container": "#1f1f25",
-                        "on-secondary-container": "#c9aeff", "error-container": "#93000a",
-                        "on-primary-container": "#00586b", "on-secondary-fixed-variant": "#5a00c6",
-                        "on-secondary": "#3f008e", "on-secondary-fixed": "#25005a",
-                        "tertiary-fixed": "#60ff99", "on-surface": "#e4e1e9",
-                        "surface-container-highest": "#35343a", "on-background": "#e4e1e9",
-                        "on-surface-variant": "#bbc9cf", "surface-container-lowest": "#0e0e13",
-                        "secondary": "#d2bbff", "on-primary-fixed": "#001f27",
-                        "error": "#ffb4ab", "secondary-fixed": "#eaddff",
-                        "surface-tint": "#3cd7ff", "surface-container-low": "#1b1b20",
-                        "inverse-on-surface": "#303036", "tertiary-container": "#00df76",
-                        "surface-container-high": "#2a292f", "secondary-container": "#6001d1",
-                        "primary-fixed": "#b4ebff", "on-tertiary-fixed": "#00210c",
-                        "inverse-surface": "#e4e1e9", "surface-variant": "#35343a",
-                        "surface-bright": "#39383e", "background": "#131318",
-                        "primary-container": "#00d4ff", "on-primary": "#003642",
-                        "tertiary": "#00ff88", "on-primary-fixed-variant": "#004e5f",
-                        "surface-dim": "#131318", "on-tertiary-fixed-variant": "#005228",
-                        "on-error": "#690005", "inverse-primary": "#00677e",
-                        "outline-variant": "#3c494e", "on-tertiary": "#003919",
-                        "on-tertiary-container": "#005d2d", "primary-fixed-dim": "#3cd7ff"
+                        "primary": "#00D09C",
+                        "primary-container": "#F6F9FC",
+                        "secondary": "#1A1A1A",
+                        "surface": "#FFFFFF",
+                        "surface-container": "#F6F9FC",
+                        "surface-container-low": "#F9FAFB",
+                        "surface-container-high": "#F3F4F6",
+                        "on-surface": "#1A1A1A",
+                        "on-surface-variant": "#718096",
+                        "outline": "#EEEEEE",
+                        "outline-variant": "#F3F4F6",
+                        "error": "#E21D26",
+                        "background": "#FFFFFF"
                     },
                     borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "9999px" },
                     fontFamily: { headline: ["Space Grotesk"], body: ["Inter"], label: ["Inter"] }
@@ -52,10 +41,10 @@
 <body class="bg-surface text-on-surface font-body min-h-screen">
 
 <!-- ===== TOP NAV BAR ===== -->
-<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<nav class="fixed top-0 w-full z-50 bg-white border-b border-gray-100">
     <div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
         <div class="flex items-center gap-8">
-            <a href="index.html" class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-['Space_Grotesk']">SkillXI</a>
+            <a href="index.html" class="text-2xl font-extrabold tracking-tighter text-primary font-headline">SkillXI</a>
             <div class="hidden md:flex gap-6">
                 <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="index.html">Home</a>
                 <a class="top-nav-link text-slate-400 font-medium hover:text-white transition-colors font-['Space_Grotesk'] tracking-tight" href="contests.html">Contests</a>
@@ -64,13 +53,13 @@
             </div>
         </div>
         <div class="flex items-center gap-4">
-            <a href="wallet.html" class="p-2 rounded-full hover:bg-[#a8e8ff]/10 transition-all duration-300 active:scale-95">
-                <span class="material-symbols-outlined text-[#a8e8ff]">account_balance_wallet</span>
+            <a href="wallet.html" class="p-2 rounded-full hover:bg-primary/5 transition-all">
+                <span class="material-symbols-outlined text-gray-400 hover:text-primary">account_balance_wallet</span>
             </a>
-            <button class="p-2 rounded-full hover:bg-[#a8e8ff]/10 transition-all duration-300 active:scale-95">
-                <span class="material-symbols-outlined text-[#a8e8ff]">notifications</span>
+            <button class="p-2 rounded-full hover:bg-primary/5 transition-all">
+                <span class="material-symbols-outlined text-gray-400 hover:text-primary">notifications</span>
             </button>
-            <a href="profile.html" class="w-10 h-10 rounded-full border-2 border-[#a8e8ff]/30 overflow-hidden">
+            <a href="profile.html" class="w-10 h-10 rounded-full border border-gray-100 overflow-hidden">
                 <img alt="User Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuWHy486rZWdwY1x41y0EEiakZeMKzCtels-E4FhYeP6C8L5eXU4ad4CDChNvgUAdFJkEvHni22VQsfSQ8SR2AuvdePWlbmTt5wm5GpkYQZ0OFhBf51CrQScJqioPhDKpNZGzQyyUWUet8n14uUIAonLXrVgs-Q9p-RsWdj6iqE9rHZ28JcC6Ju78M30mUbwcg0Zk5-FxsA0lFfGgEzhm7PmL7hCSH5NQ6azaPkSleSlSxq-hOv190dPle36yV_Up7g1_au8L2CLqt"/>
             </a>
         </div>
@@ -78,10 +67,10 @@
 </nav>
 
 <!-- ===== SIDE NAV BAR (Desktop) ===== -->
-<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 border-r border-[#ffffff0f] bg-[#0e0e13] flex-col py-8 z-40">
+<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white flex-col py-8 z-40">
     <div class="px-6 mb-12 mt-20">
-        <h2 class="text-[#d2bbff] font-black text-xl font-headline tracking-tighter">KINETIC AI</h2>
-        <p class="text-[10px] text-[#5a5a75] tracking-[0.2em] font-bold">V3.2 ACTIVE</p>
+        <h2 class="text-primary font-black text-xl font-headline tracking-tighter">KINETIC AI</h2>
+        <p class="text-[10px] text-gray-400 tracking-[0.2em] font-bold uppercase">System Active</p>
     </div>
     <div class="flex flex-col flex-1">
         <a class="side-nav-link text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200" href="index.html">
@@ -110,7 +99,7 @@
         </a>
     </div>
     <div class="px-6 mt-auto">
-        <a href="subscription.html" class="w-full block text-center bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-extrabold py-3 rounded-full shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-[1.02] transition-transform active:scale-95">
+        <a href="subscription.html" class="w-full block text-center bg-primary text-white font-headline font-extrabold py-3 rounded-xl hover:bg-primary/90 transition-all">
             UPGRADE TO PRO
         </a>
         <div class="mt-8 flex flex-col gap-4">
@@ -140,17 +129,17 @@
                     <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
                     AI-POWERED INSIGHTS
                 </span>
-                <h1 class="text-5xl md:text-7xl font-extrabold font-headline tracking-tighter text-white mb-4">
-                    SKILL OVER <span class="text-gradient-primary">LUCK</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold font-headline tracking-tighter text-gray-900 mb-4 uppercase italic">
+                    Skill over <span class="text-primary">Luck</span>
                 </h1>
-                <p class="text-on-surface-variant text-lg max-w-xl mb-8">
+                <p class="text-gray-500 text-lg max-w-xl mb-8">
                     The next-generation AI fantasy sports platform. Build data-driven lineups, analyze player performance, and compete in skill-based contests.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="contests.html" class="bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold px-8 py-4 rounded-full shadow-[0_0_30px_rgba(0,212,255,0.3)] hover:scale-[1.02] active:scale-95 transition-all">
+                    <a href="contests.html" class="bg-primary text-white font-headline font-bold px-10 py-4 rounded-xl hover:bg-primary/90 transition-all">
                         Browse Contests
                     </a>
-                    <a href="lineup.html" class="bg-surface-container-high border border-outline-variant text-white font-headline font-bold px-8 py-4 rounded-full hover:bg-surface-variant transition-all">
+                    <a href="lineup.html" class="bg-white border border-gray-100 text-gray-900 font-headline font-bold px-10 py-4 rounded-xl hover:bg-gray-50 transition-all">
                         Build Lineup
                     </a>
                 </div>
@@ -160,40 +149,40 @@
 
     <!-- Feature Cards -->
     <section class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <a href="ai-chat.html" class="group bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10 hover:border-primary/30 transition-all">
-            <span class="material-symbols-outlined text-secondary text-4xl mb-4 block" style="font-variation-settings: 'FILL' 1;">psychology</span>
-            <h3 class="font-headline font-bold text-xl mb-2 group-hover:text-primary transition-colors">AI Analyst Chat</h3>
-            <p class="text-on-surface-variant text-sm">Get real-time AI recommendations for captain picks, lineup optimization, and match intelligence.</p>
+        <a href="ai-chat.html" class="group bg-white rounded-3xl p-8 border border-gray-100 hover:border-primary transition-all">
+            <span class="material-symbols-outlined text-gray-900 text-4xl mb-4 block">psychology</span>
+            <h3 class="font-headline font-bold text-xl mb-2 text-gray-900 group-hover:text-primary transition-colors uppercase italic">AI Analyst Chat</h3>
+            <p class="text-gray-500 text-sm">Get real-time AI recommendations for captain picks, lineup optimization, and match intelligence.</p>
         </a>
-        <a href="pre-match.html" class="group bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10 hover:border-primary/30 transition-all">
-            <span class="material-symbols-outlined text-primary text-4xl mb-4 block" style="font-variation-settings: 'FILL' 1;">analytics</span>
-            <h3 class="font-headline font-bold text-xl mb-2 group-hover:text-primary transition-colors">Pre-Match Intel</h3>
-            <p class="text-on-surface-variant text-sm">Tactical breakdowns, AI score predictions, and player analysis reports before every match.</p>
+        <a href="pre-match.html" class="group bg-white rounded-3xl p-8 border border-gray-100 hover:border-primary transition-all">
+            <span class="material-symbols-outlined text-primary text-4xl mb-4 block">analytics</span>
+            <h3 class="font-headline font-bold text-xl mb-2 text-gray-900 group-hover:text-primary transition-colors uppercase italic">Pre-Match Intel</h3>
+            <p class="text-gray-500 text-sm">Tactical breakdowns, AI score predictions, and player analysis reports before every match.</p>
         </a>
-        <a href="leaderboard.html" class="group bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10 hover:border-primary/30 transition-all">
-            <span class="material-symbols-outlined text-tertiary text-4xl mb-4 block" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
-            <h3 class="font-headline font-bold text-xl mb-2 group-hover:text-primary transition-colors">Global Leaderboard</h3>
-            <p class="text-on-surface-variant text-sm">Compete against the best analysts worldwide and climb the prestige ranking system.</p>
+        <a href="leaderboard.html" class="group bg-white rounded-3xl p-8 border border-gray-100 hover:border-primary transition-all">
+            <span class="material-symbols-outlined text-primary text-4xl mb-4 block">leaderboard</span>
+            <h3 class="font-headline font-bold text-xl mb-2 text-gray-900 group-hover:text-primary transition-colors uppercase italic">Leaderboard</h3>
+            <p class="text-gray-500 text-sm">Compete against the best analysts worldwide and climb the prestige ranking system.</p>
         </a>
     </section>
 
     <!-- Quick Links -->
     <section class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <a href="player-analysis.html" class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-secondary/30 transition-all text-center">
-            <span class="material-symbols-outlined text-secondary text-3xl mb-2 block">person_search</span>
-            <span class="font-headline font-bold text-sm">Player Analysis</span>
+        <a href="player-analysis.html" class="bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary transition-all text-center">
+            <span class="material-symbols-outlined text-gray-900 text-3xl mb-2 block">person_search</span>
+            <span class="font-headline font-bold text-sm text-gray-900">Player Analysis</span>
         </a>
-        <a href="payout.html" class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-tertiary/30 transition-all text-center">
-            <span class="material-symbols-outlined text-tertiary text-3xl mb-2 block">payments</span>
-            <span class="font-headline font-bold text-sm">Payouts</span>
+        <a href="payout.html" class="bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary transition-all text-center">
+            <span class="material-symbols-outlined text-primary text-3xl mb-2 block">payments</span>
+            <span class="font-headline font-bold text-sm text-gray-900">Payouts</span>
         </a>
-        <a href="subscription.html" class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-primary/30 transition-all text-center">
+        <a href="subscription.html" class="bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary transition-all text-center">
             <span class="material-symbols-outlined text-primary text-3xl mb-2 block">workspace_premium</span>
-            <span class="font-headline font-bold text-sm">Subscription</span>
+            <span class="font-headline font-bold text-sm text-gray-900">Subscription</span>
         </a>
-        <a href="nexus-feed.html" class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10 hover:border-secondary/30 transition-all text-center">
-            <span class="material-symbols-outlined text-secondary text-3xl mb-2 block">hub</span>
-            <span class="font-headline font-bold text-sm">Nexus Feed</span>
+        <a href="nexus-feed.html" class="bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary transition-all text-center">
+            <span class="material-symbols-outlined text-gray-900 text-3xl mb-2 block">hub</span>
+            <span class="font-headline font-bold text-sm text-gray-900">Nexus Feed</span>
         </a>
     </section>
     <!-- Privacy First Highlight -->

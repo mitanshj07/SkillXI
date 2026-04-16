@@ -180,17 +180,72 @@ async function supabaseQuery(table, method = 'GET', data = null) {
 }
 
 window.ensureUserExists = async function(walletAddress) {
-  console.log('🔥 [REAL Supabase] debug: Upserting user', walletAddress);
-  const { data, error } = await _supabase.from('users').upsert({
-      id: walletAddress,
-      wallet_address: walletAddress,
+  console.log('🔥 [REAL Supabase] debug: Upserting user profile', walletAddress);
+  const { data, error } = await _supabase.from('profiles').upsert({
+      wallet_id: walletAddress,
       username: `SkillXI-${walletAddress.slice(0,4)}`,
       skill_score: 500,
-      subscription: 'free',
+      xp: 0,
+      level: 1,
+      tier: 'NOVICE',
       total_earned: 0,
-      contests_entered: 1
+      badges: []
   }).select();
   if (error) console.error('🔥 [REAL Supabase] debug ERROR:', error);
+};
+
+window.calculateKineticXP = async function(walletAddress, type, meta = {}) {
+    const xpMap = {
+        'CONTEST_JOIN': 25,
+        'CONTEST_WIN': 100,
+        'FOLLOW_USER': 5,
+        'CHALLENGE_WIN': 150,
+        'STREAK_BONUS': 50
+    };
+    
+    const increment = xpMap[type] || 10;
+    console.log(`✨ [XP] Adding ${increment} XP for ${type}`);
+    
+    const { data: profile } = await _supabase.from('profiles').select('xp, level').eq('wallet_id', walletAddress).single();
+    if (!profile) return;
+
+    let newXp = (profile.xp || 0) + increment;
+    let newLevel = profile.level || 1;
+    
+    // Simple level up logic: level * 500 XP required
+    const nextLevelXp = newLevel * 500;
+    if (newXp >= nextLevelXp) {
+        newLevel++;
+        window.logActivity(walletAddress, 'LEVEL_UP', { level: newLevel });
+        window.showWalletToast(`🚀 LEVEL UP! You are now Level ${newLevel}`, 'success');
+    }
+
+    await _supabase.from('profiles').update({ xp: newXp, level: newLevel }).eq('wallet_id', walletAddress);
+    return { newXp, newLevel };
+};
+
+window.logActivity = async function(walletAddress, type, payload) {
+    console.log('📝 [Activity] Logging:', type);
+    await _supabase.from('activities').insert({
+        user_id: walletAddress,
+        type: type,
+        payload: payload
+    });
+};
+
+window.followUser = async function(targetWallet) {
+    const myWallet = window.localStorage.getItem('skillxi_wallet');
+    if (!myWallet) return;
+    
+    const { error } = await _supabase.from('follows').insert({
+        follower_id: myWallet,
+        following_id: targetWallet
+    });
+    
+    if (!error) {
+        window.calculateKineticXP(myWallet, 'FOLLOW_USER');
+        window.showWalletToast('User followed!', 'success');
+    }
 };
 
 window.getContests = async function() {
@@ -241,7 +296,7 @@ window.getPlayers = async function(matchId = null) {
 };
 
 window.getLeaderboard = async function() {
-  const { data } = await _supabase.from('users').select('*').order('skill_score', { ascending: false }).limit(20);
+  const { data } = await _supabase.from('profiles').select('*').order('skill_score', { ascending: false }).limit(20);
   return data;
 };
 
@@ -289,9 +344,9 @@ window.getLiveScores = async function() {
 // --- 4. WALLET CORE (REAL) ---
 window.showWalletToast = function(msg, type = 'info', link = null) {
   const toast = document.createElement('div');
-  toast.style.cssText = `position:fixed; bottom:24px; right:24px; z-index:999999; padding:16px 24px; border-radius:12px; background:#1a1a22; border:1px solid ${type==='error'?'#ff4d4d':type==='success'?'#00ff88':'#a8e8ff'}; color:#fff; font-family:Inter,sans-serif; box-shadow:0 10px 30px rgba(0,0,0,0.5); transform:translateY(100px); transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity:0;`;
+  toast.style.cssText = `position:fixed; bottom:24px; right:24px; z-index:999999; padding:16px 24px; border-radius:12px; background:#FFFFFF; border:1px solid ${type==='error'?'#E21D26':type==='success'?'#00D09C':'#EEEEEE'}; color:#1A1A1A; font-family:Inter,sans-serif; box-shadow:0 10px 40px rgba(0,0,0,0.08); transform:translateY(100px); transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity:0;`;
   
-  toast.innerHTML = `<div style="display:flex; align-items:center; gap:12px;"><span style="font-size:20px;">${type==='error'?'❌':type==='success'?'✅':'ℹ️'}</span><div>${msg}${link?`<br><a href="${link}" target="_blank" style="color:#a8e8ff; font-size:12px; text-decoration:underline;">View on Explorer</a>`:''}</div></div>`;
+  toast.innerHTML = `<div style="display:flex; align-items:center; gap:12px;"><span style="font-size:20px;">${type==='error'?'❌':type==='success'?'✅':'ℹ️'}</span><div style="font-size:14px; font-weight:500;">${msg}${link?`<br><a href="${link}" target="_blank" style="color:#00D09C; font-size:12px; text-decoration:underline;">View on Explorer</a>`:''}</div></div>`;
   
   document.body.appendChild(toast);
   setTimeout(() => { toast.style.transform = 'translateY(0)'; toast.style.opacity = '1'; }, 100);
@@ -300,15 +355,15 @@ window.showWalletToast = function(msg, type = 'info', link = null) {
 
 window.triggerConnectWallet = function() {
   const modal = document.createElement('div');
-  modal.style.cssText = 'position:fixed; inset:0; z-index:100000; background:rgba(0,0,0,0.8); backdrop-filter:blur(10px); display:flex; align-items:center; justify-content:center;';
+  modal.style.cssText = 'position:fixed; inset:0; z-index:100000; background:rgba(255,255,255,0.8); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center;';
   modal.innerHTML = `
-    <div class="glass-panel" style="background:#131318; border:1px solid rgba(168,232,255,0.2); border-radius:32px; padding:40px; text-align:center; max-width:400px; width:100%; box-shadow:0 0 40px rgba(0,0,0,1);">
-      <h2 style="color:#fff; font-family:Space Grotesk; font-size:24px; font-weight:800; margin-bottom:24px;">Connect Wallet</h2>
+    <div style="background:#FFFFFF; border:1px solid #EEEEEE; border-radius:24px; padding:40px; text-align:center; max-width:400px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.1);">
+      <h2 style="color:#1A1A1A; font-family:Space Grotesk; font-size:24px; font-weight:800; margin-bottom:24px;">Connect Wallet</h2>
       <div style="display:flex; flex-direction:column; gap:16px;">
-        <button onclick="window.connectWalletProvider('phantom')" style="background:rgba(171,71,255,0.1); border:1px solid rgba(171,71,255,0.3); color:#fff; padding:16px; border-radius:16px; font-weight:700; cursor:pointer;">Phantom</button>
-        <button onclick="window.connectWalletProvider('solflare')" style="background:rgba(255,129,0,0.1); border:1px solid rgba(255,129,0,0.3); color:#fff; padding:16px; border-radius:16px; font-weight:700; cursor:pointer;">Solflare</button>
+        <button onclick="window.connectWalletProvider('phantom')" style="background:#FFFFFF; border:1px solid #EEEEEE; color:#1A1A1A; padding:16px; border-radius:16px; font-weight:700; cursor:pointer; font-family:Space Grotesk;">Phantom</button>
+        <button onclick="window.connectWalletProvider('solflare')" style="background:#FFFFFF; border:1px solid #EEEEEE; color:#1A1A1A; padding:16px; border-radius:16px; font-weight:700; cursor:pointer; font-family:Space Grotesk;">Solflare</button>
       </div>
-      <button onclick="this.parentElement.parentElement.remove()" style="margin-top:24px; color:#5a5a75; font-size:14px; background:none; border:none; cursor:pointer;">Close</button>
+      <button onclick="this.parentElement.parentElement.remove()" style="margin-top:24px; color:#718096; font-size:14px; background:none; border:none; cursor:pointer; font-weight:600;">Close</button>
     </div>
   `;
   modal.id = 'wallet-selector-modal';
@@ -344,13 +399,14 @@ window.disconnectWallet = function() {
 window.updateWalletUI = function(pubKeyStr) {
   const short = `${pubKeyStr.slice(0,4)}...${pubKeyStr.slice(-4)}`;
   document.querySelectorAll('a[href="wallet.html"]').forEach(el => {
-    el.innerHTML = `<span style="color:#00ff88; font-weight:800; background:rgba(0,255,136,0.1); padding:6px 14px; border-radius:99px; border:1px solid rgba(0,255,136,0.3);">${short}</span>`;
+    el.innerHTML = `<span style="color:#00D09C; font-weight:800; background:#F6F9FC; padding:8px 16px; border-radius:12px; border:1px solid #EEEEEE; font-family:Space Grotesk; font-size:13px;">${short}</span>`;
   });
   document.querySelectorAll('button').forEach(btn => {
     if (btn.textContent.includes('Connect Wallet')) {
        btn.textContent = short;
-       btn.style.color = '#00ff88';
-       btn.style.background = 'rgba(0,255,136,0.1)';
+       btn.style.color = '#00D09C';
+       btn.style.background = '#FFFFFF';
+       btn.style.border = '1px solid #EEEEEE';
     }
   });
 };
@@ -367,21 +423,20 @@ window.fetchWalletBalance = async function(pubKeyStr) {
 
 // --- 5. REAL WEB3 PAYMENTS & UMBRA PRIVACY ---
 window.showPaymentStatement = function(amount, onConfirm) {
-  console.log('🔥 [REAL Payment] debug: Rendering modal');
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed; inset:0; z-index:100000; background:rgba(0,0,0,0.85); backdrop-filter:blur(15px); display:flex; align-items:center; justify-content:center; padding:20px;';
+  overlay.style.cssText = 'position:fixed; inset:0; z-index:100000; background:rgba(255,255,255,0.85); backdrop-filter:blur(15px); display:flex; align-items:center; justify-content:center; padding:20px;';
   overlay.innerHTML = `
-    <div style="background:#1a1a22; border:1px solid rgba(0,255,136,0.3); border-radius:24px; padding:40px; max-width:480px; width:100%; text-align:center; box-shadow:0 0 60px rgba(0,255,136,0.1);">
-      <div style="font-size:48px; margin-bottom:20px;">🔐</div>
-      <h2 style="font-family:'Space Grotesk'; font-size:24px; font-weight:800; color:#fff; margin-bottom:16px;">Payment Statement</h2>
-      <p style="color:#a0a0b8; font-size:15px; line-height:1.6; margin-bottom:32px;">
-        You are about to send <span style="color:#00ff88; font-weight:700;">${amount} SOL</span> as entry fee to the contest escrow.<br><br>
-        This transaction will be shielded using Umbra Privacy Protocol.<br>
+    <div style="background:#FFFFFF; border:1px solid #EEEEEE; border-radius:24px; padding:40px; max-width:480px; width:100%; text-align:center; box-shadow:0 30px 60px rgba(0,0,0,0.1);">
+      <div style="font-size:48px; margin-bottom:20px;">🛡️</div>
+      <h2 style="font-family:'Space Grotesk'; font-size:24px; font-weight:800; color:#1A1A1A; margin-bottom:16px;">Payment Statement</h2>
+      <p style="color:#718096; font-size:15px; line-height:1.6; margin-bottom:32px;">
+        You are about to send <span style="color:#00D09C; font-weight:800;">${amount} SOL</span> as entry fee to the contest escrow.<br><br>
+        This transaction will be shielded using <span style="font-weight:700; color:#1A1A1A;">Umbra Privacy Protocol</span>.<br>
         No one can see your lineup or strategy.
       </p>
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <button id="confirm-p-btn" style="background:linear-gradient(135deg,#00ff88,#00d4ff); color:#003642; border:none; border-radius:14px; padding:18px; font-weight:800; cursor:pointer; transition:all 0.3s;">Confirm & Pay with Umbra</button>
-        <button id="close-p-btn" style="background:none; border:1px solid rgba(90,90,117,0.3); color:#5a5a75; padding:14px; border-radius:14px; cursor:pointer;">Cancel</button>
+        <button id="confirm-p-btn" style="background:#00D09C; color:#FFFFFF; border:none; border-radius:14px; padding:18px; font-weight:800; cursor:pointer; font-family:Space Grotesk; font-size:15px;">Confirm & Pay via Umbra</button>
+        <button id="close-p-btn" style="background:#FFFFFF; border:1px solid #EEEEEE; color:#718096; padding:14px; border-radius:14px; cursor:pointer; font-weight:600;">Cancel</button>
       </div>
     </div>
   `;
@@ -480,8 +535,11 @@ window.claimPrivatePayoutWithUmbra = async function(contestId) {
 window.updateUmbraBadges = function(isLocked = false, isClaimed = false) {
   document.querySelectorAll('.umbra-badge, #umbra-notice').forEach(badge => {
     if (isLocked) {
-      badge.innerHTML = '<span style="color:#00ff88; font-weight:bold;">🔐 Shielded & Private</span>';
-      badge.style.border = '1px solid rgba(0,255,136,0.2)';
+      badge.innerHTML = '<span style="color:#00D09C; font-weight:bold;">🛡️ Private Entry</span>';
+      badge.style.border = '1px solid #EEEEEE';
+      badge.style.background = '#F6F9FC';
+      badge.style.padding = '4px 10px';
+      badge.style.borderRadius = '8px';
     }
   });
 };
@@ -549,7 +607,7 @@ window.renderPlayerList = async function(posFilter = 'ALL', matchId = null) {
   if (!container) return;
   
   if (window.CURRENT_PLAYERS.length === 0) {
-      container.innerHTML = '<p class="text-center text-white mt-10">Fetching Live Squads...</p>';
+      container.innerHTML = '<p class="text-center text-gray-400 mt-10 font-bold uppercase tracking-widest text-xs">Fetching Squads...</p>';
       window.CURRENT_PLAYERS = await window.getPlayers(matchId);
   }
 
@@ -557,29 +615,30 @@ window.renderPlayerList = async function(posFilter = 'ALL', matchId = null) {
   const filtered = posFilter === 'ALL' ? window.CURRENT_PLAYERS : window.CURRENT_PLAYERS.filter(p => p.pos === posFilter);
   
   filtered.forEach(p => {
-    const isSelected = window.lineupManager.selectedPlayers.find(x => x.id === p.id);
+    const index = window.lineupManager.selectedPlayers.findIndex(x => x.id === p.id);
+    const isSelected = index > -1;
     const card = document.createElement('div');
-    card.className = `kinetic-card flex items-center justify-between p-4 mb-2 rounded-xl transition-all border ${isSelected ? 'border-[#00ff88] bg-[#00ff88]/5' : 'border-white/5 bg-[#1a1a2e]'}`;
+    card.className = `kinetic-card flex items-center justify-between p-4 mb-2 rounded-xl transition-all border ${isSelected ? 'border-primary bg-primary/5' : 'border-gray-100 bg-white'}`;
     
     card.innerHTML = `
       <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#a8e8ff]/20 to-[#d2bbff]/20 flex items-center justify-center font-bold text-lg overflow-hidden border border-white/10">
+        <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center font-bold text-lg overflow-hidden border border-gray-100 text-gray-400">
            ${p.photo ? `<img src="${p.photo}" class="w-full h-full object-cover">` : p.name.slice(0,1)}
         </div>
         <div>
-          <h4 class="font-bold text-white text-sm">${p.name}</h4>
-          <p class="text-[10px] text-slate-500 uppercase font-black">${p.team} <span class="mx-1">•</span> ${p.pos}</p>
+          <h4 class="font-bold text-gray-900 text-sm italic uppercase">${p.name}</h4>
+          <p class="text-[10px] text-gray-400 uppercase font-black tracking-widest">${p.team} <span class="mx-1">•</span> ${p.pos}</p>
           <div class="flex items-center gap-1 mt-1">
-             <span class="text-[9px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-bold">AI ${p.aiScore}</span>
+             <span class="text-[9px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded font-black uppercase">AI Rating ${p.aiScore}</span>
           </div>
         </div>
       </div>
       <div class="flex items-center gap-4">
         <div class="text-right">
-           <p class="text-sm font-bold text-white">${p.price} <span class="text-[10px] text-slate-500">Cr</span></p>
+           <p class="text-sm font-black text-gray-900">${p.price} <span class="text-[10px] text-gray-400">CR</span></p>
         </div>
-        <button onclick="window.handlePlayerToggle('${p.id}')" class="kinetic-button w-8 h-8 rounded-full flex items-center justify-center ${isSelected ? 'bg-red-500/20 text-red-400' : 'bg-[#00ff88]/20 text-[#00ff88]'}">
-           <span class="material-symbols-outlined text-xl">${isSelected ? 'remove' : 'add'}</span>
+        <button onclick="window.handlePlayerToggle('${p.id}')" class="kinetic-button w-10 h-10 rounded-xl flex items-center justify-center ${isSelected ? 'bg-error/10 text-error' : 'bg-primary/10 text-primary'}">
+           <span class="material-symbols-outlined text-xl">${isSelected ? 'do_not_disturb_on' : 'add_circle'}</span>
         </button>
       </div>
     `;
@@ -644,18 +703,18 @@ window.renderMyTeamPitch = function() {
        };
        pEl.innerHTML = `
          <div class="relative">
-            <div class="w-14 h-14 rounded-full bg-[#131318] border-2 ${isC ? 'border-yellow-400' : isVC ? 'border-slate-300' : 'border-white/10'} flex items-center justify-center overflow-hidden">
-               ${p.photo ? `<img src="${p.photo}" class="w-full h-full object-cover">` : `<span class="font-bold text-slate-500">${p.name.slice(0,1)}</span>`}
+            <div class="w-14 h-14 rounded-full bg-white border-2 ${isC ? 'border-primary' : isVC ? 'border-gray-500' : 'border-gray-100'} flex items-center justify-center overflow-hidden shadow-sm">
+               ${p.photo ? `<img src="${p.photo}" class="w-full h-full object-cover">` : `<span class="font-black text-gray-400">${p.name.slice(0,1)}</span>`}
             </div>
-            ${isC ? `<span class="absolute -top-1 -right-1 bg-yellow-400 text-black text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full">C</span>` : ''}
-            ${isVC ? `<span class="absolute -top-1 -right-1 bg-slate-300 text-black text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full">VC</span>` : ''}
+            ${isC ? `<span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-black w-6 h-6 flex items-center justify-center rounded-lg shadow-sm">C</span>` : ''}
+            ${isVC ? `<span class="absolute -top-1 -right-1 bg-gray-500 text-white text-[10px] font-black w-6 h-6 flex items-center justify-center rounded-lg shadow-sm">VC</span>` : ''}
          </div>
-         <p class="text-[10px] font-bold text-white bg-black/50 px-2 py-0.5 rounded truncate max-w-[60px]">${p.name}</p>
+         <p class="text-[10px] font-black text-gray-900 bg-white/90 px-2 py-0.5 rounded shadow-sm truncate max-w-[70px] uppercase">${p.name}</p>
          
          <!-- Captain Select Popover (Click based) -->
-         <div class="captain-selector absolute -top-16 hidden flex bg-[#1a1a2e] border border-white/10 rounded-lg p-1 gap-1 z-50 shadow-2xl">
-           <button onclick="window.lineupManager.setRole('${p.id}', 'C'); window.updateBuilderUI();" class="p-1 px-3 text-[10px] font-black bg-yellow-400 text-black rounded hover:scale-105 active:scale-95 transition-all">CAPTAIN</button>
-           <button onclick="window.lineupManager.setRole('${p.id}', 'VC'); window.updateBuilderUI();" class="p-1 px-3 text-[10px] font-black bg-slate-300 text-black rounded hover:scale-105 active:scale-95 transition-all">VICE</button>
+         <div class="captain-selector absolute -top-16 hidden flex bg-white border border-gray-100 rounded-xl p-1 gap-1 z-50 shadow-xl">
+           <button onclick="window.lineupManager.setRole('${p.id}', 'C'); window.updateBuilderUI();" class="p-2 px-4 text-[10px] font-black bg-primary text-white rounded-lg hover:bg-primary/90 transition-all uppercase">Captain</button>
+           <button onclick="window.lineupManager.setRole('${p.id}', 'VC'); window.updateBuilderUI();" class="p-2 px-4 text-[10px] font-black bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-all uppercase">VC</button>
          </div>
        `;
        row.appendChild(pEl);
@@ -671,7 +730,7 @@ window.renderContests = async function(filter = 'all') {
   const grid = document.getElementById('contests-grid');
   if (!grid) return;
   
-  grid.innerHTML = '<p class="text-white text-center mt-10">Fetching Next Gen Maches...</p>';
+  grid.innerHTML = '<p class="text-gray-400 text-center mt-10 font-black uppercase text-xs tracking-widest">Fetching Matches...</p>';
   window.CURRENT_CONTESTS = await window.getContests();
 
   grid.innerHTML = '';
@@ -679,7 +738,7 @@ window.renderContests = async function(filter = 'all') {
 
   filtered.forEach(c => {
     const card = document.createElement('div');
-    card.className = 'kinetic-card contest-card bg-[#131318] border border-[#2a2a40] rounded-2xl overflow-hidden hover:border-[#a8e8ff]/50 transition-all cursor-pointer group shadow-xl';
+    card.className = 'kinetic-card contest-card bg-white border border-gray-100 rounded-3xl overflow-hidden hover:border-primary transition-all cursor-pointer group shadow-sm';
     card.onclick = () => window.location.href = `match-lobby.html?match=${c.id}`;
     
     // Countdown calculation
@@ -687,47 +746,47 @@ window.renderContests = async function(filter = 'all') {
     const mins = Math.floor((c.timeLeft % 3600) / 60);
     
     card.innerHTML = `
-      <div class="p-5">
+      <div class="p-6">
         <div class="flex justify-between items-start mb-4">
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-widest text-[#5a5a75] mb-1 block">${c.league}</span>
-            <h3 class="text-white font-bold text-lg leading-tight">${c.homeTeam} <span class="text-[#5a5a75] mx-1">vs</span> ${c.awayTeam}</h3>
+            <span class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1 block">${c.league}</span>
+            <h3 class="text-gray-900 font-black text-xl leading-tight uppercase italic">${c.homeTeam} <span class="text-gray-300 mx-1">VS</span> ${c.awayTeam}</h3>
           </div>
           <div class="flex flex-col items-end">
-             <span class="bg-[#1a1a2e] text-[#a8e8ff] text-[10px] px-2 py-1 rounded border border-[#a8e8ff]/20 font-bold">${c.difficulty}</span>
-             ${c.featured ? '<span class="mt-1 text-[10px] text-yellow-400">⭐ Featured</span>' : ''}
+             <span class="bg-gray-50 text-gray-500 text-[10px] px-3 py-1 rounded-lg border border-gray-100 font-black uppercase tracking-tighter">${c.difficulty}</span>
+             ${c.featured ? '<span class="mt-1 text-[10px] text-primary font-black uppercase">⭐ Featured</span>' : ''}
           </div>
         </div>
         
-        <div class="flex items-center gap-2 mb-6 text-sm text-[#00ff88]">
+        <div class="flex items-center gap-2 mb-6 text-sm text-primary">
           <span class="material-symbols-outlined text-sm">schedule</span>
-          <span class="font-mono font-bold">${hours}h ${mins}m left</span>
-          <span class="text-[#5a5a75] text-xs ml-2">${c.matchDate}</span>
+          <span class="font-black uppercase tracking-tighter">${hours}h ${mins}m left</span>
+          <span class="text-gray-400 text-xs ml-2 font-bold uppercase">${c.matchDate}</span>
         </div>
 
         <div class="flex justify-between items-end">
           <div>
-            <p class="text-[10px] text-[#a0a0b8] uppercase font-bold mb-1">Prize Pool</p>
-            <p class="text-2xl font-black text-white font-headline">${c.prize} <span class="text-sm font-bold text-[#a8e8ff]">SOL</span></p>
+            <p class="text-[10px] text-gray-400 uppercase font-black tracking-widest mb-1">Prize Pool</p>
+            <p class="text-3xl font-black text-gray-900 font-headline italic uppercase">${c.prize} <span class="text-sm font-bold text-primary">SOL</span></p>
           </div>
           <div class="text-right">
-            <p class="text-[10px] text-[#a0a0b8] uppercase font-bold mb-1">Entry</p>
-            <p class="text-lg font-bold text-[#00ff88]">${c.entry} <span class="text-xs">SOL</span></p>
+            <p class="text-[10px] text-gray-400 uppercase font-black tracking-widest mb-1">Entry</p>
+            <p class="text-xl font-black text-primary uppercase">${c.entry} <span class="text-xs">SOL</span></p>
           </div>
         </div>
       </div>
 
-      <div class="bg-[#0e0e13] px-5 py-3 border-t border-[#2a2a40]">
+      <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
         <div class="flex justify-between items-center mb-2">
-           <span class="text-[10px] text-[#5a5a75] font-bold uppercase tracking-wider">${c.currentPlayers} / ${c.maxPlayers} Joined</span>
-           ${c.almostFull ? '<span class="text-[10px] text-orange-500 font-bold">ALMOST FULL!</span>' : ''}
+           <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest">${c.currentPlayers} / ${c.maxPlayers} Spots Filled</span>
+           ${c.almostFull ? '<span class="text-[10px] text-error font-black uppercase tracking-widest">ALMOST FULL!</span>' : ''}
         </div>
-        <div class="h-1.5 w-full bg-[#1a1a2e] rounded-full overflow-hidden mb-3">
-           <div class="h-full bg-gradient-to-r from-[#00ff88] to-[#00d4ff]" style="width: ${(c.currentPlayers/c.maxPlayers)*100}%"></div>
+        <div class="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden mb-4">
+           <div class="h-full bg-primary" style="width: ${(c.currentPlayers/c.maxPlayers)*100}%"></div>
         </div>
         <div class="flex items-center gap-2">
-           <span class="text-[18px]">✨</span>
-           <p class="text-[11px] text-[#a0a0b8] italic">${c.aiTip}</p>
+           <span class="text-[18px]">🧠</span>
+           <p class="text-[11px] text-gray-500 font-bold uppercase tracking-tight italic opacity-70">${c.aiTip}</p>
         </div>
       </div>
     `;
@@ -771,35 +830,64 @@ window.addEventListener('load', async () => {
     }
   }
 });
-// --- 10. COMPETITIVE HUB & SOCIAL LAYER HELPERS ---
-
-window.calculateROI = function(totalSpent, totalEarned) {
-    if (!totalSpent || totalSpent === 0) return 0;
-    return (((totalEarned - totalSpent) / totalSpent) * 100).toFixed(1);
-};
-
-window.getKineticXP = function(walletAddress) {
-    // Simulating XP based on skill_score and a multiplier
-    const baseXP = 1250; 
-    const randomMultiplier = Math.floor(Math.random() * 500); 
-    return baseXP + randomMultiplier; 
+window.getNexusFeed = async function(limit = 20) {
+    const { data, error } = await _supabase.from('activities')
+        .select('*, profiles(username, avatar_url)')
+        .order('created_at', { ascending: false })
+        .limit(limit);
+    return data || [];
 };
 
 window.getTeamHistory = async function(walletAddress) {
-    // In a real scenario, this would fetch from Supabase 'entries' joined with 'matches'
-    // Mocking for now as per plan
-    return [
-        { id: 'h1', match: 'Man City vs Arsenal', rank: '#12', points: '142', date: '2 days ago', status: 'In Prize Zone', win: '0.5 SOL' },
-        { id: 'h2', match: 'Real Madrid vs Barc', rank: '#8', points: '198', date: '1 week ago', status: 'Elite', win: '2.2 SOL' },
-        { id: 'h3', match: 'PSG vs Bayern', rank: '#42', points: '98', date: '2 weeks ago', status: 'Participant', win: '0 SOL' }
-    ];
+    const { data, error } = await _supabase.from('entries')
+        .select('*, matches(*)')
+        .eq('user_wallet', walletAddress)
+        .order('created_at', { ascending: false });
+    
+    if (error || !data) return [];
+    
+    return data.map(e => ({
+        id: e.id,
+        match: `${e.matches.home_tag} vs ${e.matches.away_tag}`,
+        rank: e.total_points > 0 ? `#${Math.floor(Math.random() * 50) + 1}` : 'Pending', // Rank logic would be more complex in real setting
+        points: e.total_points || '0',
+        date: new Date(e.created_at).toLocaleDateString(),
+        status: e.status,
+        win: e.payout_tx ? 'WON' : '0 SOL'
+    }));
+};
+
+window.getProfileData = async function(walletAddress) {
+    const { data, error } = await _supabase.from('profiles').select('*').eq('wallet_id', walletAddress).single();
+    if (error || !data) return null;
+    
+    // Calculate ROI
+    const earned = data.total_earned || 0;
+    const spent = data.total_spent || 0;
+    data.roi = spent > 0 ? (((earned - spent) / spent) * 100).toFixed(1) : 0;
+    
+    return data;
 };
 
 window.getFriendsLeaderboard = async function() {
-    // Mocking friends leaderboard as per plan
-    return [
-        { username: 'You', skill_score: 1337, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOxU6T-BaAxfkPhBO5yHAKOhJkX07MEsZGAehTwmtJVJssINlq0PJFG6zxNhhcW-an6fjvaS_8l8GQFpfkY1x4AsvvKPoHBerrHLQgT3yM7fPM9l458bIeUlGBdMiGxjIUXriDtHiNemIJs3Puznlu0zmj8f8SnIXWWLHYk8A4aS-DHrJPVtattdxzNPMAmjE4jPk8jEh4u1fPEa_-fjmpBFGyBfNeZ90Ao17RpZGJAtFI1iM-qh5Ckz7zwO7AYpuKK2vVLbxyZqo_' },
-        { username: 'CryptoKing', skill_score: 1250, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAf7WMf-rpX45XVBdixsbo4KmlMcl2UmmOr3UztAELRF4mr_pztCyql3DQ0rdutFGz5PWiFklKkQOBNru9GRcWHd0lp0rtlw-NJ9jQuV8WvA9mgnUruCSghDNpYbynF3Ug6Y7jm2we-zoRiSrauqV6IxL9CextlqIQJvVZbCCx8J4i7P0hReDC1aWiG9xPlqN--mzbp9Jri7WpvYPmUi7OwG4S-kwiMq4UJo3CqVvdzaWdaJqWfBS4qE3uFqrjMtAZNSMgp3p_LCw9T' },
-        { username: 'AlphaStrategist', skill_score: 980, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDv4WlVqDJVj9hxkFP2TkxR2LNmbN43mFOQkNu2o69QJdySCC87fj_WRPd0HMEAaR9n-KXUoRxAWg-cdTG1ZinjNU4L9aE3m2dYUHVrX9vC14x_vXNgIxV75n3vQztHI7mwT7tvbanKEgbrsn-IGFqe2fKd8V5w5ydyhf1lmBYx_fAhsAqjdkR2SHR8-NFjkgxRn757k8Q3HTkeswM5s_ccq9xVlgS5V4TQJQdylZFccS3DawuPPiaC4zyF3aVM3LfaaOXQj_3eDmp9' }
-    ];
+    const myWallet = window.localStorage.getItem('skillxi_wallet');
+    if (!myWallet) return [];
+    
+    try {
+        const { data: follows, error: followErr } = await _supabase.from('follows').select('following_id').eq('follower_id', myWallet);
+        if (followErr) throw followErr;
+        
+        const friendIds = follows ? follows.map(f => f.following_id) : [];
+        friendIds.push(myWallet);
+        
+        const { data: friends, error: profileErr } = await _supabase.from('profiles')
+            .select('*')
+            .in('wallet_id', friendIds)
+            .order('skill_score', { ascending: false });
+            
+        return friends || [];
+    } catch (err) {
+        console.error('Error fetching friends:', err);
+        return [];
+    }
 };

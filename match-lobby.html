@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -9,149 +9,149 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: { extend: {
-                colors: {
-                    "primary":"#a8e8ff", "surface":"#131318", "background":"#131318", "secondary":"#d2bbff", "tertiary":"#00ff88"
-                },
-                fontFamily:{ headline:["Space Grotesk"], body:["Inter"] }
-            }}
-        }
+    tailwind.config = {
+        theme: { extend: {
+            colors: {
+                "primary":"#00D09C", "surface":"#FFFFFF", "background":"#FFFFFF", "secondary":"#1A1A1A", "on-surface": "#1A1A1A", "error": "#E21D26"
+            },
+            fontFamily:{ headline:["Space Grotesk"], body:["Inter"] }
+        }}
+    }
     </script>
 </head>
-<body class="bg-surface text-white font-body min-h-screen pb-24">
+<body class="bg-white text-gray-900 font-body min-h-screen pb-24">
 
 <!-- HEADER: Match Info -->
-<div class="bg-[#1a1a2e] pt-12 pb-8 px-6 border-b border-[#2a2a40] sticky top-0 z-50">
+<div class="bg-white pt-12 pb-8 px-6 border-b border-gray-100 sticky top-0 z-50">
     <div class="flex justify-between items-center max-w-2xl mx-auto">
-        <button onclick="history.back()" class="p-2"><span class="material-symbols-outlined">arrow_back</span></button>
+        <button onclick="history.back()" class="p-2 text-gray-900"><span class="material-symbols-outlined">arrow_back</span></button>
         <div class="text-center">
-            <h1 id="lobby-match-name" class="font-headline font-bold text-lg mb-1">Loading Match...</h1>
-            <p id="lobby-match-time" class="text-xs text-[#a0a0b8] font-bold tracking-wider uppercase">00h 00m 00s LEFT</p>
+            <h1 id="lobby-match-name" class="font-headline font-black text-xl mb-1 uppercase italic">Loading Match...</h1>
+            <p id="lobby-match-time" class="text-xs text-primary font-black tracking-widest uppercase italic">00H 00M 00S LEFT</p>
         </div>
-        <button class="p-2 relative">
-            <span class="material-symbols-outlined">account_balance_wallet</span>
-            <span id="lobby-wallet-bal" class="absolute -top-1 -right-4 bg-[#00ff88] text-black text-[9px] font-black px-1 rounded-full">...</span>
+        <button class="p-2 relative bg-gray-50 rounded-xl border border-gray-100 px-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-sm">account_balance_wallet</span>
+            <span id="lobby-wallet-bal" class="text-xs font-black text-gray-900">...</span>
         </button>
     </div>
 </div>
 
 <!-- MATCH HEADER VISUAL -->
 <div class="p-6 max-w-2xl mx-auto">
-    <div class="bg-gradient-to-br from-[#131318] to-[#1a1a2e] border border-[#2a2a40] rounded-3xl p-8 mb-8 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#a8e8ff 1px, transparent 1px); background-size: 20px 20px;"></div>
+    <div class="bg-white border border-gray-100 rounded-3xl p-8 mb-8 relative overflow-hidden shadow-sm">
         <div class="relative z-10 flex justify-between items-center">
             <div class="text-center w-1/3">
-                <div class="w-16 h-16 rounded-full bg-[#131318] border-2 border-[#a8e8ff]/20 mx-auto flex items-center justify-center mb-3">
-                    <span id="home-tag" class="font-headline font-black text-xl text-[#a8e8ff]">...</span>
+                <div class="w-20 h-20 rounded-2xl bg-gray-50 border border-gray-100 mx-auto flex items-center justify-center mb-4">
+                    <span id="home-tag" class="font-headline font-black text-2xl text-gray-900">...</span>
                 </div>
-                <p id="home-name" class="text-xs font-bold text-slate-400">Home Team</p>
+                <p id="home-name" class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Home Team</p>
             </div>
             <div class="text-center w-1/3">
-                <span class="text-4xl font-headline font-black text-[#5a5a75] italic">VS</span>
+                <span class="text-4xl font-headline font-black text-gray-100 italic">VS</span>
             </div>
             <div class="text-center w-1/3">
-                <div class="w-16 h-16 rounded-full bg-[#131318] border-2 border-[#d2bbff]/20 mx-auto flex items-center justify-center mb-3">
-                    <span id="away-tag" class="font-headline font-black text-xl text-[#d2bbff]">...</span>
+                <div class="w-20 h-20 rounded-2xl bg-gray-50 border border-gray-100 mx-auto flex items-center justify-center mb-4">
+                    <span id="away-tag" class="font-headline font-black text-2xl text-gray-900">...</span>
                 </div>
-                <p id="away-name" class="text-xs font-bold text-slate-400">Away Team</p>
+                <p id="away-name" class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Away Team</p>
             </div>
         </div>
     </div>
 
     <!-- TABS -->
-    <div class="flex border-b border-[#2a2a40] mb-8">
-        <button class="flex-1 py-4 text-sm font-bold border-b-2 border-primary text-primary">CONTESTS</button>
-        <button class="flex-1 py-4 text-sm font-bold text-slate-500">MY CONTESTS (0)</button>
+    <div class="flex border-b border-gray-100 mb-8">
+        <button class="flex-1 py-4 text-xs font-black border-b-2 border-primary text-primary uppercase tracking-widest">CONTESTS</button>
+        <button class="flex-1 py-4 text-xs font-black text-gray-300 uppercase tracking-widest">YOUR TEAMS (0)</button>
     </div>
 
     <!-- CONTEST CARDS -->
     <div class="space-y-6">
         <!-- Type 1: MEGA -->
-        <div class="bg-[#131318] border border-[#2a2a40] rounded-2xl overflow-hidden group hover:border-primary transition-all">
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-4">
+        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:border-primary transition-all">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
                     <div>
-                        <h4 class="text-xs font-black text-primary uppercase tracking-widest mb-1">Grand Prize 🏆</h4>
-                        <p class="text-2xl font-headline font-black italic">8.5 SOL PRIZE POOL</p>
+                        <h4 class="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Grand Prize Pool 🏆</h4>
+                        <p class="text-3xl font-headline font-black italic uppercase">8.5 SOL PRIZE</p>
                     </div>
                 </div>
-                <div class="flex justify-between text-sm mb-4 bg-[#1a1a2e] p-3 rounded-xl border border-white/5">
-                    <div>
-                        <p class="text-[10px] text-slate-500 font-bold uppercase">WINNER TAKES</p>
-                        <p class="font-bold text-[#00ff88]">3.5 SOL</p>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">WINNER TAKES</p>
+                        <p class="font-black text-xl text-gray-900 uppercase italic">3.5 SOL</p>
                     </div>
-                    <div class="text-right">
-                        <p class="text-[10px] text-slate-500 font-bold uppercase">ENTRY</p>
-                        <p class="font-bold text-white uppercase">0.1 SOL</p>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <div class="flex justify-between text-[10px] font-bold uppercase mb-2">
-                        <span class="text-slate-500">200 spots</span>
-                        <span class="text-primary italic">142 joined</span>
-                    </div>
-                    <div class="h-1.5 w-full bg-[#1a1a2e] rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-primary to-[#00ff88] w-[71%]"></div>
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">ENTRY FEE</p>
+                        <p class="font-black text-xl text-primary uppercase italic">0.1 SOL</p>
                     </div>
                 </div>
-                <button onclick="window.location.href='lineup.html?contest=c001&type=mega'" class="w-full bg-[#00ff88] text-[#131318] font-headline font-black py-4 rounded-xl shadow-[0_10px_30px_rgba(0,255,136,0.2)] hover:scale-[1.02] transition-transform">JOIN CONTEST</button>
+                <div class="mb-6">
+                    <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2">
+                        <span class="text-gray-400">200 total spots</span>
+                        <span class="text-primary italic">142 spots left</span>
+                    </div>
+                    <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-[71%]"></div>
+                    </div>
+                </div>
+                <button onclick="window.location.href='lineup.html?contest=c001&type=mega'" class="w-full bg-primary text-white font-headline font-black py-5 rounded-2xl hover:bg-primary/90 transition-all uppercase tracking-widest">JOIN CONTEST</button>
             </div>
         </div>
 
         <!-- Type 2: 1v1 -->
-        <div class="bg-[#131318] border border-[#2a2a40] rounded-2xl overflow-hidden group hover:border-[#d2bbff] transition-all">
-            <div class="p-5">
+        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:border-primary transition-all">
+            <div class="p-6">
                 <div class="flex justify-between items-start mb-4">
                     <div>
-                        <h4 class="text-xs font-black text-[#d2bbff] uppercase tracking-widest mb-1">1v1 Battle ⚔️</h4>
-                        <p class="text-xl font-headline font-black italic">0.2 SOL PRIZE POOL</p>
+                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">1v1 Battle ⚔️</h4>
+                        <p class="text-xl font-headline font-black uppercase">0.2 SOL POOL</p>
                     </div>
                 </div>
-                <div class="flex justify-between text-sm mb-4">
+                <div class="flex justify-between items-center mb-6">
                     <div>
-                        <p class="text-[10px] text-slate-500 font-bold uppercase">WINNER TAKES</p>
-                        <p class="font-bold text-[#00ff88]">0.18 SOL</p>
+                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Entry Fee</p>
+                        <p class="font-black text-primary">0.1 SOL</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-[10px] text-slate-500 font-bold uppercase">ENTRY</p>
-                        <p class="font-bold text-white uppercase">0.1 SOL</p>
+                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Prize</p>
+                        <p class="font-black text-gray-900">0.18 SOL</p>
                     </div>
                 </div>
-                <button onclick="window.location.href='lineup.html?contest=c001&type=1v1'" class="w-full bg-[#1a1a2e] border border-white/10 text-white font-headline font-black py-4 rounded-xl hover:bg-white/5 transition-all">JOIN BATTLE</button>
+                <button onclick="window.location.href='lineup.html?contest=c001&type=1v1'" class="w-full bg-gray-50 border border-gray-100 text-gray-900 font-headline font-black py-4 rounded-xl hover:bg-gray-100 transition-all uppercase tracking-widest">JOIN BATTLE</button>
             </div>
         </div>
 
         <!-- Type 3: Small League -->
-        <div class="bg-[#131318] border border-[#2a2a40] rounded-2xl overflow-hidden group">
-            <div class="p-5">
+        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+            <div class="p-6">
                 <div class="flex justify-between items-start mb-4">
                     <div>
-                        <h4 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-1">Mini League 🎯</h4>
-                        <p class="text-xl font-headline font-black italic">0.8 SOL PRIZE POOL</p>
+                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Mini League 🎯</h4>
+                        <p class="text-xl font-headline font-black uppercase italic">0.8 SOL POOL</p>
                     </div>
                 </div>
-                <div class="flex justify-between text-sm mb-4">
+                <div class="flex justify-between items-center mb-6">
                     <div>
-                        <p class="text-[10px] text-slate-500 font-bold uppercase">ENTRY</p>
-                        <p class="font-bold text-[#00ff88]">0.1 SOL</p>
+                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Entry</p>
+                        <p class="font-black text-primary">0.1 SOL</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-[10px] text-slate-500 font-bold uppercase">SPOTS</p>
-                        <p class="font-bold text-white uppercase">10 SPOTS</p>
+                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Spots</p>
+                        <p class="font-black text-gray-900">10 SPOTS</p>
                     </div>
                 </div>
-                <button onclick="window.location.href='lineup.html?contest=c001&type=mini'" class="w-full bg-[#1a1a2e] border border-white/10 text-white font-headline font-black py-4 rounded-xl hover:bg-white/5 transition-all">JOIN LEAGUE</button>
+                <button onclick="window.location.href='lineup.html?contest=c001&type=mini'" class="w-full bg-gray-50 border border-gray-100 text-gray-900 font-headline font-black py-4 rounded-xl hover:bg-gray-100 transition-all uppercase tracking-widest">JOIN LEAGUE</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- BOTTOM AI STRIP -->
-<div class="fixed bottom-0 left-0 w-full bg-[#00ff88] text-[#131318] py-4 px-6 flex items-center gap-4 z-[60] shadow-[0_-10px_40px_rgba(0,255,136,0.3)]">
-    <span class="text-2xl">🤖</span>
-    <p class="text-[11px] font-bold leading-tight uppercase tracking-tight">AI says: Haaland is the consensus captain pick. Only 8% own De Bruyne as a differential this week.</p>
+<div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 py-4 px-8 flex items-center gap-4 z-[60] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+    <div class="w-10 h-10 bg-primary/5 rounded-xl flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined font-black">psychology</span>
+    </div>
+    <p class="text-[11px] font-black leading-tight uppercase tracking-tight text-gray-500">AI Analyst: Haaland is the consensus captain choice. Only 8% of elite managers own De Bruyne this week.</p>
 </div>
 
 <script src="assets/js/main.js"></script>

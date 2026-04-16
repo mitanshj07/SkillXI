@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>User Profile | SkillXI</title>
@@ -14,53 +14,20 @@
         theme: {
           extend: {
             "colors": {
-                    "on-error-container": "#ffdad6",
-                    "secondary-fixed-dim": "#d2bbff",
-                    "outline": "#859398",
-                    "primary": "#a8e8ff",
-                    "surface": "#131318",
-                    "tertiary-fixed-dim": "#00e479",
-                    "surface-container": "#1f1f25",
-                    "on-secondary-container": "#c9aeff",
-                    "error-container": "#93000a",
-                    "on-primary-container": "#00586b",
-                    "on-secondary-fixed-variant": "#5a00c6",
-                    "on-secondary": "#3f008e",
-                    "on-secondary-fixed": "#25005a",
-                    "tertiary-fixed": "#60ff99",
-                    "on-surface": "#e4e1e9",
-                    "surface-container-highest": "#35343a",
-                    "on-background": "#e4e1e9",
-                    "on-surface-variant": "#bbc9cf",
-                    "surface-container-lowest": "#0e0e13",
-                    "secondary": "#d2bbff",
-                    "on-primary-fixed": "#001f27",
-                    "error": "#ffb4ab",
-                    "secondary-fixed": "#eaddff",
-                    "surface-tint": "#3cd7ff",
-                    "surface-container-low": "#1b1b20",
-                    "inverse-on-surface": "#303036",
-                    "tertiary-container": "#00df76",
-                    "surface-container-high": "#2a292f",
-                    "secondary-container": "#6001d1",
-                    "primary-fixed": "#b4ebff",
-                    "on-tertiary-fixed": "#00210c",
-                    "inverse-surface": "#e4e1e9",
-                    "surface-variant": "#35343a",
-                    "surface-bright": "#39383e",
-                    "background": "#131318",
-                    "primary-container": "#00d4ff",
-                    "on-primary": "#003642",
-                    "tertiary": "#00ff88",
-                    "on-primary-fixed-variant": "#004e5f",
-                    "surface-dim": "#131318",
-                    "on-tertiary-fixed-variant": "#005228",
-                    "on-error": "#690005",
-                    "inverse-primary": "#00677e",
-                    "outline-variant": "#3c494e",
-                    "on-tertiary": "#003919",
-                    "on-tertiary-container": "#005d2d",
-                    "primary-fixed-dim": "#3cd7ff"
+                "primary": "#00D09C",
+                "on-primary": "#FFFFFF",
+                "secondary": "#1A1A1A",
+                "tertiary": "#00D09C",
+                "background": "#FFFFFF",
+                "surface": "#FFFFFF",
+                "surface-container": "#F6F9FC",
+                "surface-container-low": "#F9FAFB",
+                "surface-container-high": "#F3F4F6",
+                "on-surface": "#1A1A1A",
+                "on-surface-variant": "#718096",
+                "outline": "#EEEEEE",
+                "outline-variant": "#F3F4F6",
+                "error": "#E21D26"
             },
             "borderRadius": {
                     "DEFAULT": "0.125rem",
@@ -99,56 +66,56 @@
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary/30">
 <!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<nav class="fixed top-0 w-full z-50 bg-white border-b border-gray-100">
 <div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
-<div class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-headline">SkillXI</div>
-<div class="hidden md:flex items-center gap-8 font-headline tracking-tight">
-<a class="text-slate-400 font-medium hover:text-white transition-colors" href="#">Lobby</a>
-<a class="text-slate-400 font-medium hover:text-white transition-colors" href="#">Research</a>
-<a class="text-slate-400 font-medium hover:text-white transition-colors" href="#">Squads</a>
-<a class="text-slate-400 font-medium hover:text-white transition-colors" href="#">Intelligence</a>
+<div class="text-2xl font-black tracking-tighter text-primary font-headline">SkillXI</div>
+<div class="hidden md:flex items-center gap-8 font-headline">
+<a class="text-gray-400 font-bold hover:text-primary transition-colors hover:bg-gray-50 px-3 py-1 rounded-lg" href="#">Lobby</a>
+<a class="text-gray-400 font-bold hover:text-primary transition-colors hover:bg-gray-50 px-3 py-1 rounded-lg" href="#">Research</a>
+<a class="text-gray-400 font-bold hover:text-primary transition-colors hover:bg-gray-50 px-3 py-1 rounded-lg" href="#">Squads</a>
+<a class="text-gray-400 font-bold hover:text-primary transition-colors hover:bg-gray-50 px-3 py-1 rounded-lg" href="#">Intelligence</a>
 </div>
 <div class="flex items-center gap-4">
-<button class="p-2 text-[#a8e8ff] hover:bg-[#a8e8ff]/10 transition-all duration-300 rounded-full active:scale-95">
+<button class="p-2 text-primary hover:bg-primary/5 rounded-full transition-all">
 <span class="material-symbols-outlined">account_balance_wallet</span>
 </button>
-<button class="p-2 text-[#a8e8ff] hover:bg-[#a8e8ff]/10 transition-all duration-300 rounded-full active:scale-95">
+<button class="p-2 text-primary hover:bg-primary/5 rounded-full transition-all">
 <span class="material-symbols-outlined">notifications</span>
 </button>
-<div class="h-10 w-10 rounded-full bg-surface-container-highest border-2 border-primary ring-2 ring-primary/20 overflow-hidden">
-<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="Portrait of a young man with a confident expression, professional studio lighting, dark moody background, high fashion photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv4WlVqDJVj9hxkFP2TkxR2LNmbN43mFOQkNu2o69QJdySCC87fj_WRPd0HMEAaR9n-KXUoRxAWg-cdTG1ZinjNU4L9aE3m2dYUHVrX9vC14x_vXNgIxV75n3vQztHI7mwT7tvbanKEgbrsn-IGFqe2fKd8V5w5ydyhf1lmBYx_fAhsAqjdkR2SHR8-NFjkgxRn757k8Q3HTkeswM5s_ccq9xVlgS5V4TQJQdylZFccS3DawuPPiaC4zyF3aVM3LfaaOXQj_3eDmp9"/>
+<div class="h-10 w-10 rounded-full border-2 border-white ring-2 ring-gray-100 overflow-hidden shadow-sm">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv4WlVqDJVj9hxkFP2TkxR2LNmbN43mFOQkNu2o69QJdySCC87fj_WRPd0HMEAaR9n-KXUoRxAWg-cdTG1ZinjNU4L9aE3m2dYUHVrX9vC14x_vXNgIxV75n3vQztHI7mwT7tvbanKEgbrsn-IGFqe2fKd8V5w5ydyhf1lmBYx_fAhsAqjdkR2SHR8-NFjkgxRn757k8Q3HTkeswM5s_ccq9xVlgS5V4TQJQdylZFccS3DawuPPiaC4zyF3aVM3LfaaOXQj_3eDmp9"/>
 </div>
 </div>
 </div>
 </nav>
 <!-- SideNavBar (Desktop Only) -->
-<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-[#0e0e13] border-r border-[#ffffff0f] flex-col py-8 z-40">
+<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-gray-50 border-r border-gray-100 flex-col py-8 z-40">
 <div class="px-6 mb-10 mt-20">
 <div class="flex items-center gap-3">
-<div class="w-2 h-8 bg-secondary rounded-full"></div>
+<div class="w-1.5 h-8 bg-primary rounded-full"></div>
 <div>
-<h3 class="text-[#d2bbff] font-black font-headline text-lg tracking-wider">KINETIC AI</h3>
-<p class="text-[10px] text-outline uppercase tracking-widest">V3.2 Active</p>
+<h3 class="text-gray-900 font-black font-headline text-lg tracking-wider">KINETIC AI</h3>
+<p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">V3.2 Active</p>
 </div>
 </div>
 </div>
 <nav class="flex-1 space-y-1">
-<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined">grid_view</span> Home
             </a>
-<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined">psychology</span> AI Analyst
             </a>
-<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined">database</span> Market
             </a>
-<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined">emoji_events</span> Contests
             </a>
-<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 hover:bg-[#2a292f] transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined">leaderboard</span> Leaderboard
             </a>
-<a class="bg-gradient-to-r from-[#a8e8ff1a] to-transparent text-[#a8e8ff] border-r-4 border-[#a8e8ff] flex items-center gap-4 px-6 py-4 transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<a class="bg-primary/5 text-primary border-r-4 border-primary flex items-center gap-4 px-6 py-4 transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined">settings</span> Settings
             </a>
 </nav>
@@ -160,7 +127,7 @@
 <a class="flex items-center gap-3 text-[#5a5a75] hover:text-white text-sm font-bold" href="#">
 <span class="material-symbols-outlined text-sm">help</span> Support
                 </a>
-<a class="flex items-center gap-3 text-[#5a5a75] hover:text-white text-sm font-bold" href="#">
+<a class="text-gray-500 hover:text-white hover:bg-primary flex items-center gap-4 px-6 py-4 transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined text-sm">logout</span> Logout
                 </a>
 </div>
@@ -172,79 +139,78 @@
 <!-- Hero Bento Header -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <!-- Skill Score Visualization -->
-<div class="lg:col-span-2 relative overflow-hidden rounded-[2rem] bg-surface-container-low p-8 border border-outline-variant/10">
-<div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-primary/10 blur-[100px] rounded-full"></div>
+<div class="lg:col-span-2 relative overflow-hidden rounded-[2.5rem] bg-white p-10 border border-gray-100">
+<div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-primary/5 rounded-full"></div>
 <div class="relative z-10 flex flex-col md:flex-row items-center md:items-end justify-between h-full gap-8">
                 <div>
-                <span id="rank-badge" class="px-4 py-1.5 rounded-full bg-primary/20 text-primary font-headline text-xs font-bold tracking-widest uppercase mb-4 inline-block">Global Ranking: #412</span>
-                <h1 id="xp-display" class="text-6xl md:text-8xl font-headline font-extrabold text-on-surface tracking-tighter skill-score-glow mb-2 xp-glow">1,337</h1>
-                <p class="text-2xl font-headline font-bold text-secondary tracking-tight">EXPERT TIER <span class="text-outline/50 ml-2">/ LEGENDARY</span></p>
+                <span class="px-4 py-1.5 rounded-full bg-primary/10 text-primary font-headline text-[10px] font-bold tracking-widest uppercase mb-4 inline-block">Global Ranking: #412</span>
+                <h1 id="xp-display" class="text-7xl md:text-9xl font-headline font-black text-gray-900 tracking-tighter mb-2">1,337</h1>
+                <p class="text-2xl font-headline font-bold text-secondary tracking-tight">EXPERT TIER <span class="text-gray-300 ml-2">/ LEGENDARY</span></p>
                 </div>
 <div class="flex-1 w-full max-w-md">
-<div class="flex justify-between text-sm font-bold font-headline mb-2">
-<span class="text-outline">Progress to Elite Tier</span>
+<div class="flex justify-between text-xs font-bold font-headline mb-3">
+<span class="text-gray-400 uppercase tracking-widest">Progress to Elite Tier</span>
 <span class="text-primary">82%</span>
 </div>
-<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
-<div class="h-full bg-gradient-to-r from-primary to-secondary w-[82%] rounded-full relative">
-<div class="absolute top-0 right-0 h-full w-2 bg-white/40 blur-sm"></div>
+<div class="h-2.5 w-full bg-gray-50 rounded-full overflow-hidden border border-gray-100">
+<div class="h-full bg-primary w-[82%] rounded-full relative">
 </div>
 </div>
 </div>
 </div>
 </div>
 <!-- NFT Badges Section -->
-<div class="rounded-[2rem] bg-surface-container-low p-8 border border-outline-variant/10 flex flex-col justify-between">
+<div class="rounded-[2.5rem] bg-white p-10 border border-gray-100 shadow-sm flex flex-col justify-between">
 <div class="flex justify-between items-center mb-6">
-<h2 class="font-headline font-bold text-xl tracking-tight">NFT BADGES</h2>
-<span class="text-xs text-outline font-bold tracking-widest uppercase">4 Unlocked</span>
+<h2 class="font-headline font-bold text-xl tracking-tight text-gray-900 uppercase italic">Badges</h2>
+<span class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">4 Unlocked</span>
 </div>
 <div class="grid grid-cols-2 gap-4">
-<div class="aspect-square rounded-2xl bg-surface-container-high border border-primary/20 flex flex-col items-center justify-center p-4 text-center group cursor-pointer hover:bg-primary/5 transition-all">
+<div class="aspect-square rounded-2xl bg-gray-50 border border-transparent flex flex-col items-center justify-center p-4 text-center group cursor-pointer hover:border-primary/20 hover:bg-white transition-all shadow-sm">
 <span class="material-symbols-outlined text-4xl text-primary mb-2" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
-<span class="text-[10px] font-bold tracking-widest uppercase leading-tight">Gold Scout</span>
+<span class="text-[9px] font-bold tracking-widest uppercase text-gray-600 leading-tight">Gold Scout</span>
 </div>
-<div class="aspect-square rounded-2xl bg-surface-container-high border border-secondary/20 flex flex-col items-center justify-center p-4 text-center group cursor-pointer hover:bg-secondary/5 transition-all">
-<span class="material-symbols-outlined text-4xl text-secondary mb-2" style="font-variation-settings: 'FILL' 1;">military_tech</span>
-<span class="text-[10px] font-bold tracking-widest uppercase leading-tight">Season Veteran</span>
+<div class="aspect-square rounded-2xl bg-gray-50 border border-transparent flex flex-col items-center justify-center p-4 text-center group cursor-pointer hover:border-primary/20 hover:bg-white transition-all shadow-sm">
+<span class="material-symbols-outlined text-4xl text-primary mb-2" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<span class="text-[9px] font-bold tracking-widest uppercase text-gray-600 leading-tight">Veteran</span>
 </div>
-<div class="aspect-square rounded-2xl bg-surface-container-high border border-outline-variant/20 flex flex-col items-center justify-center p-4 text-center group cursor-pointer hover:bg-white/5 transition-all">
-<span class="material-symbols-outlined text-4xl text-outline mb-2">bolt</span>
-<span class="text-[10px] font-bold tracking-widest uppercase leading-tight">High Voltage</span>
+<div class="aspect-square rounded-2xl bg-gray-50 border border-transparent flex flex-col items-center justify-center p-4 text-center cursor-pointer hover:border-primary/20 hover:bg-white transition-all shadow-sm">
+<span class="material-symbols-outlined text-4xl text-gray-300 mb-2">bolt</span>
+<span class="text-[9px] font-bold tracking-widest uppercase text-gray-400 leading-tight">Voltage</span>
 </div>
-<div class="aspect-square rounded-2xl bg-surface-container-high border border-outline-variant/10 flex items-center justify-center p-4 group cursor-pointer hover:bg-white/5 transition-all border-dashed">
-<span class="material-symbols-outlined text-3xl text-outline/30">add</span>
+<div class="aspect-square rounded-2xl bg-gray-50 border border-dashed border-gray-200 flex items-center justify-center p-4">
+<span class="material-symbols-outlined text-3xl text-gray-300">add</span>
 </div>
 </div>
 </div>
 </div>
 <!-- Stats Dashboard Grid -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
-<p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Total Earned</p>
+<div class="bg-white rounded-[2rem] p-8 border border-gray-100">
+<p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Total Earned</p>
 <div class="flex items-baseline gap-2">
-<h3 class="text-3xl font-headline font-bold">$12,450.00</h3>
-<span class="text-tertiary text-xs font-bold">+12%</span>
+<h3 class="text-3xl font-headline font-black text-gray-900">$12,450</h3>
+<span class="text-primary text-xs font-bold">+12%</span>
 </div>
 </div>
-        <div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
-          <p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">ROI (All Contests)</p>
+        <div class="bg-white rounded-[2rem] p-8 border border-gray-100">
+          <p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">ROI (Total)</p>
           <div class="flex items-baseline gap-2">
-            <h3 id="roi-stat" class="text-3xl font-headline font-bold">+24.8%</h3>
-            <span class="text-primary text-xs font-bold">ALPHA</span>
+            <h3 id="roi-stat" class="text-3xl font-headline font-black text-primary">+24.8%</h3>
+            <span class="text-secondary text-[10px] font-bold uppercase">Alpha</span>
           </div>
         </div>
-<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
-<p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Squads Created</p>
+<div class="bg-white rounded-[2rem] p-8 border border-gray-100">
+<p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Squads</p>
 <div class="flex items-baseline gap-2">
-<h3 class="text-3xl font-headline font-bold">156</h3>
+<h3 class="text-3xl font-headline font-black text-gray-900">156</h3>
 </div>
 </div>
-<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
-<p class="text-outline text-xs font-bold tracking-widest uppercase mb-1">Active Contests</p>
+<div class="bg-white rounded-[2rem] p-8 border border-gray-100">
+<p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Live Contests</p>
 <div class="flex items-baseline gap-2">
-<h3 class="text-3xl font-headline font-bold">12</h3>
-<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<h3 class="text-3xl font-headline font-black text-gray-900">12</h3>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse ml-2"></span>
 </div>
 </div>
 </div>
@@ -282,58 +248,34 @@
 </div>
 </div>
 <!-- Recent Activity -->
-<div class="xl:col-span-2 bg-surface-container-low rounded-[2rem] p-8 border border-outline-variant/10 overflow-hidden">
-<div class="flex justify-between items-center mb-6">
-<h2 class="font-headline font-bold text-2xl tracking-tight">RECENT ACTIVITY</h2>
+<div class="xl:col-span-2 bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm overflow-hidden">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-headline font-bold text-2xl tracking-tight text-gray-900 italic uppercase">Recent Activity</h2>
 </div>
 <div class="space-y-4">
-<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center justify-between p-5 bg-gray-50 rounded-[1.5rem] hover:bg-gray-100 transition-colors cursor-pointer group">
 <div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<div class="w-12 h-12 rounded-2xl bg-tertiary/10 flex items-center justify-center text-tertiary">
 <span class="material-symbols-outlined">payments</span>
 </div>
 <div>
-<p class="font-bold text-sm">Contest Win #8821</p>
-<p class="text-[10px] text-outline uppercase tracking-widest">2 hours ago</p>
+<p class="font-bold text-sm text-gray-900">Contest Win #8821</p>
+<p class="text-[9px] text-gray-400 uppercase font-black tracking-widest">2 hours ago</p>
 </div>
 </div>
-<span class="text-tertiary font-headline font-bold">+$1,200</span>
+<span class="text-tertiary font-headline font-black">+$1,200</span>
 </div>
-<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center justify-between p-5 bg-gray-50 rounded-[1.5rem] hover:bg-gray-100 transition-colors cursor-pointer group">
 <div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
 <span class="material-symbols-outlined">trophy</span>
 </div>
 <div>
-<p class="font-bold text-sm">Badge Unlocked: Scout</p>
-<p class="text-[10px] text-outline uppercase tracking-widest">1 day ago</p>
+<p class="font-bold text-sm text-gray-900">Badge: Scout</p>
+<p class="text-[9px] text-gray-400 uppercase font-black tracking-widest">1 day ago</p>
 </div>
 </div>
 <span class="material-symbols-outlined text-primary">chevron_right</span>
-</div>
-<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:bg-surface-container-highest transition-colors cursor-pointer group">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
-<span class="material-symbols-outlined">groups</span>
-</div>
-<div>
-<p class="font-bold text-sm">Squad Revision: Alpha</p>
-<p class="text-[10px] text-outline uppercase tracking-widest">3 days ago</p>
-</div>
-</div>
-<span class="text-outline text-xs font-bold">UPDATE</span>
-</div>
-<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-2xl hover:bg-surface-container-highest transition-colors cursor-pointer group">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-outline-variant/10 flex items-center justify-center text-outline">
-<span class="material-symbols-outlined">remove</span>
-</div>
-<div>
-<p class="font-bold text-sm">Wallet Withdrawal</p>
-<p class="text-[10px] text-outline uppercase tracking-widest">4 days ago</p>
-</div>
-</div>
-<span class="text-error font-headline font-bold">-$450</span>
 </div>
 </div>
 </div>
@@ -351,26 +293,69 @@
 </div>
 </main>
 <!-- BottomNavBar (Mobile Only) -->
-<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#131318]/90 backdrop-blur-2xl border-t border-[#ffffff1a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)] md:hidden z-50 rounded-t-[2rem]">
-<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-white/95 backdrop-blur-2xl border-t border-gray-100 shadow-lg md:hidden z-50 rounded-t-[2.5rem]">
+<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="#">
 <span class="material-symbols-outlined">sports_kabaddi</span>
-<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Lobby</span>
+<span class="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Lobby</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="#">
 <span class="material-symbols-outlined">auto_awesome</span>
-<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Intel</span>
+<span class="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Intel</span>
 </a>
-<div class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-4 -mt-10 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all">
+<div class="flex flex-col items-center justify-center bg-primary text-white rounded-full p-4 -mt-10 shadow-lg active:scale-90 transition-all">
 <span class="material-symbols-outlined text-3xl">add</span>
 </div>
-<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="#">
 <span class="material-symbols-outlined">analytics</span>
-<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+<span class="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Stats</span>
 </a>
-<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-3 shadow-[0_0_20px_rgba(0,212,255,0.4)] transition-all" href="#">
+<a class="flex flex-col items-center justify-center bg-primary/10 text-primary rounded-full p-3 shadow-sm transition-all" href="#">
 <span class="material-symbols-outlined">person</span>
-<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
+<span class="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Profile</span>
 </a>
 </nav>
 <script src="assets/js/main.js"></script>
+<script>
+    window.addEventListener('load', async () => {
+        const wallet = window.localStorage.getItem('skillxi_wallet') || "MOCK_ADDR";
+        const profile = await window.getProfileData(wallet);
+        
+        if (profile) {
+            const xpEl = document.getElementById('xp-display');
+            if (xpEl) xpEl.innerText = profile.xp.toLocaleString();
+            
+            const roiEl = document.getElementById('roi-stat');
+            if (roiEl) roiEl.innerText = `+${profile.roi}%`;
+
+            // Update Tier and Progress
+            const tierEl = document.querySelector('.text-2xl.font-headline.font-bold');
+            if (tierEl) tierEl.innerHTML = `${profile.tier} TIER <span class="text-gray-300 ml-2">/ LVL ${profile.level}</span>`;
+            
+            const progressBar = document.querySelector('.h-full.bg-gradient-to-r');
+            const nextLevelXp = profile.level * 500;
+            const progress = (profile.xp % 500) / 5; // Simple percentage calculation
+            if (progressBar) progressBar.style.width = `${progress}%`;
+        }
+
+        const history = await window.getTeamHistory(wallet);
+        const list = document.getElementById('history-list');
+        if (list) {
+            list.innerHTML = '';
+            if (history.length === 0) {
+                list.innerHTML = '<p class="col-span-3 text-center text-gray-400 py-10 font-bold uppercase tracking-widest">No match history found</p>';
+            }
+            history.forEach(h => {
+                list.innerHTML += `
+                    <div class="history-card rounded-2xl p-6 bg-surface-container-high relative overflow-hidden group">
+                       <p class="text-[10px] text-primary font-bold uppercase tracking-widest mb-1">${h.match}</p>
+                       <h4 class="text-xl font-headline font-black text-gray-900 mb-4">${h.rank}</h4>
+                       <div class="flex justify-between text-xs items-end">
+                          <div><p class="text-gray-500 text-[9px]">Points</p><p class="text-gray-900 font-black">${h.points}</p></div>
+                          <div class="text-right"><p class="text-gray-500 text-[9px]">Prize</p><p class="text-tertiary font-black font-headline">${h.win}</p></div>
+                       </div>
+                    </div>`;
+            });
+        }
+    });
+</script>
 </body></html>

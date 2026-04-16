@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -9,18 +9,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: { extend: {
-                colors: { "primary":"#a8e8ff", "surface":"#131318", "background":"#131318", "secondary":"#d2bbff", "tertiary":"#00ff88" },
-                fontFamily:{ headline:["Space Grotesk"], body:["Inter"] }
-            }}
-        }
+    tailwind.config = {
+        theme: { extend: {
+            colors: { 
+                "primary":"#00D09C", 
+                "surface":"#FFFFFF", 
+                "background":"#FFFFFF", 
+                "secondary":"#1A1A1A", 
+                "on-surface": "#1A1A1A",
+                "on-surface-variant": "#718096",
+                "outline": "#EEEEEE",
+                "outline-variant": "#F3F4F6",
+                "error": "#E21D26"
+            },
+            fontFamily:{ headline:["Space Grotesk"], body:["Inter"] }
+        }}
+    }
     </script>
     <style>
         .sticky-top { position: sticky; top: 0; z-index: 100; }
-        .tab-active { color: #a8e8ff; border-bottom: 2px solid #a8e8ff; }
-        .pitch-bg { background: radial-gradient(circle at center, #1a3a1a 0%, #0e200e 100%); }
+        .tab-active { color: #00D09C; border-bottom: 2px solid #00D09C; }
+        .pitch-bg { background: #FFFFFF; border: 1px dashed #EEEEEE; position: relative; }
+        .pitch-grass { background: #F6F9FC; }
     </style>
     <!-- Solana Web3 Integrations -->
     <script src="https://bundle.run/buffer@6.0.3"></script>
@@ -28,10 +38,10 @@
     <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
-<body class="bg-surface text-white font-body min-h-screen flex flex-col">
+<body class="bg-white text-[#1A1A1A] font-body min-h-screen flex flex-col">
 
 <!-- TOP BAR (Sticky) -->
-<header class="sticky-top bg-[#1a1a2e] border-b border-[#2a2a40] shadow-2xl">
+<header class="sticky-top bg-white border-b border-gray-100">
     <div class="px-6 py-4 flex justify-between items-center">
         <div>
             <h1 id="match-header-title" class="font-headline font-extrabold text-sm text-primary uppercase tracking-widest">Man City vs Arsenal</h1>
@@ -42,8 +52,8 @@
             <p id="budget-remaining" class="text-sm font-black text-[#00ff88]">100.0 Credits</p>
         </div>
     </div>
-    <div class="h-1 w-full bg-[#0e0e13]">
-        <div id="selection-progress" class="h-full bg-gradient-to-r from-[#00ff88] to-primary transition-all duration-300" style="width: 0%"></div>
+    <div class="h-1 w-full bg-gray-50">
+        <div id="selection-progress" class="h-full bg-primary transition-all duration-300" style="width: 0%"></div>
     </div>
     <!-- Tabs -->
     <div class="flex">
@@ -59,11 +69,11 @@
     <section id="view-selection" class="py-6 max-w-2xl mx-auto">
         <!-- Position Filter Bar -->
         <div class="flex gap-2 overflow-x-auto pb-4 mb-4 scrollbar-hide">
-            <button onclick="filterPos('ALL')" class="pos-filter px-6 py-2 rounded-full border border-primary bg-primary/10 text-primary text-xs font-bold whitespace-nowrap">ALL</button>
-            <button onclick="filterPos('GK')" class="pos-filter px-6 py-2 rounded-full border border-white/10 bg-[#1a1a2e] text-slate-400 text-xs font-bold whitespace-nowrap">GK</button>
-            <button onclick="filterPos('DEF')" class="pos-filter px-6 py-2 rounded-full border border-white/10 bg-[#1a1a2e] text-slate-400 text-xs font-bold whitespace-nowrap">DEF</button>
-            <button onclick="filterPos('MID')" class="pos-filter px-6 py-2 rounded-full border border-white/10 bg-[#1a1a2e] text-slate-400 text-xs font-bold whitespace-nowrap">MID</button>
-            <button onclick="filterPos('FWD')" class="pos-filter px-6 py-2 rounded-full border border-white/10 bg-[#1a1a2e] text-slate-400 text-xs font-bold whitespace-nowrap">FWD</button>
+            <button onclick="filterPos('ALL')" class="pos-filter px-6 py-2 rounded-xl border border-primary bg-primary/5 text-primary text-xs font-bold whitespace-nowrap">ALL</button>
+            <button onclick="filterPos('GK')" class="pos-filter px-6 py-2 rounded-xl border border-gray-100 bg-white text-gray-400 text-xs font-bold whitespace-nowrap">GK</button>
+            <button onclick="filterPos('DEF')" class="pos-filter px-6 py-2 rounded-xl border border-gray-100 bg-white text-gray-400 text-xs font-bold whitespace-nowrap">DEF</button>
+            <button onclick="filterPos('MID')" class="pos-filter px-6 py-2 rounded-xl border border-gray-100 bg-white text-gray-400 text-xs font-bold whitespace-nowrap">MID</button>
+            <button onclick="filterPos('FWD')" class="pos-filter px-6 py-2 rounded-xl border border-gray-100 bg-white text-gray-400 text-xs font-bold whitespace-nowrap">FWD</button>
         </div>
 
         <!-- Player List -->
@@ -74,33 +84,33 @@
 
     <!-- VIEW B: MY TEAM -->
     <section id="view-team" class="hidden py-6 h-full max-w-2xl mx-auto flex flex-col">
-        <div class="flex-1 pitch-bg rounded-3xl border border-white/5 relative p-8 flex flex-col justify-around min-h-[600px] overflow-hidden shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]">
+        <div class="flex-1 pitch-bg rounded-3xl border border-gray-100 relative p-8 flex flex-col justify-around min-h-[600px] overflow-hidden pitch-grass">
             <!-- Pitch Markings -->
-            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t border-white/10 opacity-30"></div>
-            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-white/10 rounded-full opacity-30"></div>
+            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-gray-200 opacity-50"></div>
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-2 border-dashed border-gray-200 rounded-full opacity-50"></div>
             
             <div id="my-team-pitch" class="flex flex-col-reverse h-full justify-around relative z-10 text-center">
                 <!-- Groups will be rendered here by main.js: GK at bottom, FWD at top -->
             </div>
         </div>
         
-        <div class="mt-8 p-6 bg-[#1a1a2e] rounded-2xl border border-white/5 text-center">
-            <h4 class="text-xs font-bold text-slate-500 uppercase mb-4">Choose Captain & Vice Captain</h4>
-            <p class="text-[10px] text-slate-400">Hover over a player on the pitch to assign roles.<br>C = 2x Points | VC = 1.5x Points</p>
+        <div class="mt-8 p-6 bg-gray-50 rounded-2xl border border-gray-100 text-center">
+            <h4 class="text-xs font-bold text-gray-500 uppercase mb-4">Choose Captain & Vice Captain</h4>
+            <p class="text-[10px] text-gray-400">Tap a player on the pitch to assign roles.<br>C = 2x Points | VC = 1.5x Points</p>
         </div>
     </section>
 
 </main>
 
 <!-- BOTTOM ACTION BAR -->
-<div class="fixed bottom-0 left-0 w-full bg-[#131318] border-t border-white/10 p-4 z-[110] flex justify-between items-center px-8 shadow-[0_-10px_40px_rgba(0,0,0,0.8)]">
+<div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 p-4 z-[110] flex justify-between items-center px-8 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
     <div class="hidden md:block">
-        <p class="text-[10px] text-slate-500 font-bold uppercase">Selected Squad</p>
-        <p class="text-sm font-black text-white"><span id="footer-count">0</span> / 11 Players</p>
+        <p class="text-[10px] text-gray-400 font-bold uppercase">Selected Squad</p>
+        <p class="text-sm font-black text-gray-900"><span id="footer-count">0</span> / 11 Players</p>
     </div>
     <div class="flex gap-4 w-full md:w-auto">
-        <button onclick="window.lineupManager.selectedPlayers = []; window.updateBuilderUI(); window.renderPlayerList();" class="kinetic-button flex-1 md:flex-none px-8 py-4 rounded-xl font-bold bg-[#1a1a2e] text-white border border-white/10">RESET</button>
-        <button onclick="proceedToConfirm()" class="kinetic-button flex-1 md:flex-none px-12 py-4 rounded-xl font-headline font-black bg-gradient-to-r from-[#00ff88] to-primary text-[#131318] shadow-[0_0_30px_rgba(0,255,136,0.3)] hover:scale-[1.05] transition-transform">NEXT STEP →</button>
+        <button onclick="window.lineupManager.selectedPlayers = []; window.updateBuilderUI(); window.renderPlayerList();" class="kinetic-button flex-1 md:flex-none px-8 py-4 rounded-xl font-bold bg-gray-50 text-gray-900 border border-gray-100 uppercase text-xs tracking-widest">RESET</button>
+        <button onclick="proceedToConfirm()" class="kinetic-button flex-1 md:flex-none px-12 py-4 rounded-xl font-headline font-black bg-primary text-white hover:bg-primary/90 transition-all uppercase tracking-widest">NEXT STEP →</button>
     </div>
 </div>
 
@@ -127,12 +137,12 @@
     function filterPos(pos) {
         window.currentPosFilter = pos;
         document.querySelectorAll('.pos-filter').forEach(btn => {
-            btn.classList.remove('border-primary', 'bg-primary/10', 'text-primary');
-            btn.classList.add('border-white/10', 'bg-[#1a1a2e]', 'text-slate-400');
+            btn.classList.remove('border-primary', 'bg-primary/5', 'text-primary');
+            btn.classList.add('border-gray-100', 'bg-white', 'text-gray-400');
         });
         const active = Array.from(document.querySelectorAll('.pos-filter')).find(x => x.innerText === pos);
-        active.classList.add('border-primary', 'bg-primary/10', 'text-primary');
-        active.classList.remove('border-white/10', 'bg-[#1a1a2e]', 'text-slate-400');
+        active.classList.add('border-primary', 'bg-primary/5', 'text-primary');
+        active.classList.remove('border-gray-100', 'bg-white', 'text-gray-400');
         window.renderPlayerList(pos);
     }
 

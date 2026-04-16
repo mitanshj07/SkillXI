@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -8,87 +8,45 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-lowest": "#0e0e13",
-                        "surface": "#131318",
-                        "background": "#131318",
-                        "secondary": "#d2bbff",
-                        "on-surface-variant": "#bbc9cf",
-                        "on-tertiary-fixed-variant": "#005228",
-                        "on-primary": "#003642",
-                        "tertiary": "#00ff88",
-                        "surface-variant": "#35343a",
-                        "surface-container-high": "#2a292f",
-                        "primary-container": "#00d4ff",
-                        "on-tertiary-container": "#005d2d",
-                        "on-error": "#690005",
-                        "surface-container": "#1f1f25",
-                        "primary": "#a8e8ff",
-                        "on-primary-container": "#00586b",
-                        "on-tertiary-fixed": "#00210c",
-                        "on-secondary": "#3f008e",
-                        "inverse-primary": "#00677e",
-                        "tertiary-fixed": "#60ff99",
-                        "tertiary-container": "#00df76",
-                        "surface-container-highest": "#35343a",
-                        "inverse-surface": "#e4e1e9",
-                        "inverse-on-surface": "#303036",
-                        "error-container": "#93000a",
-                        "error": "#ffb4ab",
-                        "on-secondary-fixed-variant": "#5a00c6",
-                        "surface-container-low": "#1b1b20",
-                        "secondary-container": "#6001d1",
-                        "on-background": "#e4e1e9",
-                        "outline-variant": "#3c494e",
-                        "on-primary-fixed": "#001f27",
-                        "surface-tint": "#3cd7ff",
-                        "outline": "#859398",
-                        "on-secondary-container": "#c9aeff",
-                        "on-primary-fixed-variant": "#004e5f",
-                        "secondary-fixed": "#eaddff",
-                        "on-secondary-fixed": "#25005a",
-                        "primary-fixed-dim": "#3cd7ff",
-                        "secondary-fixed-dim": "#d2bbff",
-                        "primary-fixed": "#b4ebff",
-                        "on-tertiary": "#003919",
-                        "surface-dim": "#131318",
-                        "tertiary-fixed-dim": "#00e479",
-                        "on-surface": "#e4e1e9",
-                        "surface-bright": "#39383e",
-                        "on-error-container": "#ffdad6"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "9999px"
-                    },
-                    "fontFamily": {
-                        "headline": ["Space Grotesk"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
-                    }
+    tailwind.config = {
+        theme: {
+            extend: {
+                "colors": {
+                    "primary": "#00D09C",
+                    "surface": "#FFFFFF",
+                    "background": "#FFFFFF",
+                    "secondary": "#1A1A1A",
+                    "outline": "#EEEEEE",
+                    "outline-variant": "#F3F4F6",
+                    "on-surface": "#1A1A1A",
+                    "on-surface-variant": "#718096",
+                    "error": "#E21D26"
                 },
-            },
+                "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "9999px"
+                },
+                "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+                }
+            }
         }
-    </script>
-<style>
+    }
+</script>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .neon-glow-primary:hover {
-            box-shadow: 0 0 20px rgba(168, 232, 255, 0.4);
+        .kinetic-card:hover {
+            border-color: #00D09C;
+            transform: translateY(-2px);
         }
-        .neon-glow-secondary:hover {
-            box-shadow: 0 0 20px rgba(210, 187, 255, 0.4);
-        }
-        .glass-card {
-            background: rgba(53, 52, 58, 0.6);
-            backdrop-filter: blur(20px);
+        .balance-gradient {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F6F9FC 100%);
         }
     </style>
 <link rel="stylesheet" href="assets/css/style.css"/>
@@ -98,18 +56,17 @@
     <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
-<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<body class="bg-white text-gray-900 font-body">
 <!-- TopAppBar -->
-<header class="bg-[#131318]/80 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<header class="bg-white/80 backdrop-blur-xl border-b border-gray-100 top-0 sticky z-50">
 <div class="flex justify-between items-center w-full px-6 py-4 max-w-[1440px] mx-auto">
 <div class="flex items-center gap-8">
-<a class="text-2xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#a8e8ff] to-[#00d4ff] font-headline hover:opacity-80 transition-opacity" href="index.html">SkillXI</a>
-<a class="text-2xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#a8e8ff] to-[#00d4ff] font-headline hover:opacity-80 transition-opacity" href="index.html">SkillXI</a>
+<a class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase" href="index.html">SkillXI</a>
 </div>
 <div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-slate-400 hover:text-white transition-colors">notifications</button>
-<button class="material-symbols-outlined text-[#a8e8ff] bg-[#a8e8ff]/10 p-2 rounded-full">account_balance_wallet</button>
-<button onclick="connectWallet()" class="bg-gradient-to-r from-[#a8e8ff] to-[#00d4ff] text-on-primary px-6 py-2 rounded-full font-bold text-sm hover:scale-95 duration-200 ease-out shadow-[0_0_20px_rgba(0,212,255,0.4)]">
+<button class="material-symbols-outlined text-gray-400 hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-xl">account_balance_wallet</button>
+<button onclick="connectWallet()" class="bg-primary text-white px-8 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary/90 transition-all shadow-sm">
                     Connect Wallet
                 </button>
 </div>
@@ -117,40 +74,39 @@
 </header>
 <div class="flex min-h-screen">
 <!-- SideNavBar -->
-<aside class="h-screen w-64 fixed left-0 top-0 hidden lg:flex flex-col bg-[#0e0e13] border-r border-[#a8e8ff]/10 py-8 z-40">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 hidden lg:flex flex-col bg-white border-r border-gray-100 py-8 z-40">
 <div class="px-6 mb-12">
 <div class="flex items-center gap-3 mb-2">
-<div class="w-10 h-10 rounded-full overflow-hidden bg-primary/20 border border-primary/30 flex items-center justify-center">
-<img alt="SkillXI AI Identity" data-alt="Abstract AI neural network icon with glowing blue circuits on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlDAEVbytFzbc-IsH2M-t_d01FvEK4OLH_m09zcj5fQNK94Q02vrT1dHlzsr3DDRe0P0_h3WnuECAo-8TEeYLH3nY-WzNtzbVCdB8tbbYpN_XKzqMbp3gtV7njDcjGlttENLWt20b8dMCh8-OgVjK35PiKB3Lqml2GWS3qSZrm1jhL00NUHu8aGPlDwAzfjlZfLZG5CtSpjXUVnrSq9AzHPbrHCJ0ugfgq8FAxuhNff4RKgVG23O5fLHAK71iDw7Br3WGCKSXq2GX4"/>
+<div class="w-10 h-10 rounded-xl overflow-hidden bg-primary/5 border border-primary/10 flex items-center justify-center">
+<img alt="AI Analyst" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlDAEVbytFzbc-IsH2M-t_d01FvEK4OLH_m09zcj5fQNK94Q02vrT1dHlzsr3DDRe0P0_h3WnuECAo-8TEeYLH3nY-WzNtzbVCdB8tbbYpN_XKzqMbp3gtV7njDcjGlttENLWt20b8dMCh8-OgVjK35PiKB3Lqml2GWS3qSZrm1jhL00NUHu8aGPlDwAzfjlZfLZG5CtSpjXUVnrSq9AzHPbrHCJ0ugfgq8FAxuhNff4RKgVG23O5fLHAK71iDw7Br3WGCKSXq2GX4"/>
 </div>
 <div>
-<div class="font-headline uppercase text-[10px] tracking-widest text-primary">KINETIC INTEL</div>
-<div class="text-[9px] text-slate-500 tracking-[0.2em] uppercase">AI Node Active</div>
+<div class="font-headline font-black uppercase text-[10px] tracking-widest text-primary">KINETIC AI</div>
+<div class="text-[9px] text-gray-400 font-black tracking-widest uppercase">System Online</div>
 </div>
 </div>
 </div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
-<span class="material-symbols-outlined">dashboard</span> Command Center
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:bg-gray-50 hover:text-primary transition-all font-black uppercase text-xs tracking-widest" href="index.html">
+<span class="material-symbols-outlined">dashboard</span> HUB
                 </a>
-<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="roster-lab.html">
-<span class="material-symbols-outlined">biotech</span> Roster Lab
+<a class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:bg-gray-50 hover:text-primary transition-all font-black uppercase text-xs tracking-widest" href="lineup.html">
+<span class="material-symbols-outlined">biotech</span> ROSTER
                 </a>
-<a class="flex items-center gap-4 px-6 py-4 bg-[#1b1b20] text-[#a8e8ff] border-r-4 border-[#a8e8ff] transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
-<span class="material-symbols-outlined">account_balance_wallet</span> Vault
+<a class="flex items-center gap-4 px-6 py-4 bg-primary/5 text-primary border-r-4 border-primary transition-all font-black uppercase text-xs tracking-widest" href="wallet.html">
+<span class="material-symbols-outlined">account_balance_wallet</span> VAULT
                 </a>
-<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
-<span class="material-symbols-outlined">hub</span> Nexus Feed
-                </a>
-<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="global-leaderboard.html">
-<span class="material-symbols-outlined">gavel</span> Governance
+<a class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:bg-gray-50 hover:text-primary transition-all font-black uppercase text-xs tracking-widest" href="leaderboard.html">
+<span class="material-symbols-outlined">gavel</span> RANK
                 </a>
 </nav>
 <div class="px-6 mb-8">
-<button class="w-full py-3 bg-secondary text-on-secondary rounded-xl font-headline font-bold text-xs tracking-widest uppercase hover:scale-105 transition-transform" onclick="location.href='lineup.html'">
-                    Deploy Squad
+<button class="w-full py-4 bg-primary text-white rounded-2xl font-headline font-black text-xs tracking-widest uppercase hover:bg-primary/90 transition-all shadow-sm" onclick="location.href='contests.html'">
+                    ENTER CONTEST
                 </button>
 </div>
+</aside>
 <div class="mt-auto pt-8 border-t border-white/5 space-y-1">
 <a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:text-slate-200 font-headline uppercase text-xs tracking-widest" href="#">
 <span class="material-symbols-outlined">settings</span> Settings
@@ -165,192 +121,188 @@
 <!-- Header Section -->
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
 <div>
-<h1 class="font-headline font-extrabold text-4xl tracking-tighter text-on-surface">VAULT CONTROL</h1>
-<p class="text-on-surface-variant font-label text-sm mt-1">Manage your SOL liquidity and tactical rewards.</p>
+<h1 class="font-headline font-black text-5xl tracking-tighter text-gray-900 uppercase italic">VAULT CONTROL</h1>
+<p class="text-gray-400 font-black text-xs mt-2 uppercase tracking-widest">Secure your SOL and claim tactical rewards.</p>
 </div>
 <div class="flex gap-4">
-<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-3 rounded-full font-headline font-bold tracking-tight neon-glow-primary transition-all duration-300 flex items-center gap-2">
-<span class="material-symbols-outlined">add_circle</span> Deposit
+<button class="bg-primary text-white px-10 py-4 rounded-2xl font-headline font-black tracking-widest uppercase text-xs shadow-md hover:scale-[1.02] transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm font-black">add_circle</span> Deposit
                     </button>
-<button class="bg-surface-container-high border border-outline-variant text-primary px-8 py-3 rounded-full font-headline font-bold tracking-tight hover:bg-surface-variant transition-all flex items-center gap-2">
-<span class="material-symbols-outlined">file_upload</span> Withdraw
+<button class="bg-white border border-gray-100 text-gray-900 px-10 py-4 rounded-2xl font-headline font-black tracking-widest uppercase text-xs hover:bg-gray-50 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm font-black">file_upload</span> Withdraw
                     </button>
 </div>
 </div>
 <!-- Dashboard Grid -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <!-- Total Balance Card -->
-<div class="lg:col-span-2 glass-card rounded-[2rem] p-8 relative overflow-hidden flex flex-col justify-between min-h-[320px] shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
-<div class="absolute top-0 right-0 p-8">
-<span class="material-symbols-outlined text-primary/20 text-8xl">account_balance_wallet</span>
+<div class="lg:col-span-2 balance-gradient border border-gray-100 rounded-[2.5rem] p-10 relative overflow-hidden flex flex-col justify-between min-h-[350px] shadow-sm">
+<div class="absolute top-0 right-0 p-10">
+<span class="material-symbols-outlined text-primary/5 text-9xl font-black">account_balance_wallet</span>
 </div>
 <div>
-<div class="flex items-center gap-2 text-primary font-headline text-xs tracking-[0.2em] uppercase mb-4">
-<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<div class="flex items-center gap-2 text-primary font-black text-[10px] tracking-[0.2em] uppercase mb-6">
+<span class="w-3 h-3 rounded-md bg-primary shadow-[0_0_10px_rgba(0,208,156,0.3)]"></span>
                             Active Balance
                         </div>
 <div class="flex items-baseline gap-4">
-<span class="font-headline font-extrabold text-7xl tracking-tighter text-white">42.84</span>
-<span class="font-headline font-bold text-2xl text-primary">SOL</span>
+<span class="font-headline font-black text-8xl tracking-tighter text-gray-900 italic uppercase">42.84</span>
+<span class="font-headline font-black text-3xl text-primary italic">SOL</span>
 </div>
-<div class="text-on-surface-variant font-label text-xl mt-2">≈ $6,211.38 USD</div>
+<div class="text-gray-400 font-black text-2xl mt-2 tracking-tighter">≈ $6,211.38 USD</div>
 </div>
-<div class="w-full h-24 mt-8">
+<div class="w-full h-24 mt-12">
 <!-- Simulated Balance Chart -->
-<div class="flex items-end justify-between h-full w-full gap-1">
-<div class="bg-primary/20 w-full rounded-t-sm" style="height: 40%"></div>
-<div class="bg-primary/20 w-full rounded-t-sm" style="height: 35%"></div>
-<div class="bg-primary/20 w-full rounded-t-sm" style="height: 45%"></div>
-<div class="bg-primary/20 w-full rounded-t-sm" style="height: 60%"></div>
-<div class="bg-primary/20 w-full rounded-t-sm" style="height: 55%"></div>
-<div class="bg-primary/30 w-full rounded-t-sm" style="height: 70%"></div>
-<div class="bg-primary/40 w-full rounded-t-sm" style="height: 85%"></div>
-<div class="bg-primary/50 w-full rounded-t-sm" style="height: 80%"></div>
-<div class="bg-primary/60 w-full rounded-t-sm" style="height: 90%"></div>
-<div class="bg-primary/70 w-full rounded-t-sm" style="height: 75%"></div>
-<div class="bg-primary/80 w-full rounded-t-sm" style="height: 95%"></div>
-<div class="bg-primary w-full rounded-t-sm" style="height: 100%"></div>
+<div class="flex items-end justify-between h-full w-full gap-2">
+<div class="bg-primary/5 w-full rounded-xl" style="height: 40%"></div>
+<div class="bg-primary/10 w-full rounded-xl" style="height: 35%"></div>
+<div class="bg-primary/15 w-full rounded-xl" style="height: 45%"></div>
+<div class="bg-primary/20 w-full rounded-xl" style="height: 60%"></div>
+<div class="bg-primary/25 w-full rounded-xl" style="height: 55%"></div>
+<div class="bg-primary/30 w-full rounded-xl" style="height: 70%"></div>
+<div class="bg-primary/40 w-full rounded-xl" style="height: 85%"></div>
+<div class="bg-primary/50 w-full rounded-xl" style="height: 80%"></div>
+<div class="bg-primary/60 w-full rounded-xl" style="height: 90%"></div>
+<div class="bg-primary/70 w-full rounded-xl" style="height: 75%"></div>
+<div class="bg-primary/80 w-full rounded-xl" style="height: 95%"></div>
+<div class="bg-primary w-full rounded-xl" style="height: 100%"></div>
 </div>
-<div class="flex justify-between mt-2 text-[10px] uppercase tracking-widest text-slate-500 font-label">
-<span>30 Days Ago</span>
-<span>Today</span>
+<div class="flex justify-between mt-4 text-[10px] uppercase tracking-widest text-gray-400 font-black">
+<span>Transactions (30D)</span>
+<span>Real-time Output</span>
 </div>
 </div>
 </div>
 <!-- Wallet Security & Devices -->
-<div class="bg-surface-container-low rounded-[2rem] p-8 flex flex-col gap-6">
+<div class="bg-gray-50 border border-gray-100 rounded-[2.5rem] p-10 flex flex-col gap-6">
 <div class="flex items-center justify-between">
-<h3 class="font-headline font-bold text-lg tracking-tight">Security Node</h3>
-<span class="material-symbols-outlined text-secondary">security</span>
+<h3 class="font-headline font-black text-xl tracking-tight uppercase italic text-gray-900">Security</h3>
+<span class="material-symbols-outlined text-primary font-black">security</span>
 </div>
 <div class="space-y-4">
-<div class="p-4 bg-surface-container rounded-2xl border border-white/5 flex items-center gap-4">
-<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
-<span class="material-symbols-outlined">smartphone</span>
+<div class="p-5 bg-white rounded-2xl border border-gray-100 flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined font-black">smartphone</span>
 </div>
 <div>
-<div class="text-sm font-bold">iPhone 15 Pro</div>
-<div class="text-[10px] text-slate-500">San Francisco, USA • Active now</div>
+<div class="text-sm font-black uppercase italic">iPhone 15 Pro</div>
+<div class="text-[10px] text-gray-400 font-black uppercase tracking-widest">SF, USA • LIVE</div>
 </div>
 </div>
-<div class="p-4 bg-surface-container/50 rounded-2xl border border-white/5 flex items-center gap-4">
-<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-500">
-<span class="material-symbols-outlined">desktop_windows</span>
+<div class="p-5 bg-white/50 rounded-2xl border border-gray-100 flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center text-gray-400">
+<span class="material-symbols-outlined font-black">desktop_windows</span>
 </div>
 <div>
-<div class="text-sm font-bold text-slate-300">MacBook Pro 16"</div>
-<div class="text-[10px] text-slate-500">London, UK • 2 hours ago</div>
+<div class="text-sm font-black uppercase italic text-gray-400">MacBook Pro 16</div>
+<div class="text-[10px] text-gray-400 font-black uppercase tracking-widest">London, UK • 2H AGO</div>
 </div>
 </div>
 </div>
-<button class="w-full mt-auto py-3 border border-outline-variant text-on-surface-variant hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-colors">
-                        Manage Trusted Devices
+<button class="w-full mt-auto py-4 border border-gray-200 text-gray-400 hover:text-gray-900 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
+                        MANAGE NODES
                     </button>
 </div>
 </div>
 <!-- Transaction History Section -->
-<div class="bg-surface-container-low rounded-[2rem] overflow-hidden">
-<div class="px-8 py-6 flex items-center justify-between border-b border-white/5">
-<h3 class="font-headline font-bold text-xl tracking-tight text-white cursor-pointer" onclick="location.href='wallet.html'">Transaction History</h3>
+<div class="bg-white border border-gray-100 rounded-[2.5rem] overflow-hidden shadow-sm">
+<div class="px-10 py-8 flex items-center justify-between border-b border-gray-50">
+<h3 class="font-headline font-black text-2xl tracking-tight text-gray-900 uppercase italic">Vault Audit</h3>
 <div class="flex gap-2">
-<button class="bg-surface-container text-xs px-4 py-2 rounded-full border border-white/5 text-slate-400">Filter</button>
-<button class="bg-surface-container text-xs px-4 py-2 rounded-full border border-white/5 text-slate-400">Export CSV</button>
+<button class="bg-gray-50 text-[10px] font-black uppercase tracking-widest px-6 py-2.5 rounded-xl border border-gray-100 text-gray-400 hover:text-gray-900 transition-all">Filter</button>
+<button class="bg-gray-50 text-[10px] font-black uppercase tracking-widest px-6 py-2.5 rounded-xl border border-gray-100 text-gray-400 hover:text-gray-900 transition-all">Export</button>
 </div>
 </div>
 <div class="overflow-x-auto">
 <table class="w-full text-left font-label">
 <thead>
-<tr class="text-slate-500 text-[10px] uppercase tracking-[0.2em] bg-surface-container-lowest/50">
-<th class="px-8 py-4 font-bold">Type</th>
-<th class="px-8 py-4 font-bold">Date</th>
-<th class="px-8 py-4 font-bold">Amount</th>
-<th class="px-8 py-4 font-bold">Status</th>
-<th class="px-8 py-4 font-bold text-right">Explorer</th>
+<tr class="text-gray-400 text-[10px] uppercase tracking-[0.2em] font-black bg-gray-50/50">
+<th class="px-10 py-5">Type</th>
+<th class="px-10 py-5">Date</th>
+<th class="px-10 py-5">Amount</th>
+<th class="px-10 py-5">Status</th>
+<th class="px-10 py-5 text-right">Explorer</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-white/5">
-<tr class="hover:bg-white/[0.02] transition-colors">
-<td class="px-8 py-5">
+<tbody class="divide-y divide-gray-50">
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-10 py-6">
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">stars</span>
-<span class="font-bold">Contest Win</span>
+<span class="material-symbols-outlined text-primary font-black">stars</span>
+<span class="font-black uppercase italic text-sm">Contest Win</span>
 </div>
 </td>
-<td class="px-8 py-5 text-slate-400 text-sm">Oct 24, 2023</td>
-<td class="px-8 py-5 text-tertiary font-headline font-bold">+12.50 SOL</td>
-<td class="px-8 py-5">
-<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase">Success</span>
+<td class="px-10 py-6 text-gray-400 text-xs font-black uppercase">Oct 24, 2023</td>
+<td class="px-10 py-6 text-primary font-headline font-black text-lg">+12.50 SOL</td>
+<td class="px-10 py-6">
+<span class="px-4 py-1.5 rounded-lg bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10">Settled</span>
 </td>
-<td class="px-8 py-5 text-right">
-<a class="text-primary hover:underline text-xs flex items-center justify-end gap-1" href="#">
-                                        Solscan <span class="material-symbols-outlined text-xs">open_in_new</span>
+<td class="px-10 py-6 text-right">
+<a class="text-gray-300 hover:text-primary transition-all text-xs font-black uppercase tracking-tighter flex items-center justify-end gap-1" href="#">
+                                        SCAN <span class="material-symbols-outlined text-xs">open_in_new</span>
 </a>
 </td>
 </tr>
-<tr class="hover:bg-white/[0.02] transition-colors">
-<td class="px-8 py-5">
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-10 py-6">
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">payments</span>
-<span class="font-bold">Entry Fee</span>
+<span class="material-symbols-outlined text-gray-400 font-black">payments</span>
+<span class="font-black uppercase italic text-sm text-gray-400">Entry Fee</span>
 </div>
 </td>
-<td class="px-8 py-5 text-slate-400 text-sm">Oct 22, 2023</td>
-<td class="px-8 py-5 text-white font-headline font-bold">-2.00 SOL</td>
-<td class="px-8 py-5">
-<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase">Success</span>
+<td class="px-10 py-6 text-gray-400 text-xs font-black uppercase">Oct 22, 2023</td>
+<td class="px-10 py-6 text-gray-900 font-headline font-black text-lg">-2.00 SOL</td>
+<td class="px-10 py-6">
+<span class="px-4 py-1.5 rounded-lg bg-gray-50 text-gray-400 text-[10px] font-black uppercase tracking-widest border border-gray-100">Settled</span>
 </td>
-<td class="px-8 py-5 text-right">
-<a class="text-primary hover:underline text-xs flex items-center justify-end gap-1" href="#">
-                                        Solscan <span class="material-symbols-outlined text-xs">open_in_new</span>
+<td class="px-10 py-6 text-right">
+<a class="text-gray-300 hover:text-primary transition-all text-xs font-black uppercase tracking-tighter flex items-center justify-end gap-1" href="#">
+                                        SCAN <span class="material-symbols-outlined text-xs">open_in_new</span>
 </a>
 </td>
 </tr>
-<tr class="hover:bg-white/[0.02] transition-colors">
-<td class="px-8 py-5">
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-10 py-6">
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary-container">group_add</span>
-<span class="font-bold">Referral Bonus</span>
+<span class="material-symbols-outlined text-primary font-black">group_add</span>
+<span class="font-black uppercase italic text-sm">Referral</span>
 </div>
 </td>
-<td class="px-8 py-5 text-slate-400 text-sm">Oct 20, 2023</td>
-<td class="px-8 py-5 text-tertiary font-headline font-bold">+0.50 SOL</td>
-<td class="px-8 py-5">
-<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase">Success</span>
+<td class="px-10 py-6 text-gray-400 text-xs font-black uppercase">Oct 20, 2023</td>
+<td class="px-10 py-6 text-primary font-headline font-black text-lg">+0.50 SOL</td>
+<td class="px-10 py-6">
+<span class="px-4 py-1.5 rounded-lg bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10">Settled</span>
 </td>
-<td class="px-8 py-5 text-right">
-<a class="text-primary hover:underline text-xs flex items-center justify-end gap-1" href="#">
-                                        Solscan <span class="material-symbols-outlined text-xs">open_in_new</span>
+<td class="px-10 py-6 text-right">
+<a class="text-gray-300 hover:text-primary transition-all text-xs font-black uppercase tracking-tighter flex items-center justify-end gap-1" href="#">
+                                        SCAN <span class="material-symbols-outlined text-xs">open_in_new</span>
 </a>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="p-4 bg-surface-container-lowest/30 flex justify-center">
-<button class="text-slate-500 hover:text-primary text-xs uppercase tracking-widest font-bold flex items-center gap-2" onclick="location.href='wallet.html'">
-                        View Full History <span class="material-symbols-outlined text-sm">expand_more</span>
+<div class="p-6 bg-gray-50/30 flex justify-center">
+<button class="text-gray-400 hover:text-primary text-[10px] uppercase tracking-[0.2em] font-black flex items-center gap-2" onclick="location.href='wallet.html'">
+                        REVEAL FULL AUDIT <span class="material-symbols-outlined text-sm">expand_more</span>
 </button>
 </div>
 </div>
 </main>
 </div>
 <!-- BottomNavBar (Mobile Only) -->
-<nav class="fixed bottom-0 left-0 w-full flex lg:hidden justify-around items-center px-4 pb-6 pt-3 bg-[#131318]/90 backdrop-blur-2xl border-t border-[#a8e8ff]/20 z-50 shadow-[0_-10px_30px_rgba(0,212,255,0.15)]">
-<a class="flex flex-col items-center justify-center text-slate-500 opacity-60" href="#">
+<nav class="fixed bottom-0 left-0 w-full flex lg:hidden justify-around items-center px-4 pb-8 pt-4 bg-white/90 backdrop-blur-2xl border-t border-gray-100 z-50">
+<a class="flex flex-col items-center justify-center text-gray-300" href="index.html">
 <span class="material-symbols-outlined">home</span>
-<span class="font-['Inter'] font-bold text-[10px] uppercase mt-1">Home</span>
+<span class="font-black text-[8px] uppercase mt-1">Hub</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-500 opacity-60" href="#">
+<a class="flex flex-col items-center justify-center text-gray-300" href="contests.html">
 <span class="material-symbols-outlined">analytics</span>
-<span class="font-['Inter'] font-bold text-[10px] uppercase mt-1">Stats</span>
+<span class="font-black text-[8px] uppercase mt-1">Play</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-500 opacity-60" href="#">
-<span class="material-symbols-outlined">group</span>
-<span class="font-['Inter'] font-bold text-[10px] uppercase mt-1">Social</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff]/20 to-[#d2bbff]/20 text-[#a8e8ff] rounded-full p-3 scale-110 transition-transform" href="#">
-<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">wallet</span>
-<span class="font-['Inter'] font-bold text-[8px] uppercase mt-0.5">Wallet</span>
+<a class="flex flex-col items-center justify-center text-primary" href="wallet.html">
+<span class="material-symbols-outlined font-black">wallet</span>
+<span class="font-black text-[8px] uppercase mt-1">Vault</span>
 </a>
 </nav>
 <script src="assets/js/main.js"></script>

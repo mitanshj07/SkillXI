@@ -6,6 +6,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
+:root {
+  /* Flat White Stock App Palette */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F6F9FC;
+  --primary: #00D09C; /* Groww Teal */
+  --primary-alt: #E21D26; /* Dream11 Red (Selective Accent) */
+  --secondary: #1A1A1A;
+  --success: #00D09C;
+  --text-main: #1A1A1A;
+  --text-muted: #718096;
+  --border-light: #EEEEEE;
+  --border-focus: #00D09C;
+  
+  --primary-glow: transparent;
+  --secondary-glow: transparent;
+  --tertiary-glow: transparent;
+}
+
 /* === GLOBAL RESET & BASE === */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -15,10 +33,14 @@
 
 html {
     scroll-behavior: smooth;
+    background-color: var(--bg-primary);
 }
 
 body {
     padding-top: 80px; /* Height of fixed top nav */
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
 }
 
 /* Material Symbols default settings */
@@ -28,44 +50,40 @@ body {
 
 /* === SHARED UTILITY CLASSES === */
 .glass-panel {
-    background: rgba(27, 27, 32, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
 }
 
 .glass-card {
-    background: rgba(53, 52, 58, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
 }
 
 .neon-glow-primary {
-    box-shadow: 0 0 20px rgba(168, 232, 255, 0.15);
+    box-shadow: 0 0 20px var(--primary-glow);
 }
 
 .neon-glow-primary-hover:hover {
-    box-shadow: 0 0 20px rgba(168, 232, 255, 0.4);
+    box-shadow: 0 8px 30px var(--primary-glow);
 }
 
 .neon-glow-secondary-hover:hover {
-    box-shadow: 0 0 20px rgba(210, 187, 255, 0.4);
+    box-shadow: 0 8px 30px var(--secondary-glow);
 }
 
 .neon-border-gold {
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 25px rgba(255, 193, 7, 0.3);
 }
 
 .text-gradient-primary {
-    background: linear-gradient(135deg, #a8e8ff 0%, #00d4ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #35343a; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #a8e8ff; }
+::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
 /* === HOME PAGE === */
 .asymmetric-bleed {
@@ -184,36 +202,37 @@ body {
 
 /* Base Kinetic Card */
 .kinetic-card {
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transform-origin: center;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  background: white;
+  border: 1px solid var(--border-light);
 }
 
 .kinetic-card:hover {
-  transform: translateY(-4px) scale(1.02);
   border-color: var(--primary) !important;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--primary-glow);
+  background: var(--bg-secondary);
 }
 
-/* Pulsing Neon Effect */
+/* Pulsing Action Effect */
 .kinetic-pulse {
   animation: kinetic-pulse 3s infinite ease-in-out;
 }
 
 @keyframes kinetic-pulse {
-  0%, 100% { box-shadow: 0 0 10px rgba(168, 232, 255, 0.1); }
+  0%, 100% { box-shadow: 0 0 10px rgba(226, 55, 68, 0.05); }
   50% { box-shadow: 0 0 25px var(--primary-glow); }
 }
 
 /* Tactile Buttons */
 .kinetic-button {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--primary);
+  color: white;
+  border-radius: 12px;
 }
 
 .kinetic-button:active {
-  transform: scale(0.95);
-  filter: brightness(0.9);
+  transform: scale(0.96);
+  filter: brightness(0.95);
 }
 
 /* Shimmer Effect for Live Data */
