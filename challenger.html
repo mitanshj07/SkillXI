@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Challenger Hub | Duel Arena | SkillXI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: { extend: {
+                colors: {
+                    "primary":"#00D09C", "surface":"#131318", "background":"#131318", "secondary":"#1A1A1A", "on-surface": "#1A1A1A", "error": "#E21D26", "tertiary": "#a8e8ff"
+                },
+                fontFamily:{ headline:["Space Grotesk"], body:["Inter"] }
+            }}
+        }
+    </script>
+</head>
+<body class="bg-surface text-white font-body min-h-screen">
+
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-white/5 bg-[#0e0e13] flex flex-col py-8 z-40 hidden lg:flex">
+    <div class="px-6 mb-10">
+        <div class="flex items-center gap-3">
+            <div class="w-1.5 h-8 bg-primary rounded-full"></div>
+            <div>
+                <h3 class="font-headline font-black text-lg tracking-wider uppercase italic">SkillXI</h3>
+                <p class="text-[10px] text-primary font-bold uppercase tracking-widest leading-none">V2.0 Core Active</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 space-y-2">
+        <a href="index.html" class="flex items-center gap-4 px-6 py-4 text-gray-500 hover:text-primary hover:bg-white/5 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">grid_view</span> Hub
+        </a>
+        <a href="pre-match.html" class="flex items-center gap-4 px-6 py-4 text-gray-500 hover:text-primary hover:bg-white/5 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">psychology</span> Intel
+        </a>
+        <a href="challenger.html" class="flex items-center gap-4 px-6 py-4 bg-primary/10 text-primary border-r-4 border-primary transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">swords</span> Arena
+        </a>
+        <a href="leaderboard.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-white/5 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">leaderboard</span> Rank
+        </a>
+    </nav>
+</aside>
+
+<!-- Main Content Area -->
+<main class="lg:ml-64 pt-12 pb-32 px-6 md:px-12">
+    
+    <!-- Hero Header -->
+    <header class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+        <div>
+            <h1 class="text-4xl md:text-6xl font-headline font-black tracking-tighter uppercase italic leading-none mb-4">Duel <span class="text-primary">Arena</span></h1>
+            <p class="text-gray-400 text-xs font-black uppercase tracking-widest">Connect your wallet to engage in high-stakes tactical duels.</p>
+        </div>
+        <div class="flex gap-4">
+            <div class="bg-gray-50/5 border border-white/5 rounded-2xl p-4 min-w-[120px]">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Skill Score</p>
+                <p id="my-skill-score" class="text-2xl font-headline font-black text-white">---</p>
+            </div>
+            <div class="bg-gray-50/5 border border-white/5 rounded-2xl p-4 min-w-[120px]">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Win Ratio</p>
+                <p id="my-win-ratio" class="text-2xl font-headline font-black text-tertiary">---</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter Tabs -->
+    <div class="flex border-b border-white/10 mb-8 overflow-x-auto scrollbar-hide">
+        <button onclick="switchArenaTab('lobby')" id="tab-lobby" class="px-8 py-4 text-xs font-black uppercase tracking-widest border-b-2 border-primary text-primary whitespace-nowrap">Global Lobby</button>
+        <button onclick="switchArenaTab('invites')" id="tab-invites" class="px-8 py-4 text-xs font-black uppercase tracking-widest text-gray-500 whitespace-nowrap">Invitations <span id="invite-count" class="ml-2 bg-error text-white px-2 py-0.5 rounded-full text-[9px] hidden">0</span></button>
+        <button onclick="switchArenaTab('history')" id="tab-history" class="px-8 py-4 text-xs font-black uppercase tracking-widest text-gray-500 whitespace-nowrap">Battle History</button>
+    </div>
+
+    <!-- VIEW A: GLOBAL LOBBY -->
+    <section id="arena-lobby" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Content loaded via challenger-mode.js -->
+        <div class="col-span-full py-20 text-center opacity-50">
+             <span class="animate-spin inline-block text-4xl mb-4 text-primary italic">🌀</span>
+             <p class="text-xs font-black uppercase tracking-widest">Scanning network for active challenges...</p>
+        </div>
+    </section>
+
+    <!-- VIEW B: INVITATIONS -->
+    <section id="arena-invites" class="hidden space-y-4">
+        <!-- Content loaded via challenger-mode.js -->
+    </section>
+
+    <!-- VIEW C: HISTORY -->
+    <section id="arena-history" class="hidden space-y-4">
+        <!-- Content loaded via challenger-mode.js -->
+    </section>
+
+</main>
+
+<!-- Action Bar (Create Challenge) -->
+<div class="fixed bottom-8 right-8 z-[100]">
+    <button onclick="openCreateChallengeModal()" class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-[0_0_30px_rgba(0,208,156,0.4)] hover:scale-110 active:scale-95 transition-all">
+        <span class="material-symbols-outlined text-3xl">add</span>
+    </button>
+</div>
+
+<!-- Modal for Creating Public Challenge -->
+<div id="create-challenge-modal" class="challenger-modal-overlay">
+    <div class="challenger-modal-content bg-[#131318] border border-white/10 rounded-[2.5rem] p-10 max-w-[500px] w-11/12">
+        <h2 class="font-headline font-black text-2xl uppercase italic mb-8">Issue Global <span class="text-primary">Challenge</span></h2>
+        
+        <div class="space-y-6">
+            <div>
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-3">Select Stake Tier</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <button onclick="setStake(0.1)" class="stake-tier p-4 rounded-xl border border-white/5 bg-white/5 hover:border-primary transition-all text-center">
+                        <p class="font-black text-lg">0.1</p>
+                        <p class="text-[9px] text-gray-400">SOL</p>
+                    </button>
+                    <button onclick="setStake(0.5)" class="stake-tier p-4 rounded-xl border border-primary bg-primary/10 text-primary text-center">
+                        <p class="font-black text-lg">0.5</p>
+                        <p class="text-[9px] text-primary/50">SOL</p>
+                    </button>
+                    <button onclick="setStake(1.0)" class="stake-tier p-4 rounded-xl border border-white/5 bg-white/5 hover:border-primary transition-all text-center">
+                        <p class="font-black text-lg">1.0</p>
+                        <p class="text-[9px] text-gray-400">SOL</p>
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2">Arena Match</p>
+                <p class="text-sm font-bold">Standard Multi-Match Duel (24h Window)</p>
+            </div>
+
+            <button id="post-challenge-btn" class="w-full py-5 bg-primary text-white font-headline font-black uppercase tracking-widest rounded-2xl hover:brightness-110 transition-all">
+                POST TO LOBBY →
+            </button>
+            <button onclick="closeCreateChallengeModal()" class="w-full text-xs text-gray-500 font-bold uppercase tracking-widest pt-2">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/challenger-mode.js"></script>
+<script>
+    let currentStake = 0.5;
+
+    function switchArenaTab(tab) {
+        ['lobby', 'invites', 'history'].forEach(t => {
+            document.getElementById(`arena-${t}`).classList.add('hidden');
+            document.getElementById(`tab-${t}`).classList.remove('border-b-2', 'border-primary', 'text-primary');
+            document.getElementById(`tab-${t}`).classList.add('text-gray-500');
+        });
+        document.getElementById(`arena-${tab}`).classList.remove('hidden');
+        document.getElementById(`tab-${tab}`).classList.add('border-b-2', 'border-primary', 'text-primary');
+        document.getElementById(`tab-${tab}`).classList.remove('text-gray-500');
+        
+        if (tab === 'lobby') loadArenaLobby();
+        if (tab === 'invites') loadInvitations();
+        if (tab === 'history') loadHistory();
+    }
+
+    function openCreateChallengeModal() {
+        document.getElementById('create-challenge-modal').classList.add('active');
+    }
+
+    function closeCreateChallengeModal() {
+        document.getElementById('create-challenge-modal').classList.remove('active');
+    }
+
+    function setStake(val) {
+        currentStake = val;
+        document.querySelectorAll('.stake-tier').forEach(btn => {
+            btn.classList.remove('border-primary', 'bg-primary/10', 'text-primary');
+            btn.classList.add('border-white/5', 'bg-white/5', 'text-white');
+        });
+        // Find exact button
+        const btn = Array.from(document.querySelectorAll('.stake-tier')).find(b => b.innerText.includes(val));
+        btn.classList.add('border-primary', 'bg-primary/10', 'text-primary');
+    }
+
+    async function loadArenaLobby() {
+        const lobby = document.getElementById('arena-lobby');
+        // This will be linked to window.challengerMode.fetchPublicChallenges()
+    }
+
+    async function loadInvitations() {
+        const invites = document.getElementById('arena-invites');
+        // This will be linked to window.challengerMode.fetchUserChallenges()
+    }
+
+    async function loadHistory() {
+        const history = document.getElementById('arena-history');
+        // This will be linked to window.challengerMode.fetchHistory()
+    }
+
+    window.addEventListener('load', async () => {
+        const wallet = window.localStorage.getItem('skillxi_wallet');
+        if (wallet) {
+            const profile = await window.getProfileData(wallet);
+            if (profile) {
+                document.getElementById('my-skill-score').innerText = profile.skill_score;
+                document.getElementById('my-win-ratio').innerText = profile.win_ratio || '50%';
+            }
+        }
+        loadArenaLobby();
+    });
+</script>
+</body>
+</html>

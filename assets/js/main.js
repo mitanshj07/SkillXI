@@ -189,6 +189,8 @@ window.ensureUserExists = async function(walletAddress) {
       level: 1,
       tier: 'NOVICE',
       total_earned: 0,
+      is_private: false,
+      reputation: 100,
       badges: []
   }).select();
   if (error) console.error('🔥 [REAL Supabase] debug ERROR:', error);
@@ -200,7 +202,8 @@ window.calculateKineticXP = async function(walletAddress, type, meta = {}) {
         'CONTEST_WIN': 100,
         'FOLLOW_USER': 5,
         'CHALLENGE_WIN': 150,
-        'STREAK_BONUS': 50
+        'STREAK_BONUS': 50,
+        'AGENT_CONSULT': 15
     };
     
     const increment = xpMap[type] || 10;
@@ -226,11 +229,39 @@ window.calculateKineticXP = async function(walletAddress, type, meta = {}) {
 
 window.logActivity = async function(walletAddress, type, payload) {
     console.log('📝 [Activity] Logging:', type);
+    
+    // Check privacy before logging to public activities
+    const { data: profile } = await _supabase.from('profiles').select('is_private').eq('wallet_id', walletAddress).single();
+    if (profile && profile.is_private) {
+        console.log('🔏 [Activity] Stealth Mode enabled. Skipping public log.');
+        return;
+    }
+
     await _supabase.from('activities').insert({
         user_id: walletAddress,
         type: type,
         payload: payload
     });
+};
+
+window.updatePrivacySettings = async function(walletAddress, isPrivate) {
+    console.log('🔏 [Privacy] Updating Stealth Mode:', isPrivate);
+    const { error } = await _supabase.from('profiles').update({ is_private: isPrivate }).eq('wallet_id', walletAddress);
+    if (error) throw error;
+    window.showWalletToast(isPrivate ? 'Stealth Mode ON' : 'Stealth Mode OFF', 'info');
+};
+
+window.adjustReputation = async function(walletAddress, delta) {
+    const { data: profile } = await _supabase.from('profiles').select('reputation').eq('wallet_id', walletAddress).single();
+    if (!profile) return;
+    
+    const newReputation = Math.max(0, Math.min(100, (profile.reputation || 100) + delta));
+    await _supabase.from('profiles').update({ reputation: newReputation }).eq('wallet_id', walletAddress);
+    
+    if (delta < 0) {
+        window.showWalletToast(`⚠️ Reputation Penalty: ${delta}`, 'error');
+    }
+    return newReputation;
 };
 
 window.followUser = async function(targetWallet) {
@@ -296,7 +327,11 @@ window.getPlayers = async function(matchId = null) {
 };
 
 window.getLeaderboard = async function() {
-  const { data } = await _supabase.from('profiles').select('*').order('skill_score', { ascending: false }).limit(20);
+  const { data } = await _supabase.from('profiles')
+    .select('*')
+    .eq('is_private', false)
+    .order('skill_score', { ascending: false })
+    .limit(20);
   return data;
 };
 

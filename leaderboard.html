@@ -98,8 +98,12 @@
 <span class="material-symbols-outlined">sensors</span>
                 Live Match
             </a>
-<a class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-white hover:text-primary rounded-lg font-headline text-sm uppercase tracking-widest transition-all" href="#">
-<span class="material-symbols-outlined">military_tech</span>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-white hover:text-primary rounded-lg font-headline text-sm uppercase tracking-widest transition-all" href="challenger.html">
+<span class="material-symbols-outlined">swords</span>
+                Arena
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-white hover:text-primary rounded-lg font-headline text-sm uppercase tracking-widest transition-all" href="leaderboard.html">
+<span class="material-symbols-outlined">leaderboard</span>
                 Global Rank
             </a>
 <a class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-white hover:text-primary rounded-lg font-headline text-sm uppercase tracking-widest transition-all" href="#">
@@ -233,7 +237,7 @@
 <tr class="bg-gray-50 text-[11px] font-black uppercase tracking-[0.2em] text-gray-400">
 <th class="px-6 py-5">Rank</th>
 <th class="px-6 py-5">Player</th>
-<th class="px-6 py-5">Captain</th>
+<th class="px-6 py-5">Reliability</th>
 <th class="px-6 py-5">Points</th>
 <th class="px-6 py-5">Prize</th>
 <th class="px-6 py-5 text-center">Live</th>
@@ -323,6 +327,7 @@
                 rank: idx + 1,
                 name: p.username || 'Anonymous',
                 pts: p.skill_score || 0,
+                rep: p.reputation || 100,
                 avatar: p.avatar_url || 'https://lh3.googleusercontent.com/a/default-user',
                 wallet_id: p.wallet_id,
                 prize: idx < 3 ? (3.5 / (idx + 1)).toFixed(1) + ' SOL' : '0.1 SOL',
@@ -334,6 +339,7 @@
                 rank: idx + 1,
                 name: p.username || 'Anonymous',
                 pts: p.skill_score || 0,
+                rep: p.reputation || 100,
                 avatar: p.avatar_url || 'https://lh3.googleusercontent.com/a/default-user',
                 wallet_id: p.wallet_id,
                 prize: idx < 3 ? (3.5 / (idx + 1)).toFixed(1) + ' SOL' : '0.1 SOL',
@@ -359,7 +365,10 @@
                     </div>
                 </td>
                 <td class="px-6 py-5">
-                    <span class="bg-primary/5 text-primary px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest border border-primary/10">Expert Pick</span>
+                    <span class="flex items-center gap-1.5 bg-primary/5 text-primary px-2 py-1 rounded text-[10px] font-black uppercase tracking-widest border border-primary/10">
+                        <span class="material-symbols-outlined text-[12px]">verified</span>
+                        ${p.rep}%
+                    </span>
                 </td>
                 <td class="px-6 py-5 font-headline font-black text-gray-900 italic">${p.pts}</td>
                 <td class="px-6 py-5 font-headline font-black text-gray-900">${p.prize}</td>
@@ -407,4 +416,3 @@
     });
 </script>
 </body></html>
-y></html>

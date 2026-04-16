@@ -109,8 +109,11 @@
 <a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined">database</span> Market
             </a>
-<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
+<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="contests.html">
 <span class="material-symbols-outlined">emoji_events</span> Contests
+            </a>
+<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="challenger.html">
+<span class="material-symbols-outlined">swords</span> Arena
             </a>
 <a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
 <span class="material-symbols-outlined">leaderboard</span> Leaderboard
@@ -280,6 +283,56 @@
 </div>
 </div>
 </div>
+<!-- Privacy & Identity Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm">
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-12 h-12 rounded-2xl bg-secondary/5 flex items-center justify-center text-secondary">
+                <span class="material-symbols-outlined">shield_person</span>
+            </div>
+            <div>
+                <h2 class="font-headline font-bold text-2xl tracking-tight text-gray-900 uppercase italic">Privacy & Identity</h2>
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Digital Footprint Control</p>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between p-6 bg-gray-50 rounded-[2rem] border border-gray-100">
+            <div>
+                <p class="font-black text-gray-900 text-sm uppercase italic">Stealth Mode</p>
+                <p class="text-[10px] text-gray-400 font-bold max-w-[200px] leading-relaxed uppercase tracking-widest mt-1">Hide profile from Global Leaderboards & Social Feed</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input id="stealth-mode-toggle" type="checkbox" class="sr-only peer" onchange="window.handleStealthToggle(this.checked)">
+                <div class="w-14 h-8 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+            </label>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-8xl">verified_user</span>
+        </div>
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined">star</span>
+            </div>
+            <div>
+                <h2 class="font-headline font-bold text-2xl tracking-tight text-gray-900 uppercase italic">Verified Reputation</h2>
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Competitive Reliability</p>
+            </div>
+        </div>
+
+        <div class="flex items-end gap-3">
+            <h3 id="reputation-display" class="text-6xl font-headline font-black text-gray-900 tracking-tighter">100%</h3>
+            <div class="mb-2">
+                <span class="bg-primary/10 text-primary px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border border-primary/10">Reliable Player</span>
+            </div>
+        </div>
+        <p class="text-[11px] text-gray-500 font-medium mt-4 leading-relaxed uppercase tracking-tighter opacity-80">
+            Reputation is based on contest attendance, challenge acceptance rate, and fair play.
+        </p>
+    </div>
+</div>
 </div>
 <!-- New: Team History Section -->
 <div class="bg-surface-container-low rounded-[2rem] p-8 border border-outline-variant/10 mt-8">
@@ -327,6 +380,12 @@
             const roiEl = document.getElementById('roi-stat');
             if (roiEl) roiEl.innerText = `+${profile.roi}%`;
 
+            const repDisplay = document.getElementById('reputation-display');
+            if (repDisplay) repDisplay.innerText = `${profile.reputation}%`;
+
+            const stealthToggle = document.getElementById('stealth-mode-toggle');
+            if (stealthToggle) stealthToggle.checked = profile.is_private;
+
             // Update Tier and Progress
             const tierEl = document.querySelector('.text-2xl.font-headline.font-bold');
             if (tierEl) tierEl.innerHTML = `${profile.tier} TIER <span class="text-gray-300 ml-2">/ LVL ${profile.level}</span>`;
@@ -336,6 +395,17 @@
             const progress = (profile.xp % 500) / 5; // Simple percentage calculation
             if (progressBar) progressBar.style.width = `${progress}%`;
         }
+
+        window.handleStealthToggle = async function(isPrivate) {
+            try {
+                const wallet = window.localStorage.getItem('skillxi_wallet');
+                if (!wallet) return;
+                await window.updatePrivacySettings(wallet, isPrivate);
+            } catch (err) {
+                console.error('Failed to toggle stealth mode:', err);
+                document.getElementById('stealth-mode-toggle').checked = !isPrivate;
+            }
+        };
 
         const history = await window.getTeamHistory(wallet);
         const list = document.getElementById('history-list');

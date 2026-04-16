@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     total_lost DECIMAL(10, 2) DEFAULT 0.0,
     badges JSONB DEFAULT '[]',
     tier TEXT DEFAULT 'NOVICE',
+    is_private BOOLEAN DEFAULT false,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
