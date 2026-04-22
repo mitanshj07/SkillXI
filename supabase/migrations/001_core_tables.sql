@@ -6,6 +6,21 @@
 -- Enable UUID generation
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- 0. PROFILES TABLE (user data linked to wallet)
+CREATE TABLE IF NOT EXISTS public.profiles (
+    wallet_id TEXT PRIMARY KEY,
+    username TEXT UNIQUE,
+    skill_score INT DEFAULT 500,
+    xp INT DEFAULT 0,
+    level INT DEFAULT 1,
+    tier TEXT DEFAULT 'NOVICE',
+    total_earned DECIMAL(10,2) DEFAULT 0.0,
+    is_private BOOLEAN DEFAULT FALSE,
+    reputation INT DEFAULT 100,
+    badges TEXT[] DEFAULT '{}',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- 1. MATCHES TABLE (live or upcoming fixtures)
 CREATE TABLE IF NOT EXISTS public.matches (
     id TEXT PRIMARY KEY,                        -- e.g. 'c001', 'f101'
@@ -27,7 +42,7 @@ CREATE TABLE IF NOT EXISTS public.matches (
 
 -- 2. CONTESTS TABLE (instances of a match with different formats)
 CREATE TABLE IF NOT EXISTS public.contests (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id TEXT PRIMARY KEY,                        -- changed from UUID to TEXT for compatibility
     match_id TEXT REFERENCES public.matches(id) ON DELETE CASCADE,
     type TEXT DEFAULT 'mega',                   -- 'mega', '1v1', 'mini'
     prize_pool DECIMAL(10,2) NOT NULL,
@@ -43,7 +58,7 @@ CREATE TABLE IF NOT EXISTS public.entries (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_wallet TEXT NOT NULL,
     match_id TEXT REFERENCES public.matches(id),
-    contest_id UUID REFERENCES public.contests(id),
+    contest_id TEXT REFERENCES public.contests(id), -- changed from UUID to TEXT
     lineup_data JSONB NOT NULL DEFAULT '[]',
     captain_id TEXT,
     vc_id TEXT,

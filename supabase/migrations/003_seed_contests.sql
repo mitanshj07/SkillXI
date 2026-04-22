@@ -31,3 +31,11 @@ VALUES
   ('c007', 'basketball', 'Boston Celtics', 'Miami Heat', 'BOS', 'MIA', NOW() + INTERVAL '14 hours', 7.5, 0.1, 150, 43,
    'Jayson Tatum 40+ pts ceiling this week. Pair with Butler for Heat exposure.')
 ON CONFLICT (id) DO NOTHING;
+
+-- SEED CONTESTS (Types for Match c001)
+INSERT INTO public.contests (id, match_id, type, prize_pool, entry_fee, max_spots, filled_spots)
+VALUES
+  ('c001-mega', 'c001', 'mega', 8.5, 0.1, 200, 142),
+  ('c001-h2h', 'c001', '1v1', 1.8, 1.0, 2, 1),
+  ('c002-mega', 'c002', 'mega', 12.0, 0.15, 300, 89)
+ON CONFLICT (id) DO NOTHING;

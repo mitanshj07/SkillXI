@@ -21,7 +21,7 @@
 </head>
 <body class="bg-white text-gray-900 font-body min-h-screen">
 
-<!-- Top Navigation Bar -->
+<!-- ===== TOP NAV BAR ===== -->
 <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
     <div class="flex items-center gap-12">
         <a href="index.html" class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase">SkillXI</a>
@@ -32,14 +32,14 @@
         </div>
     </div>
     <div class="flex items-center gap-6">
-        <button class="material-symbols-outlined text-primary hover:bg-primary/5 p-2 rounded-xl transition-all">account_balance_wallet</button>
+        <a href="wallet.html" class="material-symbols-outlined text-gray-400 hover:text-primary hover:bg-primary/5 p-2 rounded-xl transition-all">account_balance_wallet</a>
         <div class="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden">
             <img id="header-avatar" alt="User avatar" src="https://lh3.googleusercontent.com/a/default-user"/>
         </div>
     </div>
 </nav>
 
-<!-- Sidebar Navigation -->
+<!-- ===== SIDE NAV BAR (Desktop) ===== -->
 <aside class="fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white flex flex-col pt-24 pb-8 z-40 hidden lg:flex">
     <div class="px-6 mb-8">
         <div class="flex items-center gap-3">
@@ -59,11 +59,20 @@
         <a href="pre-match.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
             <span class="material-symbols-outlined">psychology</span> Intel
         </a>
+        <a href="contests.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">emoji_events</span> Contests
+        </a>
         <a href="challenger.html" class="flex items-center gap-4 px-6 py-4 bg-primary/5 text-primary border-r-4 border-primary transition-all uppercase text-[11px] font-black tracking-widest font-headline">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">swords</span> Arena
         </a>
         <a href="leaderboard.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
             <span class="material-symbols-outlined">leaderboard</span> Rank
+        </a>
+        <a href="profile.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">person</span> Profile
+        </a>
+        <a href="wallet.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">account_balance_wallet</span> Vault
         </a>
     </nav>
 </aside>

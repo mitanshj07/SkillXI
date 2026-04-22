@@ -352,6 +352,80 @@ window.getLeaderboard = async function() {
   return data;
 };
 
+window.getProfileData = async function(walletAddress) {
+  console.log('🔥 [REAL Supabase] debug: Fetching profile', walletAddress);
+  const { data, error } = await _supabase.from('profiles').select('*').eq('wallet_id', walletAddress).single();
+  if (error) {
+    console.warn('⚠️ Profile not found, returning defaults');
+    return {
+      wallet_id: walletAddress,
+      username: `SkillXI-${walletAddress.slice(0,4)}`,
+      skill_score: 500,
+      xp: 0,
+      level: 1,
+      tier: 'NOVICE',
+      total_earned: 0.0,
+      roi: 0.0,
+      reputation: 100,
+      is_private: false
+    };
+  }
+  return data;
+};
+
+window.getTeamHistory = async function(walletAddress) {
+  console.log('🔥 [REAL Supabase] debug: Fetching team history', walletAddress);
+  const { data, error } = await _supabase
+    .from('entries')
+    .select(`
+        *,
+        matches:match_id (home_tag, away_tag, home_team, away_team)
+    `)
+    .eq('user_wallet', walletAddress)
+    .order('created_at', { ascending: false })
+    .limit(10);
+  
+  if (error || !data) return [];
+  
+  return data.map(e => ({
+    id: e.id,
+    match: e.matches ? `${e.matches.home_tag} vs ${e.matches.away_tag}` : 'Unknown Match',
+    points: e.total_points || 0,
+    rank: e.rank ? `#${e.rank}` : 'UNRANKED',
+    win: e.prize_won ? `${e.prize_won} SOL` : '--',
+    date: new Date(e.created_at).toLocaleDateString()
+  }));
+};
+
+window.getFriendsLeaderboard = async function() {
+  const myWallet = window.localStorage.getItem('skillxi_wallet');
+  if (!myWallet) return [];
+
+  const { data: follows } = await _supabase.from('follows').select('following_id').eq('follower_id', myWallet);
+  if (!follows || follows.length === 0) return [];
+
+  const friendIds = follows.map(f => f.following_id);
+  const { data } = await _supabase.from('profiles')
+    .select('*')
+    .in('wallet_id', friendIds)
+    .order('skill_score', { ascending: false });
+    
+  return data || [];
+};
+
+window.getNexusFeed = async function(limit = 10) {
+  const { data, error } = await _supabase
+    .from('activities')
+    .select(`
+        *,
+        profiles:user_id (username, avatar_url)
+    `)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+  
+  return data || [];
+};
+
 // --- 3. INTELLIGENT LIVE API (3 CALLS PER MATCH) ---
 const FOOTBALL_API_KEY = 'ebf76d464844eacdbe8a101bf8ee9106';
 const FOOTBALL_API_URL = 'https://v3.football.api-sports.io';
@@ -549,16 +623,16 @@ window.lockLineupWithUmbra = async function(contestId, lineupData) {
        try {
          const sig = await executeEscrowPayment(1.5);
          
-         // Real Supabase Insert
-         window.showWalletToast('🛡️ Persisting Encrypted Entry...', 'info');
-         const entry = await supabaseQuery('entries', 'POST', {
-            contest_id: contestId,
-            user_id: pubKey,
-            lineup_data: JSON.stringify(lineupData),
-            tx_signature: sig,
-            is_private: true,
-            status: 'locked'
-         });
+          // Real Supabase Insert
+          window.showWalletToast('🛡️ Persisting Encrypted Entry...', 'info');
+          const entry = await supabaseQuery('entries', 'POST', {
+             contest_id: contestId,
+             match_id: lineupData.match, // Extracting match_id from payload
+             user_wallet: pubKey,
+             lineup_data: JSON.stringify(lineupData.squad),
+             tx_signature: sig,
+             is_private: true
+          });
          
          if (entry) {
             window.showWalletToast('🔐 Umbra Shielded Transaction Confirmed', 'success', `https://explorer.solana.com/tx/${sig}?cluster=devnet`);
