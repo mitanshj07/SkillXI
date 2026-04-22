@@ -65,76 +65,55 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary/30">
-<!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-white border-b border-gray-100">
-<div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
-<div class="text-2xl font-black tracking-tighter text-primary font-headline">SkillXI</div>
-<div class="hidden md:flex items-center gap-8 font-headline">
-<a class="text-gray-400 font-bold hover:text-primary transition-colors hover:bg-gray-50 px-3 py-1 rounded-lg" href="#">Lobby</a>
-<a class="text-gray-400 font-bold hover:text-primary transition-colors hover:bg-gray-50 px-3 py-1 rounded-lg" href="#">Research</a>
-<a class="text-gray-400 font-bold hover:text-primary transition-colors hover:bg-gray-50 px-3 py-1 rounded-lg" href="#">Squads</a>
-<a class="text-gray-400 font-bold hover:text-primary transition-colors hover:bg-gray-50 px-3 py-1 rounded-lg" href="#">Intelligence</a>
-</div>
-<div class="flex items-center gap-4">
-<button class="p-2 text-primary hover:bg-primary/5 rounded-full transition-all">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-</button>
-<button class="p-2 text-primary hover:bg-primary/5 rounded-full transition-all">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<div class="h-10 w-10 rounded-full border-2 border-white ring-2 ring-gray-100 overflow-hidden shadow-sm">
-<img alt="User Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv4WlVqDJVj9hxkFP2TkxR2LNmbN43mFOQkNu2o69QJdySCC87fj_WRPd0HMEAaR9n-KXUoRxAWg-cdTG1ZinjNU4L9aE3m2dYUHVrX9vC14x_vXNgIxV75n3vQztHI7mwT7tvbanKEgbrsn-IGFqe2fKd8V5w5ydyhf1lmBYx_fAhsAqjdkR2SHR8-NFjkgxRn757k8Q3HTkeswM5s_ccq9xVlgS5V4TQJQdylZFccS3DawuPPiaC4zyF3aVM3LfaaOXQj_3eDmp9"/>
-</div>
-</div>
-</div>
+
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+    <div class="flex items-center gap-12">
+        <a href="index.html" class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase">SkillXI</a>
+        <div class="hidden md:flex gap-8">
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="index.html">Hub</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="pre-match.html">Intel</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="challenger.html">Arena</a>
+        </div>
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="wallet.html" class="material-symbols-outlined text-gray-400 hover:text-primary hover:bg-primary/5 p-2 rounded-xl transition-all">account_balance_wallet</a>
+        <div class="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden">
+            <img id="header-avatar" alt="User avatar" src="https://lh3.googleusercontent.com/a/default-user"/>
+        </div>
+    </div>
 </nav>
-<!-- SideNavBar (Desktop Only) -->
-<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-gray-50 border-r border-gray-100 flex-col py-8 z-40">
-<div class="px-6 mb-10 mt-20">
-<div class="flex items-center gap-3">
-<div class="w-1.5 h-8 bg-primary rounded-full"></div>
-<div>
-<h3 class="text-gray-900 font-black font-headline text-lg tracking-wider">KINETIC AI</h3>
-<p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">V3.2 Active</p>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
-<span class="material-symbols-outlined">grid_view</span> Home
-            </a>
-<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
-<span class="material-symbols-outlined">psychology</span> AI Analyst
-            </a>
-<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
-<span class="material-symbols-outlined">database</span> Market
-            </a>
-<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="contests.html">
-<span class="material-symbols-outlined">emoji_events</span> Contests
-            </a>
-<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="challenger.html">
-<span class="material-symbols-outlined">swords</span> Arena
-            </a>
-<a class="text-gray-500 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-white transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
-<span class="material-symbols-outlined">leaderboard</span> Leaderboard
-            </a>
-<a class="bg-primary/5 text-primary border-r-4 border-primary flex items-center gap-4 px-6 py-4 transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
-<span class="material-symbols-outlined">settings</span> Settings
-            </a>
-</nav>
-<div class="px-6 mt-auto space-y-6">
-<button class="w-full py-4 px-6 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-black text-xs tracking-widest shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-[1.02] transition-transform active:scale-95">
-                UPGRADE TO PRO
-            </button>
-<div class="pt-6 border-t border-outline-variant/30 space-y-2">
-<a class="flex items-center gap-3 text-[#5a5a75] hover:text-white text-sm font-bold" href="#">
-<span class="material-symbols-outlined text-sm">help</span> Support
-                </a>
-<a class="text-gray-500 hover:text-white hover:bg-primary flex items-center gap-4 px-6 py-4 transition-all active:translate-x-1 duration-200 font-headline font-bold" href="#">
-<span class="material-symbols-outlined text-sm">logout</span> Logout
-                </a>
-</div>
-</div>
+
+<!-- Side Navigation Bar (Desktop) -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white flex flex-col pt-24 pb-8 z-40 hidden lg:flex">
+    <div class="px-6 mb-8">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-sm font-black" style="font-variation-settings: 'FILL' 1;">person</span>
+            </div>
+            <div>
+                <div class="text-primary font-black text-xs font-headline uppercase tracking-widest italic leading-none">XI PROFILE</div>
+                <div class="text-[9px] text-gray-300 font-black uppercase tracking-widest">v2.0 ACTIVE</div>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 space-y-2">
+        <a href="index.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">grid_view</span> Hub
+        </a>
+        <a href="pre-match.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">psychology</span> Intel
+        </a>
+        <a href="challenger.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">swords</span> Arena
+        </a>
+        <a href="leaderboard.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">leaderboard</span> Rank
+        </a>
+        <a href="profile.html" class="flex items-center gap-4 px-6 py-4 bg-primary/5 text-primary border-r-4 border-primary transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span> Profile
+        </a>
+    </nav>
 </aside>
 <!-- Main Content Area -->
 <main class="lg:ml-64 pt-24 pb-24 lg:pb-12 px-4 md:px-8">
@@ -192,29 +171,33 @@
 <div class="bg-white rounded-[2rem] p-8 border border-gray-100">
 <p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Total Earned</p>
 <div class="flex items-baseline gap-2">
-<h3 class="text-3xl font-headline font-black text-gray-900">$12,450</h3>
-<span class="text-primary text-xs font-bold">+12%</span>
+<h3 id="total-earned-stat" class="text-3xl font-headline font-black text-gray-900">--</h3>
+<span class="text-primary text-xs font-bold">SOL</span>
 </div>
+<span class="text-[9px] text-amber-600 font-bold uppercase tracking-widest bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Demo</span>
 </div>
         <div class="bg-white rounded-[2rem] p-8 border border-gray-100">
           <p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">ROI (Total)</p>
           <div class="flex items-baseline gap-2">
-            <h3 id="roi-stat" class="text-3xl font-headline font-black text-primary">+24.8%</h3>
+            <h3 id="roi-stat" class="text-3xl font-headline font-black text-primary">--</h3>
             <span class="text-secondary text-[10px] font-bold uppercase">Alpha</span>
           </div>
+          <span class="text-[9px] text-amber-600 font-bold uppercase tracking-widest bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Demo</span>
         </div>
 <div class="bg-white rounded-[2rem] p-8 border border-gray-100">
 <p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Squads</p>
 <div class="flex items-baseline gap-2">
-<h3 class="text-3xl font-headline font-black text-gray-900">156</h3>
+<h3 id="squads-stat" class="text-3xl font-headline font-black text-gray-900">--</h3>
 </div>
+<span class="text-[9px] text-amber-600 font-bold uppercase tracking-widest bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Demo</span>
 </div>
 <div class="bg-white rounded-[2rem] p-8 border border-gray-100">
 <p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Live Contests</p>
 <div class="flex items-baseline gap-2">
-<h3 class="text-3xl font-headline font-black text-gray-900">12</h3>
+<h3 id="live-contests-stat" class="text-3xl font-headline font-black text-gray-900">--</h3>
 <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse ml-2"></span>
 </div>
+<span class="text-[9px] text-amber-600 font-bold uppercase tracking-widest bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Demo</span>
 </div>
 </div>
 <!-- Earnings History Chart & Activity Table -->
@@ -370,40 +353,54 @@
 <script src="assets/js/main.js"></script>
 <script>
     window.addEventListener('load', async () => {
-        const wallet = window.localStorage.getItem('skillxi_wallet') || "MOCK_ADDR";
+        const wallet = window.localStorage.getItem('skillxi_wallet');
+
+        // No wallet connected — show connect prompt, keep '--' placeholders
+        if (!wallet) {
+            const xpEl = document.getElementById('xp-display');
+            if (xpEl) xpEl.innerText = '--';
+            const roiEl = document.getElementById('roi-stat');
+            if (roiEl) roiEl.innerText = '--';
+            const repDisplay = document.getElementById('reputation-display');
+            if (repDisplay) repDisplay.innerText = '--';
+            window.showWalletToast && window.showWalletToast('Connect your wallet to load your profile', 'info');
+            return;
+        }
+
         const profile = await window.getProfileData(wallet);
-        
+
         if (profile) {
             const xpEl = document.getElementById('xp-display');
-            if (xpEl) xpEl.innerText = profile.xp.toLocaleString();
-            
+            if (xpEl) xpEl.innerText = (profile.xp || 0).toLocaleString();
+
             const roiEl = document.getElementById('roi-stat');
-            if (roiEl) roiEl.innerText = `+${profile.roi}%`;
+            if (roiEl) roiEl.innerText = profile.roi ? `+${profile.roi}%` : '--';
 
             const repDisplay = document.getElementById('reputation-display');
-            if (repDisplay) repDisplay.innerText = `${profile.reputation}%`;
+            if (repDisplay) repDisplay.innerText = `${profile.reputation || 100}%`;
+
+            const totalEarnedEl = document.getElementById('total-earned-stat');
+            if (totalEarnedEl) totalEarnedEl.innerText = (profile.total_earned || 0).toFixed(2);
 
             const stealthToggle = document.getElementById('stealth-mode-toggle');
-            if (stealthToggle) stealthToggle.checked = profile.is_private;
+            if (stealthToggle) stealthToggle.checked = profile.is_private || false;
 
-            // Update Tier and Progress
-            const tierEl = document.querySelector('.text-2xl.font-headline.font-bold');
-            if (tierEl) tierEl.innerHTML = `${profile.tier} TIER <span class="text-gray-300 ml-2">/ LVL ${profile.level}</span>`;
-            
-            const progressBar = document.querySelector('.h-full.bg-gradient-to-r');
-            const nextLevelXp = profile.level * 500;
-            const progress = (profile.xp % 500) / 5; // Simple percentage calculation
-            if (progressBar) progressBar.style.width = `${progress}%`;
+            const tierEl = document.querySelector('.text-2xl.font-headline.font-bold.text-secondary');
+            if (tierEl) tierEl.innerHTML = `${profile.tier || 'NOVICE'} TIER <span class="text-gray-300 ml-2">/ LVL ${profile.level || 1}</span>`;
+
+            const nextLevelXp = (profile.level || 1) * 500;
+            const progress = ((profile.xp || 0) % 500) / 5;
+            const progressBar = document.querySelector('.h-full.bg-primary.rounded-full');
+            if (progressBar) progressBar.style.width = `${Math.min(100, progress)}%`;
         }
 
         window.handleStealthToggle = async function(isPrivate) {
             try {
-                const wallet = window.localStorage.getItem('skillxi_wallet');
-                if (!wallet) return;
                 await window.updatePrivacySettings(wallet, isPrivate);
             } catch (err) {
                 console.error('Failed to toggle stealth mode:', err);
-                document.getElementById('stealth-mode-toggle').checked = !isPrivate;
+                const toggle = document.getElementById('stealth-mode-toggle');
+                if (toggle) toggle.checked = !isPrivate;
             }
         };
 
@@ -412,19 +409,20 @@
         if (list) {
             list.innerHTML = '';
             if (history.length === 0) {
-                list.innerHTML = '<p class="col-span-3 text-center text-gray-400 py-10 font-bold uppercase tracking-widest">No match history found</p>';
+                list.innerHTML = '<p class="col-span-3 text-center text-gray-400 py-10 font-bold uppercase tracking-widest text-xs">No match history yet — join a contest to get started!</p>';
+            } else {
+                history.forEach(h => {
+                    list.innerHTML += `
+                        <div class="history-card rounded-2xl p-6 bg-surface-container-high relative overflow-hidden group">
+                           <p class="text-[10px] text-primary font-bold uppercase tracking-widest mb-1">${h.match}</p>
+                           <h4 class="text-xl font-headline font-black text-gray-900 mb-4">${h.rank}</h4>
+                           <div class="flex justify-between text-xs items-end">
+                              <div><p class="text-gray-500 text-[9px]">Points</p><p class="text-gray-900 font-black">${h.points}</p></div>
+                              <div class="text-right"><p class="text-gray-500 text-[9px]">Prize</p><p class="text-tertiary font-black font-headline">${h.win}</p></div>
+                           </div>
+                        </div>`;
+                });
             }
-            history.forEach(h => {
-                list.innerHTML += `
-                    <div class="history-card rounded-2xl p-6 bg-surface-container-high relative overflow-hidden group">
-                       <p class="text-[10px] text-primary font-bold uppercase tracking-widest mb-1">${h.match}</p>
-                       <h4 class="text-xl font-headline font-black text-gray-900 mb-4">${h.rank}</h4>
-                       <div class="flex justify-between text-xs items-end">
-                          <div><p class="text-gray-500 text-[9px]">Points</p><p class="text-gray-900 font-black">${h.points}</p></div>
-                          <div class="text-right"><p class="text-gray-500 text-[9px]">Prize</p><p class="text-tertiary font-black font-headline">${h.win}</p></div>
-                       </div>
-                    </div>`;
-            });
         }
     });
 </script>

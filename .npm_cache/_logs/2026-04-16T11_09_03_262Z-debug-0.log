@@ -1,0 +1,32 @@
+0 verbose cli /usr/local/bin/node /usr/local/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@11.11.0
+2 info using node@v24.14.1
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/mitansh7/Desktop/SkillXI-web-project/.npmrc
+5 silly config load:file:/Users/mitansh7/.npmrc
+6 silly config load:file:/usr/local/etc/npmrc
+7 verbose title npm exec vercel whoami
+8 verbose argv "exec" "--" "vercel" "whoami"
+9 verbose logfile logs-max:10 dir:/Users/mitansh7/Desktop/SkillXI-web-project/.npm_cache/_logs/2026-04-16T11_09_03_262Z-
+10 verbose logfile /Users/mitansh7/Desktop/SkillXI-web-project/.npm_cache/_logs/2026-04-16T11_09_03_262Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 http fetch GET 200 https://registry.npmjs.org/npm 283ms
+14 http fetch GET 200 https://registry.npmjs.org/vercel 370ms (cache miss)
+15 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+16 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+17 verbose cwd /Users/mitansh7/Desktop/SkillXI-web-project
+18 verbose os Darwin 25.4.0
+19 verbose node v24.14.1
+20 verbose npm  v11.11.0
+21 notice
+21 notice New [33mminor[39m version of npm available! [33m11.11.0[39m -> [34m11.12.1[39m
+21 notice Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.12.1[39m
+21 notice To update run: [4mnpm install -g npm@11.12.1[24m
+21 notice  { force: true, Symbol(proc-log.meta): true }
+22 error Exit handler never called!
+23 error This is an error with npm itself. Please report this error at:
+24 error   <https://github.com/npm/cli/issues>
+25 verbose exit 1
+26 verbose code 1
+27 error A complete log of this run can be found in: /Users/mitansh7/Desktop/SkillXI-web-project/.npm_cache/_logs/2026-04-16T11_09_03_262Z-debug-0.log

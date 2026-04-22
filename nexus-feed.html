@@ -159,6 +159,16 @@
 
 <script src="assets/js/main.js"></script>
 <script>
+    function formatTime(dateStr) {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diff = Math.floor((now - date) / 1000);
+        if (diff < 60) return 'JUST NOW';
+        if (diff < 3600) return `${Math.floor(diff / 60)} MINS AGO`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)} HOURS AGO`;
+        return date.toLocaleDateString();
+    }
+
     window.addEventListener('load', async () => {
         const feedContainer = document.getElementById('nexus-activities');
         const activities = await window.getNexusFeed();
@@ -184,7 +194,7 @@
                 'CHALLENGE_SENT': { icon: 'swords', color: 'error', label: 'CHALLENGE' }
             }[act.type] || { icon: 'hub', color: 'primary', label: 'ACTIVITY' };
 
-            const timeAgo = new Date(act.created_at).toLocaleTimeString();
+            const timeAgo = formatTime(act.created_at);
             
             card.innerHTML = `
                 <div class="p-8">
@@ -203,7 +213,7 @@
                         </div>
                     </div>
                     <p class="text-gray-600 text-sm mb-8 leading-relaxed font-medium">
-                        ${this.getActivityMessage(act)}
+                        ${getActivityMessage(act)}
                     </p>
                     <div class="flex items-center gap-6 pt-6 border-t border-gray-50">
                         <button class="flex items-center gap-2 text-gray-300 hover:text-primary transition-colors">

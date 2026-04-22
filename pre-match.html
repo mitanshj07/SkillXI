@@ -60,26 +60,50 @@
 </head>
 <body class="bg-white text-gray-900 font-body">
 <!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100">
-<div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
-<div class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase">SkillXI</div>
-<div class="hidden md:flex gap-8 items-center">
-<a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="index.html">Hub</a>
-<a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="lineup.html">Roster</a>
-<a class="text-primary border-b-2 border-primary pb-1 font-black uppercase tracking-widest text-[11px] font-headline" href="pre-match.html">Intel</a>
-</div>
-<div class="flex items-center gap-6">
-<button class="p-2 text-primary hover:bg-primary/10 transition-all rounded-xl">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-</button>
-<div class="w-10 h-10 rounded-xl bg-gray-50 overflow-hidden border border-gray-100">
-<img alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUf7uTi8_Z2ybDxRTutAHtLRbnFnRYiXCc29YcZC4b9UY5SXXRrvhmoA54T1_LuvxPVEQOse6XCIxtXib96ZneQrhkn1ekD882Nitph7vFtuFAMxkYKsnaelDsIrQQoJ0zA1heTW5GOeW6m9pUkF_84GCHydTjVBEfOqahXrGcpkxzWlxXISSNb9K1lpQrAatOObwnN9YcfnIABQ553k_1sDz-Kj_onh7wMfwmhERvjQAa_GYm3P6l2M4hpLkTirjJBSWYtSBzKCde"/>
-</div>
-</div>
-</div>
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+    <div class="flex items-center gap-12">
+        <a href="index.html" class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase">SkillXI</a>
+        <div class="hidden md:flex gap-8">
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="index.html">Hub</a>
+            <a class="text-primary border-b-2 border-primary pb-1 font-black uppercase tracking-widest text-[11px] font-headline" href="pre-match.html">Intel</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="challenger.html">Arena</a>
+        </div>
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="wallet.html" class="material-symbols-outlined text-gray-400 hover:text-primary hover:bg-primary/5 p-2 rounded-xl transition-all">account_balance_wallet</a>
+        <div class="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden">
+            <img id="header-avatar" alt="User avatar" src="https://lh3.googleusercontent.com/a/default-user"/>
+        </div>
+    </div>
 </nav>
 <!-- Side Navigation Bar (Desktop) -->
-<aside class="fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white hidden md:flex flex-col py-8 pt-24">
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white flex flex-col pt-24 pb-8 z-40 hidden lg:flex">
+    <div class="px-6 mb-8">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-sm font-black" style="font-variation-settings: 'FILL' 1;">psychology</span>
+            </div>
+            <div>
+                <div class="text-primary font-black text-xs font-headline uppercase tracking-widest italic leading-none">XI INTEL</div>
+                <div class="text-[9px] text-gray-300 font-black uppercase tracking-widest">v2.0 ACTIVE</div>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 space-y-2">
+        <a href="index.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">grid_view</span> Hub
+        </a>
+        <a href="pre-match.html" class="flex items-center gap-4 px-6 py-4 bg-primary/5 text-primary border-r-4 border-primary transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span> Intel
+        </a>
+        <a href="challenger.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">swords</span> Arena
+        </a>
+        <a href="leaderboard.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">leaderboard</span> Rank
+        </a>
+    </nav>
+</aside>
 <div class="px-6 mb-8">
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center">

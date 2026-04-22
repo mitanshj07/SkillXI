@@ -62,42 +62,52 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body class="text-on-surface overflow-x-hidden">
-<header class="fixed top-0 w-full z-50 bg-white border-b border-gray-100 flex justify-between items-center px-6 py-4 w-full max-w-full">
-<div class="text-2xl font-black italic tracking-tighter text-primary font-headline">SkillXI</div>
-<nav class="hidden md:flex gap-8">
-<a class="text-primary border-b-2 border-primary pb-1 font-headline font-bold" href="#">Lobby</a>
-<a class="text-gray-400 font-medium hover:text-primary transition-colors font-headline" href="#">My Contests</a>
-<a class="text-gray-400 font-medium hover:text-primary transition-colors font-headline" href="#">Wallet</a>
-<a class="text-gray-400 font-medium hover:text-primary transition-colors font-headline" href="#">Leaderboards</a>
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+    <div class="flex items-center gap-12">
+        <a href="index.html" class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase">SkillXI</a>
+        <div class="hidden md:flex gap-8">
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="index.html">Hub</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="pre-match.html">Intel</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="challenger.html">Arena</a>
+        </div>
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="wallet.html" class="material-symbols-outlined text-gray-400 hover:text-primary hover:bg-primary/5 p-2 rounded-xl transition-all">account_balance_wallet</a>
+        <div class="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden">
+            <img id="header-avatar" alt="User avatar" src="https://lh3.googleusercontent.com/a/default-user"/>
+        </div>
+    </div>
 </nav>
-<div class="flex items-center gap-4">
-<button class="p-2 text-gray-400 hover:text-primary">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<button class="p-2 text-gray-400 hover:text-primary">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-</button>
-<img alt="User Avatar" class="w-10 h-10 rounded-full border border-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1701N2v3TQBaD5uPuGUfx29gXrBAaKps-P3O3MMkN1Yh5UnJcjXrJ3b9zVXbx-nbRCAzI5L56hXBM1CKqkRebot23AcQ-0CG0CKNX97uqYLPsDQHOeaUBx3eYwFdnXESInGB8qkCYrm3X0Euw23bJJPxgxZ8Hdb46PUs6sdSbsL_ETPADuL2BdTKQ2VqxGG8VX0e7_RbMxwtuC4hdBHGmYnOcBrRcIycZqG_o6Nfb-6JZdioTnxKTBDUpFIHL2I9t4agjZqR0q1xP"/>
-</div>
-</header>
-<!-- SideNavBar -->
-<aside class="fixed left-0 top-16 h-full w-64 hidden lg:flex flex-col bg-gray-50 py-8 gap-4 border-r border-gray-100">
-<div class="px-6 mb-8">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-white shadow-sm flex items-center justify-center">
-<span class="material-symbols-outlined text-primary">sports_soccer</span>
-</div>
-<div>
-<h3 class="font-headline font-bold text-gray-900 leading-tight">Premier League</h3>
-<p class="text-[10px] text-primary uppercase tracking-widest font-bold">MCI vs ARS • Live</p>
-</div>
-</div>
-</div>
-<nav class="flex flex-col gap-1 px-3">
-<a class="flex items-center gap-3 px-4 py-3 text-primary bg-white shadow-sm rounded-lg border-r-4 border-primary font-headline text-sm uppercase tracking-widest active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined">sensors</span>
-                Live Match
-            </a>
+
+<!-- Side Navigation Bar (Desktop) -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white flex flex-col pt-24 pb-8 z-40 hidden lg:flex">
+    <div class="px-6 mb-8">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-sm font-black" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+            </div>
+            <div>
+                <div class="text-primary font-black text-xs font-headline uppercase tracking-widest italic leading-none">XI RANK</div>
+                <div class="text-[9px] text-gray-300 font-black uppercase tracking-widest">v2.0 ACTIVE</div>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 space-y-2">
+        <a href="index.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">grid_view</span> Hub
+        </a>
+        <a href="pre-match.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">psychology</span> Intel
+        </a>
+        <a href="challenger.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">swords</span> Arena
+        </a>
+        <a href="leaderboard.html" class="flex items-center gap-4 px-6 py-4 bg-primary/5 text-primary border-r-4 border-primary transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span> Rank
+        </a>
+    </nav>
+</aside>
 <a class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-white hover:text-primary rounded-lg font-headline text-sm uppercase tracking-widest transition-all" href="challenger.html">
 <span class="material-symbols-outlined">swords</span>
                 Arena
@@ -315,7 +325,9 @@
             globalBtn.classList.remove('bg-primary', 'text-black');
             globalBtn.classList.add('text-slate-500');
             window.renderLeaderboardData('friends');
-        }    window.renderLeaderboardData = async function(type) {
+        }
+    };
+    window.renderLeaderboardData = async function(type) {
         const body = document.getElementById('leaderboard-body');
         if (!body) return;
         body.innerHTML = '<tr><td colspan="6" class="px-6 py-10 text-center text-slate-500">Loading Rankings...</td></tr>';

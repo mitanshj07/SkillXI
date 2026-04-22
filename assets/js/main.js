@@ -281,28 +281,40 @@ window.followUser = async function(targetWallet) {
 
 window.getContests = async function() {
   const data = await supabaseQuery('matches');
-  if (!data || data.length === 0) return FALLBACK_CONTESTS;
+  if (!data || data.length === 0) {
+    console.log('ℹ️ [getContests] No data in Supabase. Using FALLBACK_CONTESTS.');
+    return FALLBACK_CONTESTS;
+  }
   
-  // Map Supabase columns to frontend expected format
-  return data.map(m => ({
-     id: m.id,
-     sport: m.sport,
-     homeTeam: m.home_team,
-     homeTag: m.home_tag,
-     awayTeam: m.away_team,
-     awayTag: m.away_tag,
-     league: m.league,
-     matchDate: new Date(m.match_date).toLocaleString(),
-     prize: m.prize,
-     entry: m.entry,
-     maxPlayers: m.max_players,
-     currentPlayers: m.current_players,
-     difficulty: m.difficulty,
-     aiTip: m.ai_tip || `Highly competitive match`,
-     hot: m.featured,
-     almostFull: (m.current_players / m.max_players) > 0.8,
-     timeLeft: (new Date(m.match_date).getTime() - Date.now()) / 1000
-  }));
+  console.log('✅ [getContests] Fetched matches from Supabase:', data.length);
+  // Map Supabase columns to frontend expected format (handle both v1 and v2 schemas)
+  return data.map(m => {
+     const matchTime = m.match_date || m.match_time;
+     const prize = m.prize || m.prize_pool;
+     const entry = m.entry || m.entry_fee;
+     const maxPlayers = m.max_players || m.max_spots || 200;
+     const currentPlayers = m.current_players || m.filled_spots || 0;
+     
+     return {
+        id: m.id,
+        sport: m.sport || 'football',
+        homeTeam: m.home_team,
+        homeTag: m.home_tag,
+        awayTeam: m.away_team,
+        awayTag: m.away_tag,
+        league: m.league || 'Standard League',
+        matchDate: matchTime ? new Date(matchTime).toLocaleString() : 'TBD',
+        prize: prize || '0',
+        entry: entry || '0',
+        maxPlayers: maxPlayers,
+        currentPlayers: currentPlayers,
+        difficulty: m.difficulty || 'BEGINNER',
+        aiTip: m.ai_tip || `Highly competitive match`,
+        hot: m.featured || false,
+        almostFull: (currentPlayers / maxPlayers) > 0.8,
+        timeLeft: matchTime ? (new Date(matchTime).getTime() - Date.now()) / 1000 : 3600
+     };
+  });
 };
 
 window.getPlayers = async function(matchId = null) {
@@ -310,18 +322,23 @@ window.getPlayers = async function(matchId = null) {
      let query = _supabase.from('players').select('*');
      if (matchId) query = query.eq('match_id', matchId);
      const { data, error } = await query;
-     if (error || !data || data.length === 0) return FALLBACK_PLAYERS;
+     
+     if (error || !data || data.length === 0) {
+        console.log('ℹ️ [getPlayers] No data in Supabase. Using FALLBACK_PLAYERS.');
+        return FALLBACK_PLAYERS;
+     }
 
      return data.map(p => ({
         id: p.id,
         name: p.name,
-        team: p.team_tag,
+        team: p.team_tag || p.team,
         price: parseFloat(p.price),
-        aiScore: parseFloat(p.ai_score),
-        pos: p.position,
-        photo: p.photo_url || null
+        aiScore: parseFloat(p.ai_score || p.aiScore || 5.0),
+        pos: p.position || p.pos,
+        photo: p.photo_url || p.photo || null
      }));
   } catch (err) {
+     console.warn('⚠️ [getPlayers] Error fetching from Supabase, falling back.', err);
      return FALLBACK_PLAYERS;
   }
 };
@@ -857,41 +874,53 @@ window.filterContests = function(sport) {
 };
 
 // --- 8. PAGE ROUTING & INITIALIZATION ---
-window.addEventListener('load', async () => {
+// Use DOMContentLoaded so inline <script> load handlers in each HTML page
+// don't race with this one. Each page's inline script uses 'load' (fires later)
+// while this router uses DOMContentLoaded (fires first, sets up globals).
+document.addEventListener('DOMContentLoaded', async () => {
   // 1. Always inject demo banner first for transparency
   try { window.injectDemoBanner(); } catch(e) { console.error('Banner failed:', e); }
 
-  const path = window.location.pathname;
-  console.log('🏁 [Init] Current path:', path);
-  
+  // Reliable page detection: grab the filename from the URL
+  const page = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+  console.log('🏁 [Init] Current page:', page);
+
   // 2. Page-specific rendering with try/catch
+  // NOTE: lineup.html has its own load handler that calls renderPlayerList()
+  // after fetching the contest title — we skip it here to avoid double-render.
   try {
-    if (path.includes('contests')) {
-      await window.renderContests();
-    } else if (path.includes('lineup')) {
-      await window.renderPlayerList();
-    } else if (path.includes('roster-lab')) {
-      // Roster lab specific init if needed
+    if (page === 'contests') {
+      // Small delay to ensure any layout shifts are done and DOM is fully ready
+      setTimeout(() => {
+        const grid = document.getElementById('contests-grid');
+        if (grid && grid.children.length <= 1) { // 1 if it has the "Fetching..." text
+           window.renderContests('all');
+        }
+      }, 100);
     }
+    // lineup and match-lobby initialise themselves via their own inline scripts
   } catch (err) {
     console.error('🚀 [Init] Page render error:', err);
   }
 
-  // Wallet re-sync
+  // Wallet re-sync on every page
   const savedKey = window.localStorage.getItem('skillxi_wallet');
   const savedType = window.localStorage.getItem('skillxi_wallet_type') || 'phantom';
   if (savedKey) {
+    window.updateWalletUI(savedKey);
     const provider = savedType === 'phantom' ? window.solana : window.solflare;
     if (provider) {
-       provider.connect({ onlyIfTrusted: true }).then(resp => {
-            window.updateWalletUI(resp.publicKey.toString());
-            window.fetchWalletBalance(resp.publicKey.toString());
-       }).catch(() => {});
+      provider.connect({ onlyIfTrusted: true }).then(resp => {
+        window.updateWalletUI(resp.publicKey.toString());
+        window.fetchWalletBalance(resp.publicKey.toString());
+      }).catch(() => {
+        // Silent fail — user hasn't granted trusted access yet
+      });
     }
   }
 });
 window.getNexusFeed = async function(limit = 20) {
-    const { data, error } = await _supabase.from('activities')
+    const { data } = await _supabase.from('activities')
         .select('*, profiles(username, avatar_url)')
         .order('created_at', { ascending: false })
         .limit(limit);
@@ -943,6 +972,7 @@ window.getFriendsLeaderboard = async function() {
         const { data: friends, error: profileErr } = await _supabase.from('profiles')
             .select('*')
             .in('wallet_id', friendIds)
+            .or(`is_private.eq.false,wallet_id.eq.${myWallet}`)
             .order('skill_score', { ascending: false });
             
         return friends || [];
@@ -951,3 +981,7 @@ window.getFriendsLeaderboard = async function() {
         return [];
     }
 };
+
+// NOTE: updatePrivacySettings, calculateKineticXP, logActivity, and followUser
+// are defined earlier in this file (lines ~199–280). The duplicate definitions
+// that Codex added below have been removed to prevent function shadowing.

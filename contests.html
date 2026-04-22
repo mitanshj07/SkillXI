@@ -6,6 +6,8 @@
 <meta name="description" content="Browse and join AI-powered fantasy sports contests on SkillXI."/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link rel="stylesheet" href="assets/css/style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
     tailwind.config = {
         theme: { extend: {
@@ -34,47 +36,54 @@
 </head>
 <body class="bg-surface text-on-surface font-body min-h-screen">
 
-<!-- ===== TOP NAV BAR ===== -->
-<nav class="fixed top-0 w-full z-50 bg-white border-b border-gray-100">
-    <div class="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
-        <div class="flex items-center gap-8">
-            <a href="index.html" class="text-2xl font-extrabold tracking-tighter text-primary font-headline">SkillXI</a>
-            <div class="hidden md:flex gap-6">
-                <a class="top-nav-link text-gray-400 font-medium hover:text-primary transition-colors font-headline" href="index.html">Home</a>
-                <a class="top-nav-link text-primary font-bold transition-colors font-headline" href="contests.html">Contests</a>
-                <a class="top-nav-link text-gray-400 font-medium hover:text-primary transition-colors font-headline" href="lineup.html">Squads</a>
-                <a class="top-nav-link text-gray-400 font-medium hover:text-primary transition-colors font-headline" href="pre-match.html">Intelligence</a>
-            </div>
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+    <div class="flex items-center gap-12">
+        <a href="index.html" class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase">SkillXI</a>
+        <div class="hidden md:flex gap-8">
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="index.html">Hub</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="pre-match.html">Intel</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="challenger.html">Arena</a>
         </div>
-        <div class="flex items-center gap-4">
-            <a href="wallet.html" class="p-2 rounded-full hover:bg-gray-50"><span class="material-symbols-outlined text-gray-400 hover:text-primary">account_balance_wallet</span></a>
-            <button class="p-2 rounded-full hover:bg-gray-50"><span class="material-symbols-outlined text-gray-400 hover:text-primary">notifications</span></button>
-            <a href="profile.html" class="w-10 h-10 rounded-full border border-gray-100 overflow-hidden"><img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuWHy486rZWdwY1x41y0EEiakZeMKzCtels-E4FhYeP6C8L5eXU4ad4CDChNvgUAdFJkEvHni22VQsfSQ8SR2AuvdePWlbmTt5wm5GpkYQZ0OFhBf51CrQScJqioPhDKpNZGzQyyUWUet8n14uUIAonLXrVgs-Q9p-RsWdj6iqE9rHZ28JcC6Ju78M30mUbwcg0Zk5-FxsA0lFfGgEzhm7PmL7hCSH5NQ6azaPkSleSlSxq-hOv190dPle36yV_Up7g1_au8L2CLqt"/></a>
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="wallet.html" class="material-symbols-outlined text-gray-400 hover:text-primary hover:bg-primary/5 p-2 rounded-xl transition-all">account_balance_wallet</a>
+        <div class="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden">
+            <img id="header-avatar" alt="User avatar" src="https://lh3.googleusercontent.com/a/default-user"/>
         </div>
     </div>
 </nav>
 
-<!-- ===== SIDE NAV BAR (Desktop) ===== -->
-<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white flex-col py-8 z-40">
-    <div class="px-6 mb-12 mt-20">
-        <h2 class="text-primary font-black text-xl font-headline tracking-tighter">KINETIC AI</h2>
-        <p class="text-[10px] text-gray-400 tracking-[0.2em] font-bold">SYSTEM ACTIVE</p>
-    </div>
-    <div class="flex flex-col flex-1">
-        <a class="side-nav-link text-gray-400 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-all font-headline font-bold" href="index.html"><span class="material-symbols-outlined">grid_view</span>Home</a>
-        <a class="side-nav-link text-gray-400 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-all font-headline font-bold" href="ai-chat.html"><span class="material-symbols-outlined">psychology</span>AI Analyst</a>
-        <a class="side-nav-link text-primary flex items-center gap-4 px-6 py-4 bg-gray-50 transition-all font-headline font-bold" href="contests.html"><span class="material-symbols-outlined">emoji_events</span>Contests</a>
-        <a class="side-nav-link text-gray-400 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-all font-headline font-bold" href="lineup.html"><span class="material-symbols-outlined">database</span>Squad Builder</a>
-        <a class="side-nav-link text-gray-400 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-all font-headline font-bold" href="leaderboard.html"><span class="material-symbols-outlined">leaderboard</span>Leaderboard</a>
-        <a class="side-nav-link text-gray-400 hover:text-primary flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-all font-headline font-bold" href="profile.html"><span class="material-symbols-outlined">settings</span>Settings</a>
-    </div>
-    <div class="px-6 mt-auto">
-        <a href="subscription.html" class="w-full block text-center bg-primary text-white font-headline font-black py-3 rounded-xl hover:bg-primary/90 transition-all">UPGRADE TO PRO</a>
-        <div class="mt-8 flex flex-col gap-4">
-            <a class="text-gray-400 hover:text-primary flex items-center gap-4 transition-all" href="#"><span class="material-symbols-outlined">help</span>Support</a>
-            <a class="text-gray-400 hover:text-primary flex items-center gap-4 transition-all" href="#"><span class="material-symbols-outlined">logout</span>Logout</a>
+<!-- Side Navigation Bar (Desktop) -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white flex flex-col pt-24 pb-8 z-40 hidden lg:flex">
+    <div class="px-6 mb-8">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-sm font-black" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+            </div>
+            <div>
+                <div class="text-primary font-black text-xs font-headline uppercase tracking-widest italic leading-none">XI CONTESTS</div>
+                <div class="text-[9px] text-gray-300 font-black uppercase tracking-widest">v2.0 ACTIVE</div>
+            </div>
         </div>
     </div>
+    <nav class="flex-1 space-y-2">
+        <a href="index.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">grid_view</span> Hub
+        </a>
+        <a href="pre-match.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">psychology</span> Intel
+        </a>
+        <a href="contests.html" class="flex items-center gap-4 px-6 py-4 bg-primary/5 text-primary border-r-4 border-primary transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emoji_events</span> Contests
+        </a>
+        <a href="challenger.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">swords</span> Arena
+        </a>
+        <a href="leaderboard.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+            <span class="material-symbols-outlined">leaderboard</span> Rank
+        </a>
+    </nav>
 </aside>
 
 <!-- ===== MAIN CONTENT ===== -->
@@ -133,4 +142,22 @@
 </nav>
 
 <script src="assets/js/main.js"></script>
+<script>
+  // Fallback: if main.js DOMContentLoaded already fired (e.g. cached script),
+  // ensure the grid always renders when the page fully loads.
+  window.addEventListener('load', () => {
+    const grid = document.getElementById('contests-grid');
+    if (grid && grid.children.length === 0) {
+      console.log('[contests.html] Fallback render triggered');
+      window.renderContests && window.renderContests('all');
+    }
+    // Set "All Sports" filter button as active visually
+    const allBtn = document.getElementById('filter-all');
+    if (allBtn) {
+      allBtn.style.background = '#00D09C';
+      allBtn.style.color = '#fff';
+      allBtn.style.border = 'none';
+    }
+  });
+</script>
 </body></html>

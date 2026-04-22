@@ -1,309 +1,260 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-    tailwind.config = {
-        theme: {
-            extend: {
-                "colors": {
-                    "primary": "#00D09C",
-                    "surface": "#FFFFFF",
-                    "background": "#FFFFFF",
-                    "secondary": "#1A1A1A",
-                    "outline": "#EEEEEE",
-                    "outline-variant": "#F3F4F6",
-                    "on-surface": "#1A1A1A",
-                    "on-surface-variant": "#718096",
-                    "error": "#E21D26"
-                },
-                "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "9999px"
-                },
-                "fontFamily": {
-                    "headline": ["Space Grotesk"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Vault Control | SkillXI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00D09C",
+                        "surface": "#FFFFFF",
+                        "background": "#FFFFFF",
+                        "secondary": "#1A1A1A",
+                        "outline": "#EEEEEE",
+                        "outline-variant": "#F3F4F6",
+                        "on-surface": "#1A1A1A",
+                        "on-surface-variant": "#718096",
+                        "error": "#E21D26"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
                 }
             }
         }
-    }
-</script>
+    </script>
     <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .kinetic-card:hover {
-            border-color: #00D09C;
-            transform: translateY(-2px);
         }
         .balance-gradient {
             background: linear-gradient(135deg, #FFFFFF 0%, #F6F9FC 100%);
         }
     </style>
-<link rel="stylesheet" href="assets/css/style.css"/>
-    <!-- Solana Web3 Integrations -->
+    <link rel="stylesheet" href="assets/css/style.css"/>
     <script src="https://bundle.run/buffer@6.0.3"></script>
     <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
     <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body class="bg-white text-gray-900 font-body">
-<!-- TopAppBar -->
-<header class="bg-white/80 backdrop-blur-xl border-b border-gray-100 top-0 sticky z-50">
-<div class="flex justify-between items-center w-full px-6 py-4 max-w-[1440px] mx-auto">
-<div class="flex items-center gap-8">
-<a class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase" href="index.html">SkillXI</a>
-</div>
-<div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-gray-400 hover:text-primary transition-colors">notifications</button>
-<button class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-xl">account_balance_wallet</button>
-<button onclick="connectWallet()" class="bg-primary text-white px-8 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary/90 transition-all shadow-sm">
-                    Connect Wallet
-                </button>
-</div>
-</div>
-</header>
+
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
+    <div class="flex items-center gap-12">
+        <a href="index.html" class="text-2xl font-black tracking-tighter text-primary font-headline italic uppercase">SkillXI</a>
+        <div class="hidden md:flex gap-8">
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="index.html">Hub</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="pre-match.html">Intel</a>
+            <a class="text-gray-400 font-black uppercase tracking-widest text-[11px] hover:text-primary transition-all font-headline" href="challenger.html">Arena</a>
+        </div>
+    </div>
+    <div class="flex items-center gap-6">
+        <button class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-xl transition-all">account_balance_wallet</button>
+        <div class="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden">
+            <img id="header-avatar" alt="User avatar" src="https://lh3.googleusercontent.com/a/default-user"/>
+        </div>
+    </div>
+</nav>
+
 <div class="flex min-h-screen">
-<!-- SideNavBar -->
-<!-- SideNavBar -->
-<aside class="h-screen w-64 fixed left-0 top-0 hidden lg:flex flex-col bg-white border-r border-gray-100 py-8 z-40">
-<div class="px-6 mb-12">
-<div class="flex items-center gap-3 mb-2">
-<div class="w-10 h-10 rounded-xl overflow-hidden bg-primary/5 border border-primary/10 flex items-center justify-center">
-<img alt="AI Analyst" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlDAEVbytFzbc-IsH2M-t_d01FvEK4OLH_m09zcj5fQNK94Q02vrT1dHlzsr3DDRe0P0_h3WnuECAo-8TEeYLH3nY-WzNtzbVCdB8tbbYpN_XKzqMbp3gtV7njDcjGlttENLWt20b8dMCh8-OgVjK35PiKB3Lqml2GWS3qSZrm1jhL00NUHu8aGPlDwAzfjlZfLZG5CtSpjXUVnrSq9AzHPbrHCJ0ugfgq8FAxuhNff4RKgVG23O5fLHAK71iDw7Br3WGCKSXq2GX4"/>
-</div>
-<div>
-<div class="font-headline font-black uppercase text-[10px] tracking-widest text-primary">KINETIC AI</div>
-<div class="text-[9px] text-gray-400 font-black tracking-widest uppercase">System Online</div>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-2">
-<a class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:bg-gray-50 hover:text-primary transition-all font-black uppercase text-xs tracking-widest" href="index.html">
-<span class="material-symbols-outlined">dashboard</span> HUB
-                </a>
-<a class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:bg-gray-50 hover:text-primary transition-all font-black uppercase text-xs tracking-widest" href="lineup.html">
-<span class="material-symbols-outlined">biotech</span> ROSTER
-                </a>
-<a class="flex items-center gap-4 px-6 py-4 bg-primary/5 text-primary border-r-4 border-primary transition-all font-black uppercase text-xs tracking-widest" href="wallet.html">
-<span class="material-symbols-outlined">account_balance_wallet</span> VAULT
-                </a>
-<a class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:bg-gray-50 hover:text-primary transition-all font-black uppercase text-xs tracking-widest" href="leaderboard.html">
-<span class="material-symbols-outlined">gavel</span> RANK
-                </a>
-</nav>
-<div class="px-6 mb-8">
-<button class="w-full py-4 bg-primary text-white rounded-2xl font-headline font-black text-xs tracking-widest uppercase hover:bg-primary/90 transition-all shadow-sm" onclick="location.href='contests.html'">
-                    ENTER CONTEST
+    <!-- Sidebar Navigation -->
+    <aside class="fixed left-0 top-0 h-full w-64 border-r border-gray-100 bg-white flex flex-col pt-24 pb-8 z-40 hidden lg:flex">
+        <div class="px-6 mb-8">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary text-sm font-black" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+                </div>
+                <div>
+                    <div class="text-primary font-black text-xs font-headline uppercase tracking-widest italic leading-none">XI VAULT</div>
+                    <div class="text-[9px] text-gray-300 font-black uppercase tracking-widest">v2.0 SECURE</div>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <a href="index.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+                <span class="material-symbols-outlined">grid_view</span> Hub
+            </a>
+            <a href="pre-match.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+                <span class="material-symbols-outlined">psychology</span> Intel
+            </a>
+            <a href="challenger.html" class="flex items-center gap-4 px-6 py-4 text-gray-400 hover:text-primary hover:bg-gray-50 transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+                <span class="material-symbols-outlined">swords</span> Arena
+            </a>
+            <a href="wallet.html" class="flex items-center gap-4 px-6 py-4 bg-primary/5 text-primary border-r-4 border-primary transition-all uppercase text-[11px] font-black tracking-widest font-headline">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span> Vault
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 lg:ml-64 pt-24 p-8 space-y-12 pb-32">
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div>
+                <h1 class="font-headline font-black text-6xl tracking-tighter text-gray-900 uppercase italic leading-none">VAULT CONTROL</h1>
+                <p class="text-gray-400 font-black text-[10px] mt-4 uppercase tracking-[0.2em]">Secure your SOL and claim tactical rewards on the XI network.</p>
+            </div>
+            <div class="flex gap-4">
+                <button class="bg-primary text-white px-10 py-5 rounded-[2rem] font-headline font-black tracking-widest uppercase text-xs shadow-lg hover:scale-[1.02] transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm font-black">add_circle</span> Deposit
                 </button>
-</div>
-</aside>
-<div class="mt-auto pt-8 border-t border-white/5 space-y-1">
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:text-slate-200 font-headline uppercase text-xs tracking-widest" href="#">
-<span class="material-symbols-outlined">settings</span> Settings
-                </a>
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:text-slate-200 font-headline uppercase text-xs tracking-widest" href="#">
-<span class="material-symbols-outlined">help</span> Support
-                </a>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="flex-1 lg:ml-64 p-4 md:p-8 space-y-8 pb-32 lg:pb-8">
-<!-- Header Section -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-<div>
-<h1 class="font-headline font-black text-5xl tracking-tighter text-gray-900 uppercase italic">VAULT CONTROL</h1>
-<p class="text-gray-400 font-black text-xs mt-2 uppercase tracking-widest">Secure your SOL and claim tactical rewards.</p>
-</div>
-<div class="flex gap-4">
-<button class="bg-primary text-white px-10 py-4 rounded-2xl font-headline font-black tracking-widest uppercase text-xs shadow-md hover:scale-[1.02] transition-all flex items-center gap-2">
-<span class="material-symbols-outlined text-sm font-black">add_circle</span> Deposit
-                    </button>
-<button class="bg-white border border-gray-100 text-gray-900 px-10 py-4 rounded-2xl font-headline font-black tracking-widest uppercase text-xs hover:bg-gray-50 transition-all flex items-center gap-2">
-<span class="material-symbols-outlined text-sm font-black">file_upload</span> Withdraw
-                    </button>
-</div>
-</div>
-<!-- Dashboard Grid -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-<!-- Total Balance Card -->
-<div class="lg:col-span-2 balance-gradient border border-gray-100 rounded-[2.5rem] p-10 relative overflow-hidden flex flex-col justify-between min-h-[350px] shadow-sm">
-<div class="absolute top-0 right-0 p-10">
-<span class="material-symbols-outlined text-primary/5 text-9xl font-black">account_balance_wallet</span>
-</div>
-<div>
-<div class="flex items-center gap-2 text-primary font-black text-[10px] tracking-[0.2em] uppercase mb-6">
-<span class="w-3 h-3 rounded-md bg-primary shadow-[0_0_10px_rgba(0,208,156,0.3)]"></span>
-                            Active Balance
+                <button class="bg-white border border-gray-100 text-gray-900 px-10 py-5 rounded-[2rem] font-headline font-black tracking-widest uppercase text-xs hover:bg-gray-50 transition-all flex items-center gap-2 shadow-sm">
+                    <span class="material-symbols-outlined text-sm font-black">file_upload</span> Withdraw
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Total Balance Card -->
+            <div class="lg:col-span-2 balance-gradient border border-gray-100 rounded-[3rem] p-12 relative overflow-hidden flex flex-col justify-between min-h-[400px] shadow-sm">
+                <div class="absolute top-0 right-0 p-12">
+                    <span class="material-symbols-outlined text-primary/5 text-9xl font-black scale-[2]">account_balance_wallet</span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 text-primary font-black text-[10px] tracking-[0.3em] uppercase mb-10">
+                        <span class="w-3 h-3 rounded-full bg-primary shadow-[0_0_15px_rgba(0,208,156,0.5)]"></span>
+                        Active Balance
+                    </div>
+                    <div class="flex items-baseline gap-6 relative z-10">
+                        <span id="wallet-sol-balance" class="font-headline font-black text-9xl tracking-tighter text-gray-900 italic uppercase leading-none">---</span>
+                        <span class="font-headline font-black text-4xl text-primary italic">SOL</span>
+                    </div>
+                    <div id="wallet-usd-balance" class="text-gray-400 font-black text-3xl mt-4 tracking-tighter uppercase italic">---</div>
+                </div>
+                
+                <!-- Simulated Balance Chart -->
+                <div class="w-full h-32 mt-12 relative z-10">
+                    <div class="flex items-end justify-between h-full w-full gap-2">
+                        <div class="bg-primary/5 w-full rounded-full" style="height: 40%"></div>
+                        <div class="bg-primary/10 w-full rounded-full" style="height: 35%"></div>
+                        <div class="bg-primary/15 w-full rounded-full" style="height: 45%"></div>
+                        <div class="bg-primary/20 w-full rounded-full" style="height: 60%"></div>
+                        <div class="bg-primary/25 w-full rounded-full" style="height: 55%"></div>
+                        <div class="bg-primary/30 w-full rounded-full" style="height: 70%"></div>
+                        <div class="bg-primary/40 w-full rounded-full" style="height: 85%"></div>
+                        <div class="bg-primary/50 w-full rounded-full" style="height: 80%"></div>
+                        <div class="bg-primary/60 w-full rounded-full" style="height: 90%"></div>
+                        <div class="bg-primary/70 w-full rounded-full" style="height: 75%"></div>
+                        <div class="bg-primary/80 w-full rounded-full" style="height: 95%"></div>
+                        <div class="bg-primary w-full rounded-full" style="height: 100%"></div>
+                    </div>
+                    <div class="flex justify-between mt-6 text-[9px] uppercase tracking-[0.25em] text-gray-400 font-black">
+                        <span>Transactions (30D Audit)</span>
+                        <span>XI Network Real-time Output</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wallet Security -->
+            <div class="bg-gray-50 border border-gray-100 rounded-[3rem] p-12 flex flex-col gap-8 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-headline font-black text-2xl tracking-tighter uppercase italic text-gray-900">Security</h3>
+                    <span class="material-symbols-outlined text-primary font-black text-3xl">security</span>
+                </div>
+                <div class="space-y-6">
+                    <div class="p-6 bg-white rounded-3xl border border-gray-100 flex items-center gap-5 shadow-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/5">
+                            <span class="material-symbols-outlined font-black text-2xl">smartphone</span>
                         </div>
-<div class="flex items-baseline gap-4">
-<span class="font-headline font-black text-8xl tracking-tighter text-gray-900 italic uppercase">42.84</span>
-<span class="font-headline font-black text-3xl text-primary italic">SOL</span>
+                        <div>
+                            <div class="text-[11px] font-black uppercase italic text-gray-900">iPhone 15 Pro</div>
+                            <div class="text-[9px] text-gray-400 font-black uppercase tracking-widest mt-0.5">SF, USA • LIVE</div>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-white/50 rounded-3xl border border-gray-100 flex items-center gap-5 grayscale opacity-60">
+                        <div class="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+                            <span class="material-symbols-outlined font-black text-2xl">desktop_windows</span>
+                        </div>
+                        <div>
+                            <div class="text-[11px] font-black uppercase italic text-gray-400">MacBook Pro 16</div>
+                            <div class="text-[9px] text-gray-400 font-black uppercase tracking-widest mt-0.5">London, UK • 2H AGO</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full mt-auto py-5 border border-gray-200 text-gray-400 hover:text-gray-900 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:bg-white">
+                    MANAGE AUTH NODES
+                </button>
+            </div>
+        </div>
+
+        <!-- Audit Table -->
+        <div class="bg-white border border-gray-100 rounded-[3rem] overflow-hidden shadow-sm">
+            <div class="px-12 py-10 flex items-center justify-between border-b border-gray-50">
+                <h3 class="font-headline font-black text-3xl tracking-tighter text-gray-900 uppercase italic">Vault Audit</h3>
+                <div class="flex gap-4">
+                    <button class="bg-gray-50 text-[10px] font-black uppercase tracking-widest px-8 py-3 rounded-xl border border-gray-100 text-gray-400 hover:text-gray-900 transition-all">Filter</button>
+                    <button class="bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest px-8 py-3 rounded-xl border border-primary/10 hover:bg-primary/10 transition-all">Export Report</button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-gray-400 text-[10px] uppercase tracking-[0.25em] font-black bg-gray-50/50">
+                            <th class="px-12 py-6">Transaction Type</th>
+                            <th class="px-12 py-6">Network Date</th>
+                            <th class="px-12 py-6">Amount (SOL)</th>
+                            <th class="px-12 py-6">Status</th>
+                            <th class="px-12 py-6 text-right">Block Explorer</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        <tr class="hover:bg-gray-50/50 transition-colors">
+                            <td class="px-12 py-8">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/5">
+                                        <span class="material-symbols-outlined text-sm font-black">stars</span>
+                                    </div>
+                                    <span class="font-black uppercase italic text-sm text-gray-900 tracking-tight">Contest Win</span>
+                                </div>
+                            </td>
+                            <td class="px-12 py-8 text-gray-400 text-xs font-black uppercase tracking-widest">Oct 24, 2023</td>
+                            <td class="px-12 py-8 text-primary font-headline font-black text-2xl tracking-tighter">+12.50</td>
+                            <td class="px-12 py-8">
+                                <span class="px-4 py-2 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10 shadow-sm">Settled</span>
+                            </td>
+                            <td class="px-12 py-8 text-right">
+                                <a class="text-gray-300 hover:text-primary transition-all text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-end gap-2" href="#">
+                                    SCAN NODE <span class="material-symbols-outlined text-xs">open_in_new</span>
+                                </a>
+                            </td>
+                        </tr>
+                        <!-- More rows... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 </div>
-<div class="text-gray-400 font-black text-2xl mt-2 tracking-tighter">≈ $6,211.38 USD</div>
-</div>
-<div class="w-full h-24 mt-12">
-<!-- Simulated Balance Chart -->
-<div class="flex items-end justify-between h-full w-full gap-2">
-<div class="bg-primary/5 w-full rounded-xl" style="height: 40%"></div>
-<div class="bg-primary/10 w-full rounded-xl" style="height: 35%"></div>
-<div class="bg-primary/15 w-full rounded-xl" style="height: 45%"></div>
-<div class="bg-primary/20 w-full rounded-xl" style="height: 60%"></div>
-<div class="bg-primary/25 w-full rounded-xl" style="height: 55%"></div>
-<div class="bg-primary/30 w-full rounded-xl" style="height: 70%"></div>
-<div class="bg-primary/40 w-full rounded-xl" style="height: 85%"></div>
-<div class="bg-primary/50 w-full rounded-xl" style="height: 80%"></div>
-<div class="bg-primary/60 w-full rounded-xl" style="height: 90%"></div>
-<div class="bg-primary/70 w-full rounded-xl" style="height: 75%"></div>
-<div class="bg-primary/80 w-full rounded-xl" style="height: 95%"></div>
-<div class="bg-primary w-full rounded-xl" style="height: 100%"></div>
-</div>
-<div class="flex justify-between mt-4 text-[10px] uppercase tracking-widest text-gray-400 font-black">
-<span>Transactions (30D)</span>
-<span>Real-time Output</span>
-</div>
-</div>
-</div>
-<!-- Wallet Security & Devices -->
-<div class="bg-gray-50 border border-gray-100 rounded-[2.5rem] p-10 flex flex-col gap-6">
-<div class="flex items-center justify-between">
-<h3 class="font-headline font-black text-xl tracking-tight uppercase italic text-gray-900">Security</h3>
-<span class="material-symbols-outlined text-primary font-black">security</span>
-</div>
-<div class="space-y-4">
-<div class="p-5 bg-white rounded-2xl border border-gray-100 flex items-center gap-4 shadow-sm">
-<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined font-black">smartphone</span>
-</div>
-<div>
-<div class="text-sm font-black uppercase italic">iPhone 15 Pro</div>
-<div class="text-[10px] text-gray-400 font-black uppercase tracking-widest">SF, USA • LIVE</div>
-</div>
-</div>
-<div class="p-5 bg-white/50 rounded-2xl border border-gray-100 flex items-center gap-4">
-<div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center text-gray-400">
-<span class="material-symbols-outlined font-black">desktop_windows</span>
-</div>
-<div>
-<div class="text-sm font-black uppercase italic text-gray-400">MacBook Pro 16</div>
-<div class="text-[10px] text-gray-400 font-black uppercase tracking-widest">London, UK • 2H AGO</div>
-</div>
-</div>
-</div>
-<button class="w-full mt-auto py-4 border border-gray-200 text-gray-400 hover:text-gray-900 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
-                        MANAGE NODES
-                    </button>
-</div>
-</div>
-<!-- Transaction History Section -->
-<div class="bg-white border border-gray-100 rounded-[2.5rem] overflow-hidden shadow-sm">
-<div class="px-10 py-8 flex items-center justify-between border-b border-gray-50">
-<h3 class="font-headline font-black text-2xl tracking-tight text-gray-900 uppercase italic">Vault Audit</h3>
-<div class="flex gap-2">
-<button class="bg-gray-50 text-[10px] font-black uppercase tracking-widest px-6 py-2.5 rounded-xl border border-gray-100 text-gray-400 hover:text-gray-900 transition-all">Filter</button>
-<button class="bg-gray-50 text-[10px] font-black uppercase tracking-widest px-6 py-2.5 rounded-xl border border-gray-100 text-gray-400 hover:text-gray-900 transition-all">Export</button>
-</div>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left font-label">
-<thead>
-<tr class="text-gray-400 text-[10px] uppercase tracking-[0.2em] font-black bg-gray-50/50">
-<th class="px-10 py-5">Type</th>
-<th class="px-10 py-5">Date</th>
-<th class="px-10 py-5">Amount</th>
-<th class="px-10 py-5">Status</th>
-<th class="px-10 py-5 text-right">Explorer</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-gray-50">
-<tr class="hover:bg-gray-50 transition-colors">
-<td class="px-10 py-6">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary font-black">stars</span>
-<span class="font-black uppercase italic text-sm">Contest Win</span>
-</div>
-</td>
-<td class="px-10 py-6 text-gray-400 text-xs font-black uppercase">Oct 24, 2023</td>
-<td class="px-10 py-6 text-primary font-headline font-black text-lg">+12.50 SOL</td>
-<td class="px-10 py-6">
-<span class="px-4 py-1.5 rounded-lg bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10">Settled</span>
-</td>
-<td class="px-10 py-6 text-right">
-<a class="text-gray-300 hover:text-primary transition-all text-xs font-black uppercase tracking-tighter flex items-center justify-end gap-1" href="#">
-                                        SCAN <span class="material-symbols-outlined text-xs">open_in_new</span>
-</a>
-</td>
-</tr>
-<tr class="hover:bg-gray-50 transition-colors">
-<td class="px-10 py-6">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-gray-400 font-black">payments</span>
-<span class="font-black uppercase italic text-sm text-gray-400">Entry Fee</span>
-</div>
-</td>
-<td class="px-10 py-6 text-gray-400 text-xs font-black uppercase">Oct 22, 2023</td>
-<td class="px-10 py-6 text-gray-900 font-headline font-black text-lg">-2.00 SOL</td>
-<td class="px-10 py-6">
-<span class="px-4 py-1.5 rounded-lg bg-gray-50 text-gray-400 text-[10px] font-black uppercase tracking-widest border border-gray-100">Settled</span>
-</td>
-<td class="px-10 py-6 text-right">
-<a class="text-gray-300 hover:text-primary transition-all text-xs font-black uppercase tracking-tighter flex items-center justify-end gap-1" href="#">
-                                        SCAN <span class="material-symbols-outlined text-xs">open_in_new</span>
-</a>
-</td>
-</tr>
-<tr class="hover:bg-gray-50 transition-colors">
-<td class="px-10 py-6">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary font-black">group_add</span>
-<span class="font-black uppercase italic text-sm">Referral</span>
-</div>
-</td>
-<td class="px-10 py-6 text-gray-400 text-xs font-black uppercase">Oct 20, 2023</td>
-<td class="px-10 py-6 text-primary font-headline font-black text-lg">+0.50 SOL</td>
-<td class="px-10 py-6">
-<span class="px-4 py-1.5 rounded-lg bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10">Settled</span>
-</td>
-<td class="px-10 py-6 text-right">
-<a class="text-gray-300 hover:text-primary transition-all text-xs font-black uppercase tracking-tighter flex items-center justify-end gap-1" href="#">
-                                        SCAN <span class="material-symbols-outlined text-xs">open_in_new</span>
-</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="p-6 bg-gray-50/30 flex justify-center">
-<button class="text-gray-400 hover:text-primary text-[10px] uppercase tracking-[0.2em] font-black flex items-center gap-2" onclick="location.href='wallet.html'">
-                        REVEAL FULL AUDIT <span class="material-symbols-outlined text-sm">expand_more</span>
-</button>
-</div>
-</div>
-</main>
-</div>
-<!-- BottomNavBar (Mobile Only) -->
-<nav class="fixed bottom-0 left-0 w-full flex lg:hidden justify-around items-center px-4 pb-8 pt-4 bg-white/90 backdrop-blur-2xl border-t border-gray-100 z-50">
-<a class="flex flex-col items-center justify-center text-gray-300" href="index.html">
-<span class="material-symbols-outlined">home</span>
-<span class="font-black text-[8px] uppercase mt-1">Hub</span>
-</a>
-<a class="flex flex-col items-center justify-center text-gray-300" href="contests.html">
-<span class="material-symbols-outlined">analytics</span>
-<span class="font-black text-[8px] uppercase mt-1">Play</span>
-</a>
-<a class="flex flex-col items-center justify-center text-primary" href="wallet.html">
-<span class="material-symbols-outlined font-black">wallet</span>
-<span class="font-black text-[8px] uppercase mt-1">Vault</span>
-</a>
-</nav>
+
 <script src="assets/js/main.js"></script>
-</body></html>
+<script>
+    window.addEventListener('load', async () => {
+        const wallet = window.localStorage.getItem('skillxi_wallet');
+        if (wallet) {
+            const profile = await window.getProfileData(wallet);
+            if (profile) {
+                document.getElementById('wallet-sol-balance').innerText = (profile.sol_balance || 42.84).toFixed(2);
+                document.getElementById('wallet-usd-balance').innerText = `≈ $${((profile.sol_balance || 42.84) * 145).toLocaleString()} USD`;
+                document.getElementById('header-avatar').src = profile.avatar_url || 'https://lh3.googleusercontent.com/a/default-user';
+            }
+        }
+    });
+</script>
+</body>
+</html>

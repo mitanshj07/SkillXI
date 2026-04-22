@@ -64,85 +64,10 @@
         <button class="flex-1 py-4 text-xs font-black text-gray-300 uppercase tracking-widest">YOUR TEAMS (0)</button>
     </div>
 
-    <!-- CONTEST CARDS -->
-    <div class="space-y-6">
-        <!-- Type 1: MEGA -->
-        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:border-primary transition-all">
-            <div class="p-6">
-                <div class="flex justify-between items-start mb-6">
-                    <div>
-                        <h4 class="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Grand Prize Pool 🏆</h4>
-                        <p class="text-3xl font-headline font-black italic uppercase">8.5 SOL PRIZE</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">WINNER TAKES</p>
-                        <p class="font-black text-xl text-gray-900 uppercase italic">3.5 SOL</p>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">ENTRY FEE</p>
-                        <p class="font-black text-xl text-primary uppercase italic">0.1 SOL</p>
-                    </div>
-                </div>
-                <div class="mb-6">
-                    <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2">
-                        <span class="text-gray-400">200 total spots</span>
-                        <span class="text-primary italic">142 spots left</span>
-                    </div>
-                    <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-primary w-[71%]"></div>
-                    </div>
-                </div>
-                <button onclick="window.location.href='lineup.html?contest=c001&type=mega'" class="w-full bg-primary text-white font-headline font-black py-5 rounded-2xl hover:bg-primary/90 transition-all uppercase tracking-widest">JOIN CONTEST</button>
-            </div>
-        </div>
-
-        <!-- Type 2: 1v1 -->
-        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:border-primary transition-all">
-            <div class="p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">1v1 Battle ⚔️</h4>
-                        <p class="text-xl font-headline font-black uppercase">0.2 SOL POOL</p>
-                    </div>
-                </div>
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Entry Fee</p>
-                        <p class="font-black text-primary">0.1 SOL</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Prize</p>
-                        <p class="font-black text-gray-900">0.18 SOL</p>
-                    </div>
-                </div>
-                <button onclick="window.location.href='lineup.html?contest=c001&type=1v1'" class="w-full bg-gray-50 border border-gray-100 text-gray-900 font-headline font-black py-4 rounded-xl hover:bg-gray-100 transition-all uppercase tracking-widest">JOIN BATTLE</button>
-            </div>
-        </div>
-
-        <!-- Type 3: Small League -->
-        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
-            <div class="p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Mini League 🎯</h4>
-                        <p class="text-xl font-headline font-black uppercase italic">0.8 SOL POOL</p>
-                    </div>
-                </div>
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Entry</p>
-                        <p class="font-black text-primary">0.1 SOL</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Spots</p>
-                        <p class="font-black text-gray-900">10 SPOTS</p>
-                    </div>
-                </div>
-                <button onclick="window.location.href='lineup.html?contest=c001&type=mini'" class="w-full bg-gray-50 border border-gray-100 text-gray-900 font-headline font-black py-4 rounded-xl hover:bg-gray-100 transition-all uppercase tracking-widest">JOIN LEAGUE</button>
-            </div>
-        </div>
+    <!-- CONTEST CARDS — dynamically injected by the load script below -->
+    <div id="lobby-contest-cards" class="space-y-6">
+        <!-- Loading state -->
+        <p class="text-center text-gray-400 font-black uppercase text-xs tracking-widest py-12">Loading contest types...</p>
     </div>
 </div>
 
@@ -161,27 +86,140 @@
         const matchId = urlParams.get('match');
         
         let contests = window.CURRENT_CONTESTS;
-        if (!contests || contests.length === 0) contests = await window.getContests();
+        if (!contests || contests.length === 0) {
+            contests = await window.getContests();
+            window.CURRENT_CONTESTS = contests;
+        }
         
         const contest = contests.find(c => c.id === matchId) || contests[0];
-        
+        const cid = contest ? contest.id : 'c001';
+
+        // Hydrate match header
         document.getElementById('lobby-match-name').innerText = `${contest.homeTag} vs ${contest.awayTag}`;
         document.getElementById('home-tag').innerText = contest.homeTag;
         document.getElementById('away-tag').innerText = contest.awayTag;
         document.getElementById('home-name').innerText = contest.homeTeam;
         document.getElementById('away-name').innerText = contest.awayTeam;
-        
-        // Simulating countdown
+
+        // Live countdown using timeLeft from contest data
+        let secsLeft = Math.max(0, Math.floor(contest.timeLeft || 0));
         const timerEl = document.getElementById('lobby-match-time');
-        setInterval(() => {
-            const h = Math.floor(contest.timeLeft / 3600);
-            const m = Math.floor((contest.timeLeft % 3600) / 60);
-            const s = Math.floor(contest.timeLeft % 60);
-            timerEl.innerText = `${h}H ${m}M ${s}S LEFT`;
-        }, 1000);
-        
+        const tick = () => {
+            const h = String(Math.floor(secsLeft / 3600)).padStart(2, '0');
+            const m = String(Math.floor((secsLeft % 3600) / 60)).padStart(2, '0');
+            const s = String(Math.floor(secsLeft % 60)).padStart(2, '0');
+            if (timerEl) timerEl.innerText = `${h}H ${m}M ${s}S LEFT`;
+            if (secsLeft > 0) secsLeft--;
+        };
+        tick();
+        setInterval(tick, 1000);
+
+        // Wallet balance
         const bal = window.localStorage.getItem('skillxi_sol_bal') || '0.0';
-        document.getElementById('lobby-wallet-bal').innerText = bal;
+        document.getElementById('lobby-wallet-bal').innerText = bal + ' SOL';
+
+        // Dynamically render contest type cards using real contest entry fee & prize
+        const entryFee = parseFloat(contest.entry || 0.1);
+        const prize = parseFloat(contest.prize || 8.5);
+        const filled = contest.currentPlayers || 0;
+        const maxSpots = contest.maxPlayers || 200;
+        const fillPct = Math.round((filled / maxSpots) * 100);
+
+        document.getElementById('lobby-contest-cards').innerHTML = `
+            <!-- MEGA Contest -->
+            <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:border-primary transition-all">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h4 class="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Grand Prize Pool 🏆</h4>
+                            <p class="text-3xl font-headline font-black italic uppercase">${prize} SOL PRIZE</p>
+                        </div>
+                        <span class="text-[9px] bg-amber-50 text-amber-700 font-black uppercase tracking-widest px-3 py-1 rounded-full border border-amber-100">Demo</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">WINNER TAKES</p>
+                            <p class="font-black text-xl text-gray-900 uppercase italic">${(prize * 0.4).toFixed(2)} SOL</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">ENTRY FEE</p>
+                            <p class="font-black text-xl text-primary uppercase italic">${entryFee} SOL</p>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2">
+                            <span class="text-gray-400">${maxSpots} total spots</span>
+                            <span class="text-primary italic">${maxSpots - filled} spots left</span>
+                        </div>
+                        <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-primary" style="width:${fillPct}%"></div>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='lineup.html?match=${cid}&contest=${cid}&type=mega'" 
+                        class="w-full bg-primary text-white font-headline font-black py-5 rounded-2xl hover:bg-primary/90 transition-all uppercase tracking-widest">
+                        JOIN CONTEST
+                    </button>
+                </div>
+            </div>
+
+            <!-- 1v1 Battle -->
+            <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:border-primary transition-all">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">1v1 Battle ⚔️</h4>
+                            <p class="text-xl font-headline font-black uppercase">${(entryFee * 2).toFixed(2)} SOL POOL</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Entry Fee</p>
+                            <p class="font-black text-primary">${entryFee} SOL</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Prize</p>
+                            <p class="font-black text-gray-900">${(entryFee * 1.8).toFixed(2)} SOL</p>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='lineup.html?match=${cid}&contest=${cid}&type=1v1'" 
+                        class="w-full bg-gray-50 border border-gray-100 text-gray-900 font-headline font-black py-4 rounded-xl hover:bg-gray-100 transition-all uppercase tracking-widest">
+                        JOIN BATTLE
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mini League -->
+            <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Mini League 🎯</h4>
+                            <p class="text-xl font-headline font-black uppercase italic">${(entryFee * 8).toFixed(2)} SOL POOL</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Entry</p>
+                            <p class="font-black text-primary">${entryFee} SOL</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Spots</p>
+                            <p class="font-black text-gray-900">10 SPOTS</p>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='lineup.html?match=${cid}&contest=${cid}&type=mini'" 
+                        class="w-full bg-gray-50 border border-gray-100 text-gray-900 font-headline font-black py-4 rounded-xl hover:bg-gray-100 transition-all uppercase tracking-widest">
+                        JOIN LEAGUE
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Update AI tip strip
+        const aiStrip = document.querySelector('.fixed.bottom-0 p');
+        if (aiStrip && contest.aiTip) {
+            aiStrip.innerText = `AI Analyst: ${contest.aiTip}`;
+        }
     });
 </script>
 </body>

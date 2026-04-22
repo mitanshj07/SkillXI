@@ -1,10 +1,10 @@
 import os
 import json
 import requests
-from typing import TypedDict, Annotated, List, Union
+from typing import TypedDict, Annotated, List
 from langgraph.graph import StateGraph, END
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
+from langchain_core.messages import BaseMessage, HumanMessage
 from supabase import create_client, Client
 
 # --- Config & Environment ---
@@ -12,6 +12,18 @@ FOOTBALL_API_URL = "https://v3.football.api-sports.io"
 FOOTBALL_API_KEY = os.getenv("FOOTBALL_API_KEY", "ebf76d464844eacdbe8a101bf8ee9106")
 SUPABASE_URL = os.getenv("VITE_SUPABASE_URL", "https://vtvrvlcholgjoujqcoxd.supabase.co")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY") # Required for backend DB access
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
+
+# --- LLM Setup ---
+# Uses GOOGLE_API_KEY from environment. Set it in Vercel project settings or .env.local.
+if not GOOGLE_API_KEY:
+    raise EnvironmentError("GOOGLE_API_KEY is not set. Add it to Vercel environment variables.")
+
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.0-flash",
+    google_api_key=GOOGLE_API_KEY,
+    temperature=0.7
+)
 
 # --- State Definition ---
 class AgentState(TypedDict):
@@ -22,9 +34,6 @@ class AgentState(TypedDict):
     tactical_analysis: str
     final_response: str
     match_context: str
-
-# --- LLM Setup ---
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.7)
 
 # --- Real-Time Data Utilities ---
 
@@ -133,11 +142,35 @@ app = workflow.compile()
 # --- Vercel Request Handler ---
 
 def handler(request):
-    """Main entry point for Vercel Serverless Function."""
+    """Main entry point for Vercel Serverless Function (Python runtime)."""
+    # Handle CORS preflight
+    if request.method == 'OPTIONS':
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type"
+            },
+            "body": ""
+        }
+    
     try:
-        body = json.loads(request.body)
+        # Vercel passes body as a string for Python functions
+        if hasattr(request, 'body'):
+            raw = request.body
+            body = json.loads(raw) if isinstance(raw, str) else raw
+        else:
+            body = {}
+
         user_message = body.get("message", "")
         user_wallet = body.get("user_wallet", "")
+        
+        if not user_message:
+            return {
+                "statusCode": 400,
+                "body": json.dumps({"error": "No message provided"})
+            }
         
         # Initialize state
         initial_state = {
@@ -153,19 +186,29 @@ def handler(request):
         # Run Graph
         result = app.invoke(initial_state)
         
+        response_body = json.dumps({
+            "response": result["final_response"],
+            "logs": {
+                "scout": result["scout_data"][:300] if result.get("scout_data") else "No scout data.",
+                "tactician": result["tactical_analysis"][:300] if result.get("tactical_analysis") else "No tactical data."
+            },
+            "lineup_detected": bool(
+                result.get("user_lineup") and
+                "No active lineup" not in result["user_lineup"]
+            )
+        })
+        
         return {
             "statusCode": 200,
-            "body": json.dumps({
-                "response": result["final_response"],
-                "logs": {
-                    "scout": result["scout_data"],
-                    "tactician": result["tactical_analysis"]
-                },
-                "lineup_detected": bool(result.get("user_lineup") and "No active lineup" not in result["user_lineup"])
-            })
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            "body": response_body
         }
     except Exception as e:
         return {
             "statusCode": 500,
+            "headers": {"Content-Type": "application/json"},
             "body": json.dumps({"error": str(e)})
         }

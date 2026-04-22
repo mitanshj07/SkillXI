@@ -1,6 +1,25 @@
-.DS_Store
-*.log
-*.pid
-node_modules/
+# SkillXI Web Project
+
+# Environment
 .env
-temp/
+.env.local
+.env.production
+.env.*.local
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Supabase local
+supabase/.temp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Vercel
+.vercel/

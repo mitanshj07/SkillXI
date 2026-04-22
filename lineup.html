@@ -140,10 +140,12 @@
             btn.classList.remove('border-primary', 'bg-primary/5', 'text-primary');
             btn.classList.add('border-gray-100', 'bg-white', 'text-gray-400');
         });
-        const active = Array.from(document.querySelectorAll('.pos-filter')).find(x => x.innerText === pos);
-        active.classList.add('border-primary', 'bg-primary/5', 'text-primary');
-        active.classList.remove('border-gray-100', 'bg-white', 'text-gray-400');
-        window.renderPlayerList(pos);
+        const active = Array.from(document.querySelectorAll('.pos-filter')).find(x => x.innerText.trim() === pos);
+        if (active) {
+            active.classList.add('border-primary', 'bg-primary/5', 'text-primary');
+            active.classList.remove('border-gray-100', 'bg-white', 'text-gray-400');
+        }
+        window.renderPlayerList && window.renderPlayerList(pos);
     }
 
     function proceedToConfirm() {
@@ -153,7 +155,6 @@
         if (!window.lineupManager.captainId || !window.lineupManager.vcId) {
             return window.showWalletToast('Please select Captain & VC', 'error');
         }
-        // Save to localStorage for next page
         localStorage.setItem('skillxi_temp_lineup', JSON.stringify(window.lineupManager.selectedPlayers));
         localStorage.setItem('skillxi_temp_c', window.lineupManager.captainId);
         localStorage.setItem('skillxi_temp_vc', window.lineupManager.vcId);
@@ -162,19 +163,28 @@
         window.location.href = `contest-confirm.html?match=${urlParams.get('match')}&contest=${urlParams.get('contest')}`;
     }
 
+    // Single load handler — main.js DOMContentLoaded fires first (globals ready),
+    // then this 'load' fires to do page-specific init safely.
     window.addEventListener('load', async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const matchId = urlParams.get('match');
+        const contestId = urlParams.get('contest');
+
+        // Hydrate match title
         let contests = window.CURRENT_CONTESTS;
         if (!contests || contests.length === 0) {
             contests = await window.getContests();
+            window.CURRENT_CONTESTS = contests;
         }
-        const contest = contests.find(c => c.id === matchId) || contests[0];
+        const contest = contests.find(c => c.id === (matchId || contestId)) || contests[0];
         if (contest) {
-            document.getElementById('match-header-title').innerText = `${contest.homeTeam} vs ${contest.awayTeam}`;
+            document.getElementById('match-header-title').innerText =
+                `${contest.homeTeam} vs ${contest.awayTeam}`;
         }
-        
-        await window.renderPlayerList('ALL', matchId);
+
+        // Render player list — single call, no race with main.js
+        // (main.js DOMContentLoaded skips lineup page intentionally)
+        await window.renderPlayerList('ALL', matchId || null);
         window.updateBuilderUI();
     });
 </script>

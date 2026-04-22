@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -10,77 +10,109 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
-            darkMode: "class",
             theme: { extend: {
-                colors: { "primary":"#a8e8ff", "surface":"#131318", "background":"#131318", "secondary":"#d2bbff", "tertiary":"#00ff88" },
+                colors: { 
+                    "primary":"#00D09C", 
+                    "surface":"#FFFFFF", 
+                    "background":"#FFFFFF", 
+                    "secondary":"#1A1A1A", 
+                    "on-surface": "#1A1A1A",
+                    "outline": "#EEEEEE",
+                    "error": "#E21D26" 
+                },
                 fontFamily:{ headline:["Space Grotesk"], body:["Inter"] }
             }}
         }
     </script>
+    <style>
+        .confirmation-gradient {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F6F9FC 100%);
+        }
+    </style>
     <!-- Solana Web3 Integrations -->
     <script src="https://bundle.run/buffer@6.0.3"></script>
     <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
     <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
-<body class="bg-surface text-white font-body min-h-screen">
+<body class="bg-white text-gray-900 font-body min-h-screen">
 
-<div class="p-6 max-w-2xl mx-auto">
+<div class="p-6 max-w-2xl mx-auto pt-12">
     <!-- Header -->
-    <div class="flex items-center gap-4 mb-8">
-        <button onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></button>
-        <h1 class="text-xl font-headline font-black">Confirm Selection</h1>
+    <div class="flex items-center justify-between mb-12">
+        <div class="flex items-center gap-4">
+            <button onclick="history.back()" class="p-2 hover:bg-gray-50 rounded-xl transition-all"><span class="material-symbols-outlined text-gray-900">arrow_back</span></button>
+            <h1 class="text-2xl font-headline font-black uppercase italic tracking-tighter">Finalize Squad</h1>
+        </div>
+        <span class="text-[9px] bg-amber-50 text-amber-700 font-black uppercase tracking-widest px-3 py-1 rounded-full border border-amber-100">Demo Mode</span>
     </div>
 
     <!-- Match Summary -->
-    <div class="bg-[#1a1a2e] border border-white/5 rounded-3xl p-6 mb-8 text-center">
-        <p id="confirm-match-name" class="font-headline font-bold text-lg mb-1">...</p>
-        <p id="confirm-contest-name" class="text-xs text-primary font-bold uppercase tracking-widest">...</p>
+    <div class="bg-gray-50 border border-gray-100 rounded-[2rem] p-8 mb-10 text-center relative overflow-hidden">
+        <div class="absolute top-0 right-0 p-4 opacity-5">
+            <span class="material-symbols-outlined text-6xl">verified</span>
+        </div>
+        <p id="confirm-match-name" class="font-headline font-black text-2xl mb-1 uppercase italic tracking-tight text-gray-900">...</p>
+        <p id="confirm-contest-name" class="text-[10px] text-primary font-black uppercase tracking-[0.2em]">...</p>
     </div>
 
     <!-- The Team Grid -->
-    <div class="mb-8">
-        <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Your Final XI</h2>
-        <div id="confirm-player-grid" class="grid grid-cols-3 gap-3">
-            <!-- Small player cards -->
+    <div class="mb-12">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Validated Selection (XI)</h2>
+            <span class="text-[10px] font-black text-primary uppercase">100% Efficiency</span>
+        </div>
+        <div id="confirm-player-grid" class="grid grid-cols-3 md:grid-cols-4 gap-4">
+            <!-- Small player cards populated via script -->
         </div>
     </div>
 
     <!-- Payment Detail -->
-    <div class="bg-gradient-to-br from-[#1a1a2e] to-[#131318] border border-white/10 rounded-3xl p-8 mb-12 text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full translate-y-1/2"></div>
+    <div class="confirmation-gradient border border-gray-100 rounded-[3rem] p-10 mb-20 text-center relative shadow-sm overflow-hidden">
         <div class="relative z-10">
-            <p class="text-xs text-slate-400 font-bold uppercase mb-2">Total Entry Fee</p>
-            <h3 id="confirm-entry-fee" class="text-4xl font-headline font-black text-white mb-2">0.1 SOL</h3>
-            <p class="text-[11px] text-slate-500 mb-8 italic">🔐 Payment secured via Umbra & Solana Devnet</p>
+            <p class="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em] mb-4">Network Commitment Fee</p>
+            <div class="flex items-baseline justify-center gap-2 mb-2">
+                <h3 id="confirm-entry-fee" class="text-6xl font-headline font-black text-gray-900 italic">0.1</h3>
+                <span class="text-xl font-headline font-black text-primary italic uppercase">SOL</span>
+            </div>
+            <p class="text-[10px] text-gray-400 font-bold mb-10 uppercase tracking-tight">🔐 Payment secured via Umbra & Solana Devnet</p>
             
-            <button id="final-pay-btn" onclick="executeFinalJoin()" class="w-full bg-gradient-to-r from-[#00ff88] to-primary text-[#131318] font-headline font-black py-4 rounded-xl shadow-[0_10px_40px_rgba(0,255,136,0.3)] hover:scale-[1.05] transition-transform">
-                PAY & JOIN CONTEST
+            <button id="final-pay-btn" onclick="executeFinalJoin()" class="w-full bg-primary text-white font-headline font-black py-6 rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-sm">
+                CONFIRM & DEPLOY SQUAD
             </button>
         </div>
     </div>
 </div>
 
 <!-- Success Overlay -->
-<div id="success-overlay" class="fixed inset-0 bg-[#00ff88] z-[200] flex flex-col items-center justify-center text-[#131318] hidden">
-    <span class="text-8xl mb-6">✅</span>
-    <h2 class="text-5xl font-headline font-black mb-2 italic">YOU'RE IN!</h2>
-    <p class="text-xl font-bold opacity-70">Redirecting to Leaderboard...</p>
+<div id="success-overlay" class="fixed inset-0 bg-white z-[200] flex flex-col items-center justify-center text-gray-900 hidden">
+    <div class="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center text-primary text-6xl mb-8 animate-bounce">
+        <span class="material-symbols-outlined text-6xl font-black">check_circle</span>
+    </div>
+    <h2 class="text-5xl font-headline font-black mb-2 italic uppercase tracking-tighter">SQUAD DEPLOYED</h2>
+    <p class="text-sm font-black text-gray-400 uppercase tracking-widest opacity-70">Redirecting to Live Leaderboard...</p>
 </div>
 
 <script src="assets/js/main.js"></script>
 <script>
-    let currentMatch, currentContest;
+    let currentContest;
 
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const matchId = urlParams.get('match');
-        const contestId = urlParams.get('contest');
         
-        currentContest = CONTESTS.find(c => c.id === matchId) || CONTESTS[0];
-        document.getElementById('confirm-match-name').innerText = `${currentContest.homeTeam} vs ${currentContest.awayTeam}`;
-        document.getElementById('confirm-contest-name').innerText = currentContest.league;
-        document.getElementById('confirm-entry-fee').innerText = `${currentContest.entry} SOL`;
+        let contests = window.CURRENT_CONTESTS;
+        if (!contests || contests.length === 0) {
+            contests = await window.getContests();
+            window.CURRENT_CONTESTS = contests;
+        }
+
+        currentContest = (contests || []).find(c => c.id === matchId) || contests[0];
+        if (currentContest) {
+            document.getElementById('confirm-match-name').innerText = `${currentContest.homeTag} vs ${currentContest.awayTag}`;
+            document.getElementById('confirm-contest-name').innerText = currentContest.league || 'Standard Contest';
+            document.getElementById('confirm-entry-fee').innerText = currentContest.entry || '0.1';
+        }
 
         const lineup = JSON.parse(localStorage.getItem('skillxi_temp_lineup') || '[]');
         const cId = localStorage.getItem('skillxi_temp_c');
@@ -89,17 +121,18 @@
         const grid = document.getElementById('confirm-player-grid');
         lineup.forEach(p => {
             const card = document.createElement('div');
-            card.className = "bg-[#131318] border border-white/5 p-3 rounded-xl text-center relative";
-            const isC = p.id === cId;
-            const isVC = p.id === vcId;
+            card.className = "bg-white border border-gray-100 p-4 rounded-2xl text-center relative shadow-sm hover:border-primary/30 transition-all";
+            const isC = String(p.id) === String(cId);
+            const isVC = String(p.id) === String(vcId);
             
             card.innerHTML = `
-                ${isC ? `<span class="absolute top-1 right-1 bg-yellow-400 text-black text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center">C</span>` : ''}
-                ${isVC ? `<span class="absolute top-1 right-1 bg-slate-300 text-black text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center">VC</span>` : ''}
-                <div class="w-8 h-8 rounded-full bg-primary/10 mx-auto mb-2 flex items-center justify-center text-[10px] font-bold overflow-hidden">
+                ${isC ? `<span class="absolute top-2 right-2 bg-primary text-white text-[8px] font-black w-5 h-5 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">C</span>` : ''}
+                ${isVC ? `<span class="absolute top-2 right-2 bg-gray-900 text-white text-[8px] font-black w-5 h-5 rounded-lg flex items-center justify-center">VC</span>` : ''}
+                <div class="w-10 h-10 rounded-xl bg-gray-50 mx-auto mb-3 flex items-center justify-center text-xs font-black text-gray-300 overflow-hidden border border-gray-100">
                     ${p.photo ? `<img src="${p.photo}" class="w-full h-full object-cover">` : p.name.slice(0,1)}
                 </div>
-                <p class="text-[9px] font-black text-white truncate">${p.name}</p>
+                <p class="text-[9px] font-black text-gray-900 truncate uppercase tracking-tighter">${p.name}</p>
+                <p class="text-[8px] font-bold text-gray-400 uppercase mt-0.5">${p.team}</p>
             `;
             grid.appendChild(card);
         });
@@ -107,7 +140,8 @@
 
     async function executeFinalJoin() {
         const btn = document.getElementById('final-pay-btn');
-        btn.innerHTML = '<span class="animate-spin mr-2">🌀</span> SHIELDING...';
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="animate-spin mr-2">🌀</span> SECURING NODE...';
         btn.disabled = true;
 
         try {
@@ -123,12 +157,13 @@
                     window.location.href = 'leaderboard.html';
                 }, 2000);
             } else {
-                btn.innerHTML = 'PAY & JOIN CONTEST';
+                btn.innerHTML = originalText;
                 btn.disabled = false;
             }
         } catch (e) {
-            window.showWalletToast(e.message, 'error');
-            btn.innerHTML = 'PAY & JOIN CONTEST';
+            console.error(e);
+            window.showWalletToast && window.showWalletToast(e.message || 'Deployment failed', 'error');
+            btn.innerHTML = originalText;
             btn.disabled = false;
         }
     }

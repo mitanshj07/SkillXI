@@ -2,12 +2,31 @@
   "buildCommand": "echo 'No build required'",
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/agent_brain.py": {
+      "runtime": "python3.9"
+    }
+  },
   "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     }
-  ]
+  ],
+  "env": {
+    "GOOGLE_API_KEY": "@google_api_key",
+    "FOOTBALL_API_KEY": "@football_api_key",
+    "VITE_SUPABASE_URL": "@vite_supabase_url",
+    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key"
+  }
 }
