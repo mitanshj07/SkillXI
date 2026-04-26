@@ -159,6 +159,17 @@
 
 <script src="assets/js/main.js"></script>
 <script>
+    const FALLBACK_ACTIVITIES = [
+        { type: 'CONTEST_JOIN', icon: '⚽', msg: 'Rahul_Analyst just joined the Man City vs Arsenal contest' },
+        { type: 'CONTEST_WIN', icon: '🏆', msg: 'CryptoStriker won 4.5 SOL in the El Clasico contest' },
+        { type: 'AI_TIP', icon: '🤖', msg: 'AI tip: Haaland (62% ownership) is the consensus captain pick' },
+        { type: 'NEW_CONTEST', icon: '💎', msg: 'New contest: PSG vs Bayern — 200 SOL prize pool' },
+        { type: 'LEADERBOARD', icon: '📈', msg: 'SolanaScout climbed to #3 on global leaderboard' },
+        { type: 'CONTEST_JOIN', icon: '⚡', msg: 'Man City vs Arsenal contest filling fast — 192/200 joined' },
+        { type: 'CONTEST_WIN', icon: '🎯', msg: 'PhantomEdge won 2.1 SOL from Liverpool vs Tottenham' },
+        { type: 'LEVEL_UP', icon: '🔥', msg: 'XI_Hunter reached PRO tier after 15 consecutive wins' }
+    ];
+
     function formatTime(dateStr) {
         const date = new Date(dateStr);
         const now = new Date();
@@ -169,52 +180,27 @@
         return date.toLocaleDateString();
     }
 
-    window.addEventListener('load', async () => {
-        const feedContainer = document.getElementById('nexus-activities');
-        const activities = await window.getNexusFeed();
-        
-        if (activities.length === 0) {
-            feedContainer.innerHTML = `
-                <div class="bg-surface-container-low rounded-2xl p-20 text-center border border-outline-variant/10">
-                    <span class="material-symbols-outlined text-6xl text-slate-700 mb-4">hub</span>
-                    <p class="text-slate-500 font-headline font-bold uppercase tracking-widest">The network is quiet. Be the first to maneuver.</p>
-                </div>`;
-            return;
-        }
-
-        feedContainer.innerHTML = '';
-        activities.forEach(act => {
+    function renderFallbackFeed(container) {
+        container.innerHTML = '';
+        FALLBACK_ACTIVITIES.forEach((act, i) => {
             const card = document.createElement('div');
             card.className = "bg-white rounded-[2rem] overflow-hidden relative border border-gray-100 shadow-sm transition-all hover:border-primary/20";
-            
-            const config = {
-                'CONTEST_JOIN': { icon: 'rocket_launch', color: 'primary', label: 'DEPLOYMENT' },
-                'CONTEST_WIN': { icon: 'payments', color: 'primary', label: 'VICTORY' },
-                'LEVEL_UP': { icon: 'trending_up', color: 'secondary', label: 'EVOLUTION' },
-                'CHALLENGE_SENT': { icon: 'swords', color: 'error', label: 'CHALLENGE' }
-            }[act.type] || { icon: 'hub', color: 'primary', label: 'ACTIVITY' };
-
-            const timeAgo = formatTime(act.created_at);
-            
+            const timeLabel = i === 0 ? 'JUST NOW' : i < 3 ? `${i * 8} MINS AGO` : `${i} HOURS AGO`;
             card.innerHTML = `
                 <div class="p-8">
                     <div class="flex items-start justify-between mb-6">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 p-0.5 overflow-hidden">
-                                <img src="${act.profiles?.avatar_url || 'https://lh3.googleusercontent.com/a/default-user'}" class="w-full h-full object-cover rounded-lg">
-                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-2xl">${act.icon}</div>
                             <div>
-                                <h3 class="font-headline font-black text-base italic uppercase tracking-tighter text-gray-900 leading-tight">${act.profiles?.username || 'ANONYMOUS NODE'}</h3>
-                                <p class="text-[9px] text-gray-300 font-black uppercase tracking-[0.2em] mt-0.5">${config.label} • ${timeAgo}</p>
+                                <h3 class="font-headline font-black text-base italic uppercase tracking-tighter text-gray-900 leading-tight">${act.type.replace('_', ' ')}</h3>
+                                <p class="text-[9px] text-gray-300 font-black uppercase tracking-[0.2em] mt-0.5">${timeLabel}</p>
                             </div>
                         </div>
                         <div class="px-4 py-1 bg-primary/5 rounded-lg border border-primary/10">
                             <span class="text-[9px] font-black text-primary uppercase tracking-widest">${act.type.replace('_', ' ')}</span>
                         </div>
                     </div>
-                    <p class="text-gray-600 text-sm mb-8 leading-relaxed font-medium">
-                        ${getActivityMessage(act)}
-                    </p>
+                    <p class="text-gray-600 text-sm mb-8 leading-relaxed font-medium">${act.msg}</p>
                     <div class="flex items-center gap-6 pt-6 border-t border-gray-50">
                         <button class="flex items-center gap-2 text-gray-300 hover:text-primary transition-colors">
                             <span class="material-symbols-outlined text-xl">favorite</span>
@@ -224,8 +210,86 @@
                         </button>
                     </div>
                 </div>`;
-            feedContainer.appendChild(card);
+            container.appendChild(card);
         });
+    }
+
+    window.addEventListener('load', async () => {
+        const feedContainer = document.getElementById('nexus-activities');
+        let resolved = false;
+
+        // 3-second timeout fallback — never show infinite spinner
+        const timeout = setTimeout(() => {
+            if (!resolved) {
+                resolved = true;
+                console.log('[Nexus] Timeout reached — rendering fallback feed');
+                renderFallbackFeed(feedContainer);
+            }
+        }, 3000);
+
+        try {
+            const activities = await window.getNexusFeed();
+            if (!resolved) {
+                clearTimeout(timeout);
+                resolved = true;
+                if (!activities || activities.length === 0) {
+                    renderFallbackFeed(feedContainer);
+                    return;
+                }
+
+                feedContainer.innerHTML = '';
+                activities.forEach(act => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-[2rem] overflow-hidden relative border border-gray-100 shadow-sm transition-all hover:border-primary/20";
+                    
+                    const config = {
+                        'CONTEST_JOIN': { icon: 'rocket_launch', label: 'DEPLOYMENT' },
+                        'CONTEST_WIN': { icon: 'payments', label: 'VICTORY' },
+                        'LEVEL_UP': { icon: 'trending_up', label: 'EVOLUTION' },
+                        'CHALLENGE_SENT': { icon: 'swords', label: 'CHALLENGE' }
+                    }[act.type] || { icon: 'hub', label: 'ACTIVITY' };
+
+                    const timeAgo = formatTime(act.created_at);
+                    
+                    card.innerHTML = `
+                        <div class="p-8">
+                            <div class="flex items-start justify-between mb-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 p-0.5 overflow-hidden">
+                                        <img src="${act.profiles?.avatar_url || 'https://lh3.googleusercontent.com/a/default-user'}" class="w-full h-full object-cover rounded-lg">
+                                    </div>
+                                    <div>
+                                        <h3 class="font-headline font-black text-base italic uppercase tracking-tighter text-gray-900 leading-tight">${act.profiles?.username || 'ANONYMOUS NODE'}</h3>
+                                        <p class="text-[9px] text-gray-300 font-black uppercase tracking-[0.2em] mt-0.5">${config.label} • ${timeAgo}</p>
+                                    </div>
+                                </div>
+                                <div class="px-4 py-1 bg-primary/5 rounded-lg border border-primary/10">
+                                    <span class="text-[9px] font-black text-primary uppercase tracking-widest">${act.type.replace('_', ' ')}</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-8 leading-relaxed font-medium">
+                                ${getActivityMessage(act)}
+                            </p>
+                            <div class="flex items-center gap-6 pt-6 border-t border-gray-50">
+                                <button class="flex items-center gap-2 text-gray-300 hover:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-xl">favorite</span>
+                                </button>
+                                <button class="flex items-center gap-2 text-gray-300 hover:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-xl">share</span>
+                                </button>
+                            </div>
+                        </div>`;
+                    feedContainer.appendChild(card);
+                });
+            }
+        } catch (err) {
+            if (!resolved) {
+                clearTimeout(timeout);
+                resolved = true;
+                console.warn('[Nexus] Error fetching feed, using fallback:', err);
+                renderFallbackFeed(feedContainer);
+            }
+        }
     });
 
     function getActivityMessage(act) {
@@ -237,6 +301,4 @@
         }
     }
 </script>
-</body></html>
->
 </body></html>

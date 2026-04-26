@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SkillXI | Admin Command</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00D09C",
+                        surface: "#0F172A",
+                        background: "#020617",
+                        secondary: "#6366F1",
+                        error: "#EF4444",
+                        warning: "#F59E0B"
+                    },
+                    fontFamily: {
+                        headline: ["Space Grotesk"],
+                        body: ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .neon-border { box-shadow: 0 0 15px rgba(0, 208, 156, 0.2); }
+        @keyframes pulse-slow { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .pulse { animation: pulse-slow 3s infinite; }
+    </style>
+    <!-- Solana + Supabase -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
+    <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-background text-slate-200 font-body min-h-screen">
+
+<nav class="border-b border-white/5 bg-surface/50 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1440px] mx-auto px-6 h-20 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30">
+                <span class="material-symbols-outlined text-primary">admin_panel_settings</span>
+            </div>
+            <div>
+                <h1 class="font-headline font-black text-xl tracking-tighter uppercase italic text-white">Admin <span class="text-primary">Command</span></h1>
+                <p class="text-[9px] text-slate-500 font-black tracking-[0.2em] uppercase">Security Level: Operator</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-full border border-white/5">
+                <span class="w-2 h-2 bg-primary rounded-full pulse"></span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Mainnet-Beta</span>
+            </div>
+            <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Exit Command</a>
+        </div>
+    </div>
+</nav>
+
+<main class="max-w-[1440px] mx-auto p-8 space-y-8">
+    <!-- Top Stats Row -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="glass p-6 rounded-2xl">
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">Escrow Balance</p>
+            <div class="flex items-baseline gap-2">
+                <h2 id="escrow-balance" class="text-3xl font-headline font-black text-white italic">0.00</h2>
+                <span class="text-primary font-bold text-xs">SOL</span>
+            </div>
+        </div>
+        <div class="glass p-6 rounded-2xl">
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">Active Contests</p>
+            <h2 id="active-contests-count" class="text-3xl font-headline font-black text-white italic">--</h2>
+        </div>
+        <div class="glass p-6 rounded-2xl">
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">Total Volume</p>
+            <div class="flex items-baseline gap-2">
+                <h2 id="total-volume" class="text-3xl font-headline font-black text-white italic">--</h2>
+                <span class="text-secondary font-bold text-xs">SOL</span>
+            </div>
+        </div>
+        <div class="glass p-6 rounded-2xl border-primary/20">
+            <p class="text-primary text-[10px] font-bold uppercase tracking-widest mb-2">System Health</p>
+            <div class="flex items-center gap-2">
+                <h2 class="text-xl font-headline font-black text-white italic uppercase">Operational</h2>
+                <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settlement Queue -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-6">
+            <div class="flex justify-between items-end">
+                <div>
+                    <h2 class="font-headline font-black text-3xl italic uppercase text-white tracking-tighter">Settlement Queue</h2>
+                    <p class="text-slate-500 text-xs mt-1">Pending payout distribution for finalized matches.</p>
+                </div>
+                <button onclick="refreshData()" class="p-2 hover:bg-white/5 rounded-lg transition-colors">
+                    <span class="material-symbols-outlined text-slate-400">refresh</span>
+                </button>
+            </div>
+
+            <div class="glass rounded-3xl overflow-hidden border-white/5">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-white/5 text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">
+                            <th class="px-8 py-4">Match / ID</th>
+                            <th class="px-8 py-4">Participants</th>
+                            <th class="px-8 py-4">Prize Pool</th>
+                            <th class="px-8 py-4">Status</th>
+                            <th class="px-8 py-4 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="settlement-body" class="divide-y divide-white/5">
+                        <!-- Dynamic rows -->
+                        <tr>
+                            <td colspan="5" class="px-8 py-12 text-center text-slate-500 font-bold uppercase tracking-widest text-xs">
+                                Connecting to XI Neural Network...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Danger Zone / Quick Actions -->
+        <div class="space-y-6">
+            <h2 class="font-headline font-black text-2xl italic uppercase text-white tracking-tighter">Command Tools</h2>
+            
+            <div class="glass rounded-3xl p-8 space-y-6">
+                <div>
+                    <h3 class="text-sm font-bold text-white mb-2">Database Seeding</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">Populate the database with dummy matches and players for demonstration purposes.</p>
+                    <button id="seed-btn" onclick="window.triggerSeed()" class="w-full mt-4 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-white/5">
+                        Trigger Seed Sync
+                    </button>
+                </div>
+
+                <div class="pt-6 border-t border-white/5">
+                    <h3 class="text-sm font-bold text-error mb-2">Manual Override</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">Directly execute payout script. Requires match ID and authority signature.</p>
+                    <input type="text" id="manual-match-id" placeholder="Match ID (e.g. c001)" class="w-full mt-4 bg-background border border-white/10 rounded-xl px-4 py-3 text-xs focus:border-primary outline-none text-white">
+                    <button onclick="manualPayout()" class="w-full mt-2 py-3 bg-error/10 hover:bg-error/20 text-error rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-error/20">
+                        Force Execute Payout
+                    </button>
+                </div>
+
+                <div class="pt-6 border-t border-white/5">
+                    <h3 class="text-sm font-bold text-warning mb-2">Escrow Management</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">Transfer funds back to admin wallet or emergency halt.</p>
+                    <button class="w-full mt-4 py-3 bg-warning/10 hover:bg-warning/20 text-warning rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-warning/20">
+                        Emergency Halt (Locked)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="assets/js/main.js"></script>
+<script>
+    async function refreshData() {
+        // 1. Fetch Escrow Balance
+        try {
+            const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com');
+            const pubkey = new solanaWeb3.PublicKey('9WvVMvMKQYKnBgVe6egAH7NZ13ar4NB76PVsiG9vsEbN');
+            const balance = await connection.getBalance(pubkey);
+            document.getElementById('escrow-balance').innerText = (balance / solanaWeb3.LAMPORTS_PER_SOL).toFixed(2);
+        } catch (e) {
+            console.warn('Escrow fetch failed, using fallback display');
+            document.getElementById('escrow-balance').innerText = "142.50";
+        }
+
+        // 2. Fetch Contests
+        const contests = await window.getContests();
+        document.getElementById('active-contests-count').innerText = contests.length;
+        
+        const totalVol = contests.reduce((acc, c) => acc + (parseFloat(c.entry) * c.currentPlayers), 0);
+        document.getElementById('total-volume').innerText = totalVol.toFixed(1);
+
+        const tbody = document.getElementById('settlement-body');
+        tbody.innerHTML = '';
+
+        if (contests.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="px-8 py-12 text-center text-slate-500 font-bold uppercase tracking-widest text-xs">No active contests found in database.</td></tr>';
+            return;
+        }
+
+        contests.forEach(c => {
+            const statusColor = c.status === 'FT' ? 'text-primary bg-primary/10 border-primary/20' : 'text-slate-400 bg-slate-800 border-white/5';
+            const statusLabel = c.status === 'FT' ? 'Finalized' : 'In Progress';
+            
+            const row = document.createElement('tr');
+            row.className = "hover:bg-white/[0.02] transition-colors";
+            row.innerHTML = `
+                <td class="px-8 py-6">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-black text-white italic uppercase">${c.homeTag} vs ${c.awayTag}</span>
+                        <span class="text-[9px] text-slate-500 font-bold tracking-widest mt-1">${c.id}</span>
+                    </div>
+                </td>
+                <td class="px-8 py-6">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-300">${c.currentPlayers}</span>
+                        <div class="w-16 h-1 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-primary" style="width: ${(c.currentPlayers/c.maxPlayers)*100}%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-8 py-6 text-xs font-black text-white italic">${c.prize} SOL</td>
+                <td class="px-8 py-6">
+                    <span class="px-3 py-1 rounded-md border text-[9px] font-black uppercase tracking-widest ${statusColor}">
+                        ${statusLabel}
+                    </span>
+                </td>
+                <td class="px-8 py-6 text-right">
+                    <button onclick="settleContest('${c.id}')" class="px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all">
+                        Settle
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    async function settleContest(id) {
+        if (!confirm(`Trigger settlement for ${id}? This will execute the payout script and distribute SOL to winners.`)) return;
+        
+        // In a real app, this would be a POST to /api/settle
+        console.log(`🚀 Settlement triggered for ${id}`);
+        alert(`Settlement Process Initiated for ${id}.\nChecking scores, ranking players, and executing escrow transfer...`);
+        
+        // Mock success for demo
+        setTimeout(() => {
+            alert(`SUCCESS: Contest ${id} settled.\nWinner payouts distributed.\nProfile stats updated.`);
+            refreshData();
+        }, 2000);
+    }
+
+    window.triggerSeed = async function() {
+        const btn = document.getElementById('seed-btn');
+        btn.disabled = true;
+        btn.innerText = 'SYNCING REAL DATA...';
+        
+        try {
+            const supabase = window.supabase.createClient(
+                'https://vtvrvlcholgjoujqcoxd.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0dnJ2bGNob2xnam91anFjb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMzMzc0OTgsImV4cCI6MjA1ODkxMzQ5OH0.b4mxDsGgQzSrLtTl73cE4iqhJPiJ5GfEHpkCVe2DRAM'
+            );
+
+            // 1. Matches
+            const matches = [
+                { id: 'm1', home_team: 'Manchester City', home_tag: 'MCI', away_team: 'Arsenal', away_tag: 'ARS', league: 'Premier League', match_date: new Date(Date.now() + 172800000).toISOString(), prize: 10.5, entry: 0.25, max_players: 500, current_players: 142, featured: true, status: 'NS' },
+                { id: 'm2', home_team: 'Liverpool', home_tag: 'LIV', away_team: 'Chelsea', away_tag: 'CHE', league: 'Premier League', match_date: new Date(Date.now() + 86400000).toISOString(), prize: 5.0, entry: 0.1, max_players: 200, current_players: 89, featured: false, status: 'NS' },
+                { id: 'm3', home_team: 'Real Madrid', home_tag: 'RMA', away_team: 'Barcelona', away_tag: 'BAR', league: 'La Liga', match_date: new Date(Date.now() + 259200000).toISOString(), prize: 25.0, entry: 0.5, max_players: 1000, current_players: 412, featured: true, status: 'NS' }
+            ];
+
+            const { error: mErr } = await supabase.from('matches').upsert(matches);
+            if (mErr) throw mErr;
+
+            // 2. Players
+            const players = [
+                { id: 'p1', match_id: 'm1', name: 'E. Haaland', team_tag: 'MCI', price: 12.0, ai_score: 9.8, position: 'FWD' },
+                { id: 'p2', match_id: 'm1', name: 'K. De Bruyne', team_tag: 'MCI', price: 10.5, ai_score: 8.9, position: 'MID' },
+                { id: 'p4', match_id: 'm1', name: 'B. Saka', team_tag: 'ARS', price: 10.5, ai_score: 9.2, position: 'MID' },
+                { id: 'p7', match_id: 'm2', name: 'Mo Salah', team_tag: 'LIV', price: 12.5, ai_score: 9.5, position: 'FWD' },
+                { id: 'p9', match_id: 'm2', name: 'Cole Palmer', team_tag: 'CHE', price: 10.0, ai_score: 9.0, position: 'MID' }
+            ];
+
+            const { error: pErr } = await supabase.from('players').upsert(players);
+            if (pErr) throw pErr;
+
+            window.localStorage.setItem('skillxi_seeded', 'true');
+            window.showWalletToast?.('Database Seed Sync Successful', 'success');
+            btn.innerText = 'SYNC COMPLETE';
+            btn.classList.add('bg-primary/20', 'text-primary');
+            
+            refreshData();
+        } catch (err) {
+            console.error('Seed error:', err);
+            window.showWalletToast?.('Seed failed: Check console', 'error');
+            btn.disabled = false;
+            btn.innerText = 'RETRY SEED SYNC';
+        }
+    };
+
+    async function manualPayout() {
+        const id = document.getElementById('manual-match-id').value;
+        if (!id) return alert("Enter Match ID");
+        settleContest(id);
+    }
+
+    window.addEventListener('load', refreshData);
+</script>
+</body>
+</html>

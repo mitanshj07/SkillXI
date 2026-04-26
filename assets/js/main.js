@@ -4,7 +4,7 @@
 
 // --- 1. CONFIGURATION & REAL SDK INIT ---
 const SUPABASE_URL = 'https://vtvrvlcholgjoujqcoxd.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdWJhc2VzInJlZzIsInJlZiI6InZ0dnJ2bGNob2xnam91anFjb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4MzE0ODAsImV4cCI6MjAyODQwNzQ4MH0.kkgEG83casObXDcorqf50w9EqTleD_evYInWGrhkcR';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0dnJ2bGNob2xnam91anFjb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMzMzc0OTgsImV4cCI6MjA1ODkxMzQ5OH0.b4mxDsGgQzSrLtTl73cE4iqhJPiJ5GfEHpkCVe2DRAM';
 const { createClient } = supabase;
 const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -208,7 +208,7 @@ window.calculateKineticXP = async function(walletAddress, type, meta = {}) {
     
     const increment = xpMap[type] || 10;
     console.log(`✨ [XP] Adding ${increment} XP for ${type}`);
-    
+
     const { data: profile } = await _supabase.from('profiles').select('xp, level').eq('wallet_id', walletAddress).single();
     if (!profile) return;
 
@@ -225,6 +225,42 @@ window.calculateKineticXP = async function(walletAddress, type, meta = {}) {
 
     await _supabase.from('profiles').update({ xp: newXp, level: newLevel }).eq('wallet_id', walletAddress);
     return { newXp, newLevel };
+};
+
+window.uploadAvatar = async function(wallet, file) {
+    console.log('🖼️ [Avatar] Starting upload for:', wallet);
+    try {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${wallet}_${Date.now()}.${fileExt}`;
+        const filePath = `avatars/${fileName}`;
+
+        // 1. Upload to Supabase Storage
+        const { error: uploadError } = await _supabase.storage
+            .from('user-content')
+            .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        // 2. Get Public URL
+        const { data: { publicUrl } } = _supabase.storage
+            .from('user-content')
+            .getPublicUrl(filePath);
+
+        // 3. Update Profile
+        const { error: updateError } = await _supabase
+            .from('profiles')
+            .update({ avatar_url: publicUrl })
+            .eq('wallet_id', wallet);
+
+        if (updateError) throw updateError;
+
+        window.showWalletToast?.('Avatar updated successfully!', 'success');
+        return publicUrl;
+    } catch (err) {
+        console.error('Avatar upload error:', err);
+        window.showWalletToast?.('Failed to upload avatar', 'error');
+        return null;
+    }
 };
 
 window.logActivity = async function(walletAddress, type, payload) {
@@ -393,6 +429,8 @@ window.getTeamHistory = async function(walletAddress) {
     points: e.total_points || 0,
     rank: e.rank ? `#${e.rank}` : 'UNRANKED',
     win: e.prize_won ? `${e.prize_won} SOL` : '--',
+    payout_tx: e.payout_tx,
+    status: e.status,
     date: new Date(e.created_at).toLocaleDateString()
   }));
 };
@@ -548,6 +586,7 @@ window.fetchWalletBalance = async function(pubKeyStr) {
 };
 
 window.injectDemoBanner = function() {
+    if (window.localStorage.getItem('skillxi_seeded') === 'true') return;
     const banner = document.createElement('div');
     banner.id = 'demo-banner';
     banner.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:10000; background:#FFFBEB; border:1px solid #FEF3C7; color:#92400E; padding:10px 24px; border-radius:12px; font-size:12px; font-weight:700; font-family:Inter, sans-serif; box-shadow:0 4px 20px rgba(0,0,0,0.05); display:flex; align-items:center; gap:12px; white-space:nowrap;';
@@ -613,15 +652,15 @@ async function executeEscrowPayment(amount) {
   return signature;
 }
 
-window.lockLineupWithUmbra = async function(contestId, lineupData) {
+window.lockLineupWithUmbra = async function(contestId, lineupData, entryFee = 0.1) {
   console.log('🔥 [REAL Umbra] debug: Initiating shield flow');
   const pubKey = window.localStorage.getItem('skillxi_wallet');
   if (!pubKey) return window.showWalletToast('Please connect wallet first', 'error');
 
   return new Promise((resolve) => {
-    window.showPaymentStatement(1.5, async () => {
+    window.showPaymentStatement(entryFee, async () => {
        try {
-         const sig = await executeEscrowPayment(1.5);
+         const sig = await executeEscrowPayment(entryFee);
          
           // Real Supabase Insert
           window.showWalletToast('🛡️ Persisting Encrypted Entry...', 'info');
@@ -898,7 +937,7 @@ window.renderContests = async function(filter = 'all') {
         
         <div class="flex items-center gap-2 mb-6 text-sm text-primary">
           <span class="material-symbols-outlined text-sm">schedule</span>
-          <span class="font-black uppercase tracking-tighter">${hours}h ${mins}m left</span>
+          <span class="font-black uppercase tracking-tighter contest-timer" data-time="${c.timeLeft}">${hours}h ${mins}m left</span>
           <span class="text-gray-400 text-xs ml-2 font-bold uppercase">${c.matchDate}</span>
         </div>
 
@@ -977,6 +1016,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('🚀 [Init] Page render error:', err);
   }
 
+  // --- 9. GLOBAL COUNTDOWN TICKER ---
+  setInterval(() => {
+    document.querySelectorAll('.contest-timer, #lobby-match-time').forEach(el => {
+      let t = parseFloat(el.getAttribute('data-time') || 0);
+      if (t > 0) {
+        t--;
+        el.setAttribute('data-time', t);
+        const h = Math.floor(t / 3600);
+        const m = Math.floor((t % 3600) / 60);
+        const s = Math.floor(t % 60);
+        
+        if (el.id === 'lobby-match-time') {
+           el.innerText = `${String(h).padStart(2,'0')}H ${String(m).padStart(2,'0')}M ${String(s).padStart(2,'0')}S LEFT`;
+        } else {
+           el.innerText = `${h}h ${m}m ${s}s left`;
+        }
+      } else {
+        el.innerText = 'LIVE / CLOSED';
+        el.classList.add('text-error');
+      }
+    });
+  }, 1000);
+
   // Wallet re-sync on every page
   const savedKey = window.localStorage.getItem('skillxi_wallet');
   const savedType = window.localStorage.getItem('skillxi_wallet_type') || 'phantom';
@@ -993,68 +1055,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 });
-window.getNexusFeed = async function(limit = 20) {
-    const { data } = await _supabase.from('activities')
-        .select('*, profiles(username, avatar_url)')
-        .order('created_at', { ascending: false })
-        .limit(limit);
-    return data || [];
-};
-
-window.getTeamHistory = async function(walletAddress) {
-    const { data, error } = await _supabase.from('entries')
-        .select('*, matches(*)')
-        .eq('user_wallet', walletAddress)
-        .order('created_at', { ascending: false });
-    
-    if (error || !data) return [];
-    
-    return data.map(e => ({
-        id: e.id,
-        match: `${e.matches.home_tag} vs ${e.matches.away_tag}`,
-        rank: e.total_points > 0 ? `#${Math.floor(Math.random() * 50) + 1}` : 'Pending', // Rank logic would be more complex in real setting
-        points: e.total_points || '0',
-        date: new Date(e.created_at).toLocaleDateString(),
-        status: e.status,
-        win: e.payout_tx ? 'WON' : '0 SOL'
-    }));
-};
-
-window.getProfileData = async function(walletAddress) {
-    const { data, error } = await _supabase.from('profiles').select('*').eq('wallet_id', walletAddress).single();
-    if (error || !data) return null;
-    
-    // Calculate ROI
-    const earned = data.total_earned || 0;
-    const spent = data.total_spent || 0;
-    data.roi = spent > 0 ? (((earned - spent) / spent) * 100).toFixed(1) : 0;
-    
-    return data;
-};
-
-window.getFriendsLeaderboard = async function() {
-    const myWallet = window.localStorage.getItem('skillxi_wallet');
-    if (!myWallet) return [];
-    
-    try {
-        const { data: follows, error: followErr } = await _supabase.from('follows').select('following_id').eq('follower_id', myWallet);
-        if (followErr) throw followErr;
-        
-        const friendIds = follows ? follows.map(f => f.following_id) : [];
-        friendIds.push(myWallet);
-        
-        const { data: friends, error: profileErr } = await _supabase.from('profiles')
-            .select('*')
-            .in('wallet_id', friendIds)
-            .or(`is_private.eq.false,wallet_id.eq.${myWallet}`)
-            .order('skill_score', { ascending: false });
-            
-        return friends || [];
-    } catch (err) {
-        console.error('Error fetching friends:', err);
-        return [];
-    }
-};
 
 // NOTE: updatePrivacySettings, calculateKineticXP, logActivity, and followUser
 // are defined earlier in this file (lines ~199–280). The duplicate definitions

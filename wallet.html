@@ -238,7 +238,7 @@
                                 <span class="px-4 py-2 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10 shadow-sm">Settled</span>
                             </td>
                             <td class="px-12 py-8 text-right">
-                                <a class="text-gray-300 hover:text-primary transition-all text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-end gap-2" href="#">
+                                <a class="text-gray-300 hover:text-primary transition-all text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-end gap-2" href="https://explorer.solana.com/" target="_blank">
                                     SCAN NODE <span class="material-symbols-outlined text-xs">open_in_new</span>
                                 </a>
                             </td>
@@ -256,11 +256,58 @@
     window.addEventListener('load', async () => {
         const wallet = window.localStorage.getItem('skillxi_wallet');
         if (wallet) {
+            // 1. Fetch Real Solana Balance
+            try {
+                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'), 'confirmed');
+                const pubkey = new solanaWeb3.PublicKey(wallet);
+                const balance = await connection.getBalance(pubkey);
+                const solBalance = balance / solanaWeb3.LAMPORTS_PER_SOL;
+                
+                document.getElementById('wallet-sol-balance').innerText = solBalance.toFixed(3);
+                document.getElementById('wallet-usd-balance').innerText = `≈ $${(solBalance * 145).toLocaleString()} USD`;
+            } catch (err) {
+                console.error('Failed to fetch SOL balance:', err);
+            }
+
+            // 2. Fetch Profile Info
             const profile = await window.getProfileData(wallet);
             if (profile) {
-                document.getElementById('wallet-sol-balance').innerText = (profile.sol_balance || 42.84).toFixed(2);
-                document.getElementById('wallet-usd-balance').innerText = `≈ $${((profile.sol_balance || 42.84) * 145).toLocaleString()} USD`;
                 document.getElementById('header-avatar').src = profile.avatar_url || 'https://lh3.googleusercontent.com/a/default-user';
+            }
+
+            // 3. Populate Vault Audit from Supabase Entries
+            const history = await window.getTeamHistory(wallet);
+            const tbody = document.querySelector('tbody');
+            if (history && history.length > 0) {
+                tbody.innerHTML = '';
+                history.forEach(h => {
+                    if (h.status === 'won' || h.payout_tx) {
+                        tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50/50 transition-colors">
+                            <td class="px-12 py-8">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/5">
+                                        <span class="material-symbols-outlined text-sm font-black">stars</span>
+                                    </div>
+                                    <span class="font-black uppercase italic text-sm text-gray-900 tracking-tight">Contest Win (${h.match})</span>
+                                </div>
+                            </td>
+                            <td class="px-12 py-8 text-gray-400 text-xs font-black uppercase tracking-widest">${h.date}</td>
+                            <td class="px-12 py-8 text-primary font-headline font-black text-2xl tracking-tighter">+${h.win.split(' ')[0]}</td>
+                            <td class="px-12 py-8">
+                                <span class="px-4 py-2 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10 shadow-sm">Settled</span>
+                            </td>
+                            <td class="px-12 py-8 text-right">
+                                ${h.payout_tx ? `
+                                <a class="text-gray-300 hover:text-primary transition-all text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-end gap-2" href="https://explorer.solana.com/tx/${h.payout_tx}?cluster=devnet" target="_blank">
+                                    SCAN NODE <span class="material-symbols-outlined text-xs">open_in_new</span>
+                                </a>` : '--'}
+                            </td>
+                        </tr>`;
+                    }
+                });
+            } else {
+                 tbody.innerHTML = '<tr><td colspan="5" class="px-12 py-20 text-center text-gray-400 font-bold uppercase tracking-widest text-xs">No transaction records found in the XI Vault.</td></tr>';
             }
         }
     });

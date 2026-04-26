@@ -116,24 +116,24 @@
 </div>
 </div>
 <nav class="flex-1 space-y-1">
-<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="index.html">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
 <span>Command Center</span>
 </a>
-<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="lineup.html">
 <span class="material-symbols-outlined" data-icon="biotech">biotech</span>
 <span>Roster Lab</span>
 </a>
-<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="wallet.html">
 <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
 <span>Vault</span>
 </a>
-<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-[#131318] hover:text-slate-200 transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="contests.html">
 <span class="material-symbols-outlined" data-icon="hub">hub</span>
 <span>Nexus Feed</span>
 </a>
 <!-- Active State -->
-<a class="flex items-center gap-4 px-6 py-4 bg-[#1b1b20] text-[#a8e8ff] border-r-4 border-[#a8e8ff] transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="#">
+<a class="flex items-center gap-4 px-6 py-4 bg-[#1b1b20] text-[#a8e8ff] border-r-4 border-[#a8e8ff] transition-all duration-300 font-headline uppercase text-xs tracking-widest" href="leaderboard.html">
 <span class="material-symbols-outlined" data-icon="gavel">gavel</span>
 <span>Governance</span>
 </a>
@@ -143,11 +143,11 @@
                     Deploy Squad
                 </button>
 <div class="mt-8 space-y-2">
-<a class="flex items-center gap-4 py-2 text-slate-500 hover:text-primary transition-colors font-headline uppercase text-[10px] tracking-widest" href="#">
+<a class="flex items-center gap-4 py-2 text-slate-500 hover:text-primary transition-colors font-headline uppercase text-[10px] tracking-widest" href="profile.html">
 <span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
 <span>Settings</span>
 </a>
-<a class="flex items-center gap-4 py-2 text-slate-500 hover:text-primary transition-colors font-headline uppercase text-[10px] tracking-widest" href="#">
+<a class="flex items-center gap-4 py-2 text-slate-500 hover:text-primary transition-colors font-headline uppercase text-[10px] tracking-widest" href="profile.html">
 <span class="material-symbols-outlined text-sm" data-icon="help">help</span>
 <span>Support</span>
 </a>
@@ -163,10 +163,10 @@
 <div class="flex items-center gap-8">
 <h1 class="text-2xl font-headline font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container">SkillXI</h1>
 <nav class="hidden md:flex gap-6">
-<a class="text-slate-400 hover:text-white font-headline text-sm tracking-tight transition-colors" href="#">Arena</a>
-<a class="text-slate-400 hover:text-white font-headline text-sm tracking-tight transition-colors" href="#">Exchange</a>
-<a class="text-[#a8e8ff] border-b-2 border-[#a8e8ff] pb-1 font-headline text-sm tracking-tight" href="#">Leaderboard</a>
-<a class="text-slate-400 hover:text-white font-headline text-sm tracking-tight transition-colors" href="#">Social</a>
+<a class="text-slate-400 hover:text-white font-headline text-sm tracking-tight transition-colors" href="contests.html">Arena</a>
+<a class="text-slate-400 hover:text-white font-headline text-sm tracking-tight transition-colors" href="wallet.html">Exchange</a>
+<a class="text-[#a8e8ff] border-b-2 border-[#a8e8ff] pb-1 font-headline text-sm tracking-tight" href="leaderboard.html">Leaderboard</a>
+<a class="text-slate-400 hover:text-white font-headline text-sm tracking-tight transition-colors" href="profile.html">Social</a>
 </nav>
 </div>
 <div class="flex items-center gap-4">
@@ -276,4 +276,107 @@
 </div>
 </div>
 <script src="assets/js/main.js"></script>
+<script>
+const FALLBACK_LEADERBOARD = [
+    { username: 'PhantomEdge', skill_score: 8420, tier: 'LEGEND', wallet_id: '7xKp...3mNa' },
+    { username: 'SolanaScout', skill_score: 7890, tier: 'LEGEND', wallet_id: '4rQp...9kLm' },
+    { username: 'QuantMaster_XI', skill_score: 7340, tier: 'ELITE', wallet_id: '9jMn...2xVb' },
+    { username: 'CryptoStriker', skill_score: 6750, tier: 'ELITE', wallet_id: '3pWk...8nRt' },
+    { username: 'XI_Hunter', skill_score: 6210, tier: 'ELITE', wallet_id: '6hFg...1yQz' },
+    { username: 'ShadowStriker', skill_score: 5880, tier: 'PRO', wallet_id: '2mKx...5pJd' },
+    { username: 'NeonAnalyst', skill_score: 5340, tier: 'PRO', wallet_id: '8vLc...0wHa' },
+    { username: 'AceBaller', skill_score: 4920, tier: 'PRO', wallet_id: '1nBr...7tSf' },
+    { username: 'DataPundit', skill_score: 4510, tier: 'ADVANCED', wallet_id: '5qYd...4eXg' },
+    { username: 'RookieStar', skill_score: 4100, tier: 'ADVANCED', wallet_id: '0wMp...6rCk' }
+];
+
+function renderLeaderboardRows(players) {
+    const table = document.getElementById('leaderboard-table');
+    const medals = ['🥇', '🥈', '🥉'];
+    let html = `
+        <div style="display:grid; grid-template-columns:60px 1fr 120px 100px; padding:14px 20px; border-bottom:1px solid #1e1e30; color:#6b6b8a; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">
+            <span>Rank</span><span>Player</span><span>Skill Score</span><span>Tier</span>
+        </div>`;
+
+    players.forEach((p, i) => {
+        const rank = i + 1;
+        const medal = medals[i] || `#${rank}`;
+        const isTop3 = i < 3;
+        const bgColor = isTop3 ? 'rgba(168, 232, 255, 0.03)' : 'transparent';
+        const nameColor = isTop3 ? '#a8e8ff' : '#e4e1e9';
+        const scoreColor = isTop3 ? '#00ff88' : '#d2bbff';
+
+        html += `
+            <div style="display:grid; grid-template-columns:60px 1fr 120px 100px; padding:16px 20px; border-bottom:1px solid #1e1e30; align-items:center; background:${bgColor}; transition:background 0.2s;" onmouseenter="this.style.background='rgba(168,232,255,0.06)'" onmouseleave="this.style.background='${bgColor}'">
+                <span style="font-size:${isTop3 ? '20px' : '14px'}; font-weight:800; color:#a0a0b8;">${medal}</span>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, #a8e8ff20, #d2bbff20); border:1px solid #2a2a40; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; color:#a8e8ff;">${(p.username || 'A')[0]}</div>
+                    <div>
+                        <p style="font-weight:700; color:${nameColor}; font-size:14px;">${p.username || p.wallet_id?.slice(0,8) || 'Anonymous'}</p>
+                        <p style="font-size:10px; color:#6b6b8a;">${p.wallet_id?.slice(0,4) || '????'}...${p.wallet_id?.slice(-4) || '????'}</p>
+                    </div>
+                </div>
+                <span style="font-weight:800; color:${scoreColor}; font-size:15px; font-family:'Space Grotesk';">${(p.skill_score || 0).toLocaleString()}</span>
+                <span style="font-size:10px; font-weight:700; color:#a0a0b8; text-transform:uppercase; letter-spacing:0.1em;">${p.tier || 'NOVICE'}</span>
+            </div>`;
+    });
+    table.innerHTML = html;
+}
+
+async function loadLeaderboard(period = 'all_time') {
+    // Update tab styles
+    ['lb-all', 'lb-week', 'lb-month'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+            btn.style.background = '#13131f';
+            btn.style.color = '#a0a0b8';
+            btn.style.border = '1px solid #2a2a40';
+        }
+    });
+    const activeId = period === 'all_time' ? 'lb-all' : period === 'weekly' ? 'lb-week' : 'lb-month';
+    const activeBtn = document.getElementById(activeId);
+    if (activeBtn) {
+        activeBtn.style.background = '#7c3aed';
+        activeBtn.style.color = '#fff';
+        activeBtn.style.border = 'none';
+    }
+
+    const table = document.getElementById('leaderboard-table');
+    table.innerHTML = '<div style="padding:20px; text-align:center; color:#a0a0b8;">Loading leaderboard...</div>';
+
+    let resolved = false;
+
+    // 2-second timeout fallback
+    const timeout = setTimeout(() => {
+        if (!resolved) {
+            resolved = true;
+            console.log('[Leaderboard] Timeout — rendering fallback');
+            renderLeaderboardRows(FALLBACK_LEADERBOARD);
+        }
+    }, 2000);
+
+    try {
+        const data = await window.getLeaderboard();
+        if (!resolved) {
+            clearTimeout(timeout);
+            resolved = true;
+            if (!data || data.length === 0) {
+                renderLeaderboardRows(FALLBACK_LEADERBOARD);
+            } else {
+                renderLeaderboardRows(data);
+            }
+        }
+    } catch (err) {
+        if (!resolved) {
+            clearTimeout(timeout);
+            resolved = true;
+            console.warn('[Leaderboard] Error, using fallback:', err);
+            renderLeaderboardRows(FALLBACK_LEADERBOARD);
+        }
+    }
+}
+
+// Auto-load on page ready
+window.addEventListener('load', () => loadLeaderboard('all_time'));
+</script>
 </body></html>

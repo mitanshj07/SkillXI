@@ -122,7 +122,7 @@
 <!-- Breadcrumb & Title Section -->
 <div class="mb-8">
 <nav class="flex text-[12px] text-gray-400 gap-2 mb-4 font-medium uppercase tracking-wider">
-<span>Contests</span>
+<a href="contests.html" class="hover:text-primary transition-colors cursor-pointer">Contests</a>
 <span>/</span>
 <span>Man City vs Arsenal</span>
 <span>/</span>
@@ -271,19 +271,19 @@
 </main>
 <!-- BottomNavBar (Mobile) -->
 <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 lg:hidden bg-white/95 backdrop-blur-2xl border-t border-gray-100 shadow-lg rounded-t-3xl">
-<a class="flex flex-col items-center justify-center text-gray-400 hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-gray-400 hover:text-primary transition-all active:scale-90 duration-150" href="contests.html">
 <span class="material-symbols-outlined">grid_view</span>
 <span class="font-['Inter'] text-[10px] font-bold uppercase tracking-tighter mt-1">Lobby</span>
 </a>
-<a class="flex flex-col items-center justify-center bg-primary/10 text-primary rounded-2xl px-6 py-2 active:scale-90 duration-150" href="#">
+<a class="flex flex-col items-center justify-center bg-primary/10 text-primary rounded-2xl px-6 py-2 active:scale-90 duration-150" href="leaderboard.html">
 <span class="material-symbols-outlined">bolt</span>
 <span class="font-['Inter'] text-[10px] font-bold uppercase tracking-tighter mt-1">Live</span>
 </a>
-<a class="flex flex-col items-center justify-center text-gray-400 hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-gray-400 hover:text-primary transition-all active:scale-90 duration-150" href="lineup.html">
 <span class="material-symbols-outlined">groups</span>
 <span class="font-['Inter'] text-[10px] font-bold uppercase tracking-tighter mt-1">My XI</span>
 </a>
-<a class="flex flex-col items-center justify-center text-gray-400 hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-gray-400 hover:text-primary transition-all active:scale-90 duration-150" href="profile.html">
 <span class="material-symbols-outlined">person</span>
 <span class="font-['Inter'] text-[10px] font-bold uppercase tracking-tighter mt-1">Profile</span>
 </a>
@@ -296,56 +296,87 @@
         const friendsBtn = document.getElementById('tab-friends');
         
         if (type === 'global') {
-            globalBtn.classList.add('bg-primary', 'text-black');
-            globalBtn.classList.remove('text-slate-500');
-            friendsBtn.classList.remove('bg-primary', 'text-black');
-            friendsBtn.classList.add('text-slate-500');
+            globalBtn.classList.add('bg-primary', 'text-white');
+            globalBtn.classList.remove('text-gray-400');
+            friendsBtn.classList.remove('bg-primary', 'text-white');
+            friendsBtn.classList.add('text-gray-400');
             window.renderLeaderboardData('global');
         } else {
-            friendsBtn.classList.add('bg-primary', 'text-black');
-            friendsBtn.classList.remove('text-slate-500');
-            globalBtn.classList.remove('bg-primary', 'text-black');
-            globalBtn.classList.add('text-slate-500');
+            friendsBtn.classList.add('bg-primary', 'text-white');
+            friendsBtn.classList.remove('text-gray-400');
+            globalBtn.classList.remove('bg-primary', 'text-white');
+            globalBtn.classList.add('text-gray-400');
             window.renderLeaderboardData('friends');
         }
     };
+
     window.renderLeaderboardData = async function(type) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const matchId = urlParams.get('match') || 'm1';
+        
         const body = document.getElementById('leaderboard-body');
         if (!body) return;
-        body.innerHTML = '<tr><td colspan="6" class="px-6 py-10 text-center text-slate-500">Loading Rankings...</td></tr>';
+        body.innerHTML = '<tr><td colspan="6" class="px-6 py-10 text-center text-gray-400 font-bold uppercase text-[10px] tracking-widest">Hydrating Rankings...</td></tr>';
         
-        let players = [];
-        if (type === 'global') {
-            const data = await window.getLeaderboard();
-            players = data ? data.map((p, idx) => ({
-                rank: idx + 1,
-                name: p.username || 'Anonymous',
-                pts: p.skill_score || 0,
-                rep: p.reputation || 100,
-                avatar: p.avatar_url || 'https://lh3.googleusercontent.com/a/default-user',
-                wallet_id: p.wallet_id,
-                prize: idx < 3 ? (3.5 / (idx + 1)).toFixed(1) + ' SOL' : '0.1 SOL',
-                isMe: p.wallet_id === window.localStorage.getItem('skillxi_wallet')
-            })) : [];
-        } else {
-            const data = await window.getFriendsLeaderboard();
-            players = data ? data.map((p, idx) => ({
-                rank: idx + 1,
-                name: p.username || 'Anonymous',
-                pts: p.skill_score || 0,
-                rep: p.reputation || 100,
-                avatar: p.avatar_url || 'https://lh3.googleusercontent.com/a/default-user',
-                wallet_id: p.wallet_id,
-                prize: idx < 3 ? (3.5 / (idx + 1)).toFixed(1) + ' SOL' : '0.1 SOL',
-                isMe: p.wallet_id === window.localStorage.getItem('skillxi_wallet')
-            })) : [];
+        let entries = [];
+        try {
+            if (type === 'global') {
+                // Fetch entries for this specific contest
+                const { data, error } = await _supabase.from('entries')
+                    .select('*, profiles:user_wallet(username, avatar_url, reputation)')
+                    .eq('match_id', matchId)
+                    .order('total_points', { ascending: false });
+                
+                if (data && data.length > 0) {
+                    entries = data.map((e, idx) => ({
+                        rank: e.rank || idx + 1,
+                        name: e.profiles?.username || `Analyst-${e.user_wallet.slice(0,4)}`,
+                        pts: e.total_points || 0,
+                        rep: e.profiles?.reputation || 100,
+                        avatar: e.profiles?.avatar_url || 'https://lh3.googleusercontent.com/a/default-user',
+                        wallet_id: e.user_wallet,
+                        prize: e.prize_won ? `${e.prize_won.toFixed(2)} SOL` : (idx < 3 ? 'PRIZE ELIGIBLE' : '--'),
+                        tx: e.payout_tx,
+                        isMe: e.user_wallet === window.localStorage.getItem('skillxi_wallet')
+                    }));
+                } else {
+                    // Fallback to global profiles if no contest entries yet
+                    const profiles = await window.getLeaderboard();
+                    entries = profiles.map((p, idx) => ({
+                        rank: idx + 1,
+                        name: p.username || 'Anonymous',
+                        pts: p.skill_score || 0,
+                        rep: p.reputation || 100,
+                        avatar: p.avatar_url || 'https://lh3.googleusercontent.com/a/default-user',
+                        wallet_id: p.wallet_id,
+                        prize: '--',
+                        isMe: p.wallet_id === window.localStorage.getItem('skillxi_wallet')
+                    }));
+                }
+            } else {
+                const data = await window.getFriendsLeaderboard();
+                entries = data ? data.map((p, idx) => ({
+                    rank: idx + 1,
+                    name: p.username || 'Anonymous',
+                    pts: p.skill_score || 0,
+                    rep: p.reputation || 100,
+                    avatar: p.avatar_url || 'https://lh3.googleusercontent.com/a/default-user',
+                    wallet_id: p.wallet_id,
+                    prize: '--',
+                    isMe: p.wallet_id === window.localStorage.getItem('skillxi_wallet')
+                })) : [];
+            }
+        } catch (err) {
+            console.error('Leaderboard fetch error:', err);
         }
 
         body.innerHTML = '';
-        if (players.length === 0) {
-            body.innerHTML = '<tr><td colspan="6" class="px-6 py-10 text-center text-slate-500">No players found.</td></tr>';
+        if (entries.length === 0) {
+            body.innerHTML = '<tr><td colspan="6" class="px-6 py-10 text-center text-gray-400">No data available for this view.</td></tr>';
+            return;
         }
-        players.forEach((p, idx) => {
+
+        entries.forEach((p, idx) => {
             const tr = document.createElement('tr');
             tr.className = `row-hover-effect group border-b border-gray-50 transition-all hover:bg-gray-50/50 ${p.isMe ? 'bg-primary/5' : ''}`;
             tr.innerHTML = `
@@ -354,7 +385,7 @@
                 </td>
                 <td class="px-6 py-5">
                     <div class="flex items-center gap-3">
-                        <img src="${p.avatar}" class="w-8 h-8 rounded-full border border-gray-200">
+                        <img src="${p.avatar}" class="w-8 h-8 rounded-full border border-gray-200 object-cover">
                         <span class="font-bold text-gray-900">${p.name}</span>
                     </div>
                 </td>
@@ -365,10 +396,15 @@
                     </span>
                 </td>
                 <td class="px-6 py-5 font-headline font-black text-gray-900 italic">${p.pts}</td>
-                <td class="px-6 py-5 font-headline font-black text-gray-900">${p.prize}</td>
+                <td class="px-6 py-5">
+                    <div class="flex flex-col">
+                        <span class="font-headline font-black text-gray-900">${p.prize}</span>
+                        ${p.tx ? `<a href="https://explorer.solana.com/tx/${p.tx}?cluster=devnet" target="_blank" class="text-[8px] text-primary font-black uppercase tracking-widest mt-1 hover:underline">View on Explorer ↗</a>` : ''}
+                    </div>
+                </td>
                 <td class="px-6 py-5 text-center relative">
                     <div class="flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-primary scale-75" data-icon="bolt">bolt</span>
+                        <span class="material-symbols-outlined text-primary scale-75">bolt</span>
                         ${!p.isMe ? `<button onclick="window.challengerMode.open('${p.name}', '${p.avatar}', '${p.wallet_id}')" class="opacity-0 group-hover:opacity-100 absolute right-4 bg-primary text-white text-[10px] font-black px-3 py-1.5 rounded uppercase tracking-widest transition-all hover:scale-110 shadow-lg">Challenge</button>` : ''}
                     </div>
                 </td>
@@ -391,7 +427,7 @@
             div.className = 'flex gap-3 p-3 rounded-2xl hover:bg-white transition-all cursor-pointer group shadow-sm hover:shadow-md';
             const profile = act.profiles || { username: 'Anonymous', avatar_url: 'https://lh3.googleusercontent.com/a/default-user' };
             div.innerHTML = `
-                <img src="${profile.avatar_url}" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                <img src="${profile.avatar_url}" class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
                 <div class="flex-1">
                     <p class="text-[11px] text-gray-900 leading-tight">
                         <span class="font-black">${profile.username}</span> ${act.type.replace(/_/g, ' ').toLowerCase()}
@@ -404,9 +440,22 @@
         });
     };
 
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const matchId = urlParams.get('match') || 'm1';
+        
+        // Dynamic match title hydration
+        const contests = await window.getContests();
+        const contest = contests.find(c => c.id === matchId);
+        if (contest) {
+            document.querySelector('h1').innerHTML = `<span class="text-2xl">⚽</span> ${contest.homeTeam} vs ${contest.awayTeam}`;
+            document.querySelectorAll('nav span')[2].innerText = `${contest.homeTag} vs ${contest.awayTag}`;
+            document.querySelector('.text-gray-500.text-sm.font-medium.mt-1').innerText = `${contest.league || 'Premier League'}`;
+        }
+
         window.renderLeaderboardData('global');
         window.renderNexusFeed();
     });
+
 </script>
 </body></html>

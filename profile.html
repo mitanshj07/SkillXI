@@ -131,9 +131,22 @@
 <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-primary/5 rounded-full"></div>
 <div class="relative z-10 flex flex-col md:flex-row items-center md:items-end justify-between h-full gap-8">
                 <div>
-                <span class="px-4 py-1.5 rounded-full bg-primary/10 text-primary font-headline text-[10px] font-bold tracking-widest uppercase mb-4 inline-block">Global Ranking: #412</span>
-                <h1 id="xp-display" class="text-7xl md:text-9xl font-headline font-black text-gray-900 tracking-tighter mb-2 skill-score-glow xp-glow">1,337</h1>
-                <p class="text-2xl font-headline font-bold text-secondary tracking-tight">EXPERT TIER <span class="text-gray-300 ml-2">/ LEGENDARY</span></p>
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="relative group cursor-pointer" onclick="document.getElementById('avatar-upload').click()">
+                        <div class="w-32 h-32 rounded-[2rem] bg-gray-50 border-4 border-white shadow-xl overflow-hidden group-hover:border-primary/30 transition-all">
+                            <img id="profile-avatar" src="https://lh3.googleusercontent.com/a/default-user" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all rounded-[2rem]">
+                            <span class="material-symbols-outlined text-white text-2xl">photo_camera</span>
+                        </div>
+                        <input type="file" id="avatar-upload" class="hidden" accept="image/*" onchange="handleAvatarChange(event)">
+                    </div>
+                    <div>
+                        <span class="px-4 py-1.5 rounded-full bg-primary/10 text-primary font-headline text-[10px] font-bold tracking-widest uppercase mb-4 inline-block">Global Ranking: #--</span>
+                        <h1 id="xp-display" class="text-7xl md:text-9xl font-headline font-black text-gray-900 tracking-tighter mb-2 skill-score-glow xp-glow">--</h1>
+                        <p id="tier-display" class="text-2xl font-headline font-bold text-secondary tracking-tight">NOVICE TIER <span class="text-gray-300 ml-2">/ LVL 1</span></p>
+                    </div>
+                </div>
                 </div>
 <div class="flex-1 w-full max-w-md">
 <div class="flex justify-between text-xs font-bold font-headline mb-3">
@@ -180,7 +193,6 @@
 <h3 id="total-earned-stat" class="text-3xl font-headline font-black text-gray-900">--</h3>
 <span class="text-primary text-xs font-bold">SOL</span>
 </div>
-<span class="text-[9px] text-amber-600 font-bold uppercase tracking-widest bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Demo</span>
 </div>
         <div class="bg-white rounded-[2rem] p-8 border border-gray-100">
           <p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">ROI (Total)</p>
@@ -188,14 +200,12 @@
             <h3 id="roi-stat" class="text-3xl font-headline font-black text-primary">--</h3>
             <span class="text-secondary text-[10px] font-bold uppercase">Alpha</span>
           </div>
-          <span class="text-[9px] text-amber-600 font-bold uppercase tracking-widest bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Demo</span>
         </div>
 <div class="bg-white rounded-[2rem] p-8 border border-gray-100">
 <p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Squads</p>
 <div class="flex items-baseline gap-2">
 <h3 id="squads-stat" class="text-3xl font-headline font-black text-gray-900">--</h3>
 </div>
-<span class="text-[9px] text-amber-600 font-bold uppercase tracking-widest bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Demo</span>
 </div>
 <div class="bg-white rounded-[2rem] p-8 border border-gray-100">
 <p class="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Live Contests</p>
@@ -203,7 +213,6 @@
 <h3 id="live-contests-stat" class="text-3xl font-headline font-black text-gray-900">--</h3>
 <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse ml-2"></span>
 </div>
-<span class="text-[9px] text-amber-600 font-bold uppercase tracking-widest bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Demo</span>
 </div>
 </div>
 <!-- Earnings History Chart & Activity Table -->
@@ -255,7 +264,7 @@
 <p class="text-[9px] text-gray-400 uppercase font-black tracking-widest">2 hours ago</p>
 </div>
 </div>
-<span class="text-tertiary font-headline font-black">+$1,200</span>
+<span class="text-tertiary font-headline font-black">+$12.50</span>
 </div>
 <div class="flex items-center justify-between p-5 bg-gray-50 rounded-[1.5rem] hover:bg-gray-100 transition-colors cursor-pointer group">
 <div class="flex items-center gap-4">
@@ -336,22 +345,22 @@
 </main>
 <!-- BottomNavBar (Mobile Only) -->
 <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-white/95 backdrop-blur-2xl border-t border-gray-100 shadow-lg md:hidden z-50 rounded-t-[2.5rem]">
-<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="#">
+<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="contests.html">
 <span class="material-symbols-outlined">sports_kabaddi</span>
 <span class="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Lobby</span>
 </a>
-<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="#">
+<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="pre-match.html">
 <span class="material-symbols-outlined">auto_awesome</span>
 <span class="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Intel</span>
 </a>
-<div class="flex flex-col items-center justify-center bg-primary text-white rounded-full p-4 -mt-10 shadow-lg active:scale-90 transition-all">
+<a href="lineup.html" class="flex flex-col items-center justify-center bg-primary text-white rounded-full p-4 -mt-10 shadow-lg active:scale-90 transition-all">
 <span class="material-symbols-outlined text-3xl">add</span>
-</div>
-<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="#">
+</a>
+<a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all" href="leaderboard.html">
 <span class="material-symbols-outlined">analytics</span>
 <span class="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Stats</span>
 </a>
-<a class="flex flex-col items-center justify-center bg-primary/10 text-primary rounded-full p-3 shadow-sm transition-all" href="#">
+<a class="flex flex-col items-center justify-center bg-primary/10 text-primary rounded-full p-3 shadow-sm transition-all" href="profile.html">
 <span class="material-symbols-outlined">person</span>
 <span class="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Profile</span>
 </a>
@@ -391,10 +400,18 @@
             const stealthToggle = document.getElementById('stealth-mode-toggle');
             if (stealthToggle) stealthToggle.checked = profile.is_private || false;
 
-            const tierEl = document.querySelector('.text-2xl.font-headline.font-bold.text-secondary');
+            const profileAv = document.getElementById('profile-avatar');
+            const headerAv = document.getElementById('header-avatar');
+            if (profile.avatar_url) {
+                if (profileAv) profileAv.src = profile.avatar_url;
+                if (headerAv) headerAv.src = profile.avatar_url;
+            }
+
+            const tierEl = document.getElementById('tier-display');
             if (tierEl) tierEl.innerHTML = `${profile.tier || 'NOVICE'} TIER <span class="text-gray-300 ml-2">/ LVL ${profile.level || 1}</span>`;
 
             const nextLevelXp = (profile.level || 1) * 500;
+
             const progress = ((profile.xp || 0) % 500) / 5;
             const progressBar = document.querySelector('.h-full.bg-primary.rounded-full');
             if (progressBar) progressBar.style.width = `${Math.min(100, progress)}%`;
@@ -410,7 +427,32 @@
             }
         };
 
+        window.handleAvatarChange = async function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('profile-avatar').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            const url = await window.uploadAvatar(wallet, file);
+            if (url) {
+                document.getElementById('profile-avatar').src = url;
+                document.getElementById('header-avatar').src = url;
+            }
+        };
+
         const history = await window.getTeamHistory(wallet);
+        
+        // Update Stats Dashboard dynamically
+        const squadsEl = document.getElementById('squads-stat');
+        if (squadsEl) squadsEl.innerText = history.length;
+        
+        const liveContestsEl = document.getElementById('live-contests-stat');
+        if (liveContestsEl) liveContestsEl.innerText = history.filter(h => h.status === 'locked').length || 0;
+
         const list = document.getElementById('history-list');
         if (list) {
             list.innerHTML = '';
@@ -421,11 +463,15 @@
                     list.innerHTML += `
                         <div class="history-card rounded-2xl p-6 bg-surface-container-high relative overflow-hidden group">
                            <p class="text-[10px] text-primary font-bold uppercase tracking-widest mb-1">${h.match}</p>
-                           <h4 class="text-xl font-headline font-black text-gray-900 mb-4">${h.rank}</h4>
-                           <div class="flex justify-between text-xs items-end">
+                           <h4 class="text-xl font-headline font-black text-gray-900 mb-2">${h.rank}</h4>
+                           <div class="flex justify-between text-xs items-end mb-3">
                               <div><p class="text-gray-500 text-[9px]">Points</p><p class="text-gray-900 font-black">${h.points}</p></div>
                               <div class="text-right"><p class="text-gray-500 text-[9px]">Prize</p><p class="text-tertiary font-black font-headline">${h.win}</p></div>
                            </div>
+                           ${h.payout_tx ? `
+                           <a href="https://explorer.solana.com/tx/${h.payout_tx}?cluster=devnet" target="_blank" class="block w-full py-2 bg-primary/10 text-primary text-[8px] font-black text-center uppercase tracking-widest rounded-lg hover:bg-primary/20 transition-all">
+                              View Transaction ↗
+                           </a>` : ''}
                         </div>`;
                 });
             }

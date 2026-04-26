@@ -149,7 +149,7 @@
             const success = await window.lockLineupWithUmbra(currentContest.id, { 
                 match: currentContest.id,
                 squad: JSON.parse(localStorage.getItem('skillxi_temp_lineup'))
-            });
+            }, parseFloat(currentContest.entry || 0.1));
 
             if (success) {
                 document.getElementById('success-overlay').classList.remove('hidden');

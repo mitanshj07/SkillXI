@@ -2,12 +2,14 @@ import os
 import json
 import requests
 from typing import TypedDict, Annotated, List
+from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import BaseMessage, HumanMessage
 from supabase import create_client, Client
 
 # --- Config & Environment ---
+load_dotenv()
 FOOTBALL_API_URL = "https://v3.football.api-sports.io"
 FOOTBALL_API_KEY = os.getenv("FOOTBALL_API_KEY", "ebf76d464844eacdbe8a101bf8ee9106")
 SUPABASE_URL = os.getenv("VITE_SUPABASE_URL", "https://vtvrvlcholgjoujqcoxd.supabase.co")

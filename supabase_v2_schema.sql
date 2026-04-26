@@ -21,10 +21,21 @@ CREATE TABLE IF NOT EXISTS public.matches (
     ai_tip TEXT,
     featured BOOLEAN DEFAULT FALSE,
     status TEXT DEFAULT 'NS', -- NS (Not Started), LIVE, FT (Full Time)
+    payouts_completed BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 2. Create Players Table mapping to Matches
+-- 2. Profiles Table (User Stats)
+CREATE TABLE IF NOT EXISTS public.profiles (
+    wallet_id TEXT PRIMARY KEY,
+    username TEXT UNIQUE,
+    skill_score INT DEFAULT 500,
+    contests_won INT DEFAULT 0,
+    total_earned DECIMAL(10, 2) DEFAULT 0.0,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. Create Players Table mapping to Matches
 CREATE TABLE IF NOT EXISTS public.players (
     id TEXT PRIMARY KEY,
     match_id TEXT REFERENCES public.matches(id) ON DELETE CASCADE,
@@ -49,6 +60,7 @@ CREATE TABLE IF NOT EXISTS public.entries (
     is_private BOOLEAN DEFAULT TRUE,
     status TEXT DEFAULT 'locked',
     total_points DECIMAL(10, 1) DEFAULT 0.0,
+    prize_won DECIMAL(10, 2) DEFAULT 0.0,
     payout_tx TEXT, -- Stores the automated Solana payout signature
     created_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE(match_id, user_wallet)
@@ -66,3 +78,29 @@ CREATE POLICY "Public players are viewable by everyone" ON public.players FOR SE
 -- Users can only see their own entries unless they are public (for the leaderboard end-state)
 CREATE POLICY "Users can insert their own entries" ON public.entries FOR INSERT WITH CHECK (true);
 CREATE POLICY "Users can view their own entries" ON public.entries FOR SELECT USING (true); -- Relaxed for leaderboard purposes
+
+-- 5. Social & Nexus Feed Tables
+CREATE TABLE IF NOT EXISTS public.activities (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    wallet_id TEXT REFERENCES public.profiles(wallet_id) ON DELETE CASCADE,
+    type TEXT NOT NULL, -- CONTEST_JOIN, CONTEST_WIN, LEVEL_UP, CHALLENGE_SENT
+    payload JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.follows (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    follower_id TEXT REFERENCES public.profiles(wallet_id) ON DELETE CASCADE,
+    following_id TEXT REFERENCES public.profiles(wallet_id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(follower_id, following_id)
+);
+
+-- Enable RLS for Social Tables
+ALTER TABLE public.activities ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.follows ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Activities are viewable by everyone" ON public.activities FOR SELECT USING (true);
+CREATE POLICY "Follows are viewable by everyone" ON public.follows FOR SELECT USING (true);
+CREATE POLICY "Users can insert own activities" ON public.activities FOR INSERT WITH CHECK (wallet_id = current_user);
+CREATE POLICY "Users can insert own follows" ON public.follows FOR INSERT WITH CHECK (follower_id = current_user);

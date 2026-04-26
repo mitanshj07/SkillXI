@@ -148,15 +148,18 @@ function appendMessage(sender, text, isLoading = false) {
     div.className = `flex ${isAi ? 'justify-start' : 'justify-end'} mb-4`;
     
     div.innerHTML = `
-        <div class="max-w-[80%] ${isAi ? 'bg-gray-50 border border-gray-100' : 'bg-primary/10 border border-primary/20'} p-5 rounded-2xl">
+        <div class="max-w-[80%] ${isAi ? 'bg-gray-50 border border-gray-100' : 'bg-primary/10 border border-primary/20'} p-5 rounded-2xl shadow-sm">
             <div class="flex items-center gap-2 mb-2">
+                <div class="w-6 h-6 rounded-lg bg-white border border-gray-100 flex items-center justify-center text-[10px]">
+                    ${isAi ? '🤖' : '👤'}
+                </div>
                 <span class="${isAi ? 'text-primary' : 'text-gray-900'} text-[10px] font-black uppercase tracking-widest">
                     ${isAi ? 'Kinetic Intelligence' : 'You'}
                 </span>
-                ${isAi && isLoading ? '<span class="flex gap-1"><span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span><span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" style="animation-delay:0.2s"></span><span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" style="animation-delay:0.4s"></span></span>' : ''}
+                ${isAi && isLoading ? '<div class="flex gap-1 ml-2"><span class="w-1 h-1 bg-primary rounded-full animate-bounce"></span><span class="w-1 h-1 bg-primary rounded-full animate-bounce" style="animation-delay:0.1s"></span><span class="w-1 h-1 bg-primary rounded-full animate-bounce" style="animation-delay:0.2s"></span></div>' : ''}
             </div>
             <div class="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
-                ${text.replace(/\n/g, '<br>')}
+                ${isLoading ? '<span class="italic text-gray-400">Processing complex match data...</span>' : text.replace(/\n/g, '<br>')}
             </div>
         </div>
     `;
