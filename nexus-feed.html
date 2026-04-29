@@ -218,14 +218,14 @@
         const feedContainer = document.getElementById('nexus-activities');
         let resolved = false;
 
-        // 3-second timeout fallback — never show infinite spinner
+        // 1.5-second timeout fallback — never show infinite spinner
         const timeout = setTimeout(() => {
             if (!resolved) {
                 resolved = true;
                 console.log('[Nexus] Timeout reached — rendering fallback feed');
                 renderFallbackFeed(feedContainer);
             }
-        }, 3000);
+        }, 1500);
 
         try {
             const activities = await window.getNexusFeed();

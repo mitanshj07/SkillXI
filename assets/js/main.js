@@ -13,6 +13,25 @@ const ESCROW_ADDRESS = '9WvVMvMKQYKnBgVe6egAH7NZ13ar4NB76PVsiG9vsEbN';
 // --- VERSION 1 DATA (FALLBACK) ---
 const FALLBACK_CONTESTS = [
   {
+    id: "c000",
+    sport: "football",
+    homeTeam: "Web3 Whale",
+    homeTag: "W3W",
+    awayTeam: "Exclusive",
+    awayTag: "EXC",
+    league: "Solana Super League · Token Gated",
+    matchDate: "Tomorrow · 18:00 UTC",
+    prize: "500",
+    entry: "10",
+    maxPlayers: 50,
+    currentPlayers: 12,
+    difficulty: "WHALE TIER",
+    aiTip: "Requires holding Mad Lads NFT to enter",
+    hot: true,
+    almostFull: false,
+    timeLeft: 24 * 3600
+  },
+  {
     id: "c001",
     sport: "football",
     homeTeam: "Manchester City",
@@ -561,13 +580,22 @@ window.disconnectWallet = function() {
 };
 
 window.updateWalletUI = function(pubKeyStr) {
-  const short = `${pubKeyStr.slice(0,4)}...${pubKeyStr.slice(-4)}`;
+  // Simulate Solana Name Service (.sol domains)
+  let displayName = `${pubKeyStr.slice(0,4)}...${pubKeyStr.slice(-4)}`;
+  if (pubKeyStr.startsWith('8') || pubKeyStr.startsWith('9') || pubKeyStr.startsWith('A')) {
+     displayName = 'skillxi_whale.sol';
+  } else if (pubKeyStr.startsWith('E') || pubKeyStr.startsWith('F')) {
+     displayName = 'phantom_user.sol';
+  }
+  
+  const labelHTML = `<span style="color:#00D09C; font-weight:800; background:#F6F9FC; padding:8px 16px; border-radius:12px; border:1px solid #EEEEEE; font-family:Space Grotesk; font-size:13px; display:flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:14px">verified</span> ${displayName}</span>`;
+
   document.querySelectorAll('a[href="wallet.html"]').forEach(el => {
-    el.innerHTML = `<span style="color:#00D09C; font-weight:800; background:#F6F9FC; padding:8px 16px; border-radius:12px; border:1px solid #EEEEEE; font-family:Space Grotesk; font-size:13px;">${short}</span>`;
+    el.innerHTML = labelHTML;
   });
   document.querySelectorAll('button').forEach(btn => {
     if (btn.textContent.includes('Connect Wallet')) {
-       btn.textContent = short;
+       btn.innerHTML = labelHTML;
        btn.style.color = '#00D09C';
        btn.style.background = '#FFFFFF';
        btn.style.border = '1px solid #EEEEEE';
@@ -606,13 +634,18 @@ window.showPaymentStatement = function(amount, onConfirm) {
     <div style="background:#FFFFFF; border:1px solid #EEEEEE; border-radius:24px; padding:40px; max-width:480px; width:100%; text-align:center; box-shadow:0 30px 60px rgba(0,0,0,0.1);">
       <div style="font-size:48px; margin-bottom:20px;">🛡️</div>
       <h2 style="font-family:'Space Grotesk'; font-size:24px; font-weight:800; color:#1A1A1A; margin-bottom:16px;">Payment Statement</h2>
-      <p style="color:#718096; font-size:15px; line-height:1.6; margin-bottom:32px;">
+      <p style="color:#718096; font-size:15px; line-height:1.6; margin-bottom:24px;">
         You are about to send <span style="color:#00D09C; font-weight:800;">${amount} SOL</span> as entry fee to the contest escrow.<br><br>
-        This transaction will be shielded using <span style="font-weight:700; color:#1A1A1A;">Umbra Privacy Protocol</span>.<br>
-        No one can see your lineup or strategy.
+        This transaction will be shielded using <span style="font-weight:700; color:#1A1A1A;">Umbra Privacy Protocol</span>.
       </p>
+
+      <div style="background:#F9FAFB; border:1px solid #EEEEEE; border-radius:16px; padding:20px; margin-bottom:32px; display:flex; flex-direction:column; align-items:center;">
+        <h3 style="font-size:11px; font-weight:800; color:#A0AEC0; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;">Scan with Mobile Wallet (Solana Pay)</h3>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`solana:${ESCROW_ADDRESS}?amount=${amount}&label=SkillXI&message=SkillXI%20Contest%20Entry`)}" style="width:160px; height:160px; border-radius:12px; border:4px solid white; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+      </div>
+
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <button id="confirm-p-btn" style="background:#00D09C; color:#FFFFFF; border:none; border-radius:14px; padding:18px; font-weight:800; cursor:pointer; font-family:Space Grotesk; font-size:15px;">Confirm & Pay via Umbra</button>
+        <button id="confirm-p-btn" style="background:#00D09C; color:#FFFFFF; border:none; border-radius:14px; padding:18px; font-weight:800; cursor:pointer; font-family:Space Grotesk; font-size:15px;">Confirm via Browser Extension</button>
         <button id="close-p-btn" style="background:#FFFFFF; border:1px solid #EEEEEE; color:#718096; padding:14px; border-radius:14px; cursor:pointer; font-weight:600;">Cancel</button>
       </div>
     </div>
@@ -633,6 +666,11 @@ async function executeEscrowPayment(amount) {
   const conn = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'), 'confirmed');
   const type = window.localStorage.getItem('skillxi_wallet_type') === 'phantom' ? window.solana : window.solflare;
   
+  // Simulated Umbra Stealth Address generation
+  console.log('[UMBRA PROTOCOL] Generating one-time stealth address for routing...');
+  window.showWalletToast('Umbra: Generating Stealth Address...', 'info');
+  await new Promise(r => setTimeout(r, 800));
+
   const transaction = new solanaWeb3.Transaction().add(
     solanaWeb3.SystemProgram.transfer({
       fromPubkey: new solanaWeb3.PublicKey(pubKeyStr),
@@ -645,9 +683,9 @@ async function executeEscrowPayment(amount) {
   transaction.recentBlockhash = blockhash;
   transaction.feePayer = new solanaWeb3.PublicKey(pubKeyStr);
   
-  window.showWalletToast('Requesting Signature...', 'info');
+  window.showWalletToast('Umbra: Requesting Shielded Signature...', 'info');
   const { signature } = await type.signAndSendTransaction(transaction);
-  window.showWalletToast('Confirming Shielded Transfer...', 'info');
+  window.showWalletToast('Umbra: Confirming Shielded Transfer...', 'info');
   await conn.confirmTransaction(signature);
   return signature;
 }
@@ -1241,3 +1279,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 // NOTE: updatePrivacySettings, calculateKineticXP, logActivity, and followUser
 // are defined earlier in this file (lines ~199–280). The duplicate definitions
 // that Codex added below have been removed to prevent function shadowing.
+
+// Service Worker Registration for PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  });
+}

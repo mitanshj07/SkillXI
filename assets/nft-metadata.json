@@ -1,0 +1,16 @@
+{
+  "name": "SkillXI Elite Badge",
+  "symbol": "SXI",
+  "description": "Proof of Victory. This badge represents an elite tactical win on the SkillXI Fantasy Sports network.",
+  "image": "https://raw.githubusercontent.com/mitanshj07/SkillXI/main/assets/icons/icon-512.png",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Elite"
+    },
+    {
+      "trait_type": "Season",
+      "value": "Genesis"
+    }
+  ]
+}

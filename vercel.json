@@ -9,11 +9,19 @@
   },
   "headers": [
     {
+      "source": "/actions.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization, Content-Encoding, Accept-Encoding" }
+      ]
+    },
+    {
       "source": "/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization, Content-Encoding, Accept-Encoding" }
       ]
     },
     {
@@ -28,5 +36,11 @@
     "FOOTBALL_API_KEY": "@football_api_key",
     "VITE_SUPABASE_URL": "@vite_supabase_url",
     "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key"
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/settle",
+      "schedule": "0 * * * *"
+    }
+  ]
 }
