@@ -417,10 +417,7 @@
         }
     };
 
-    async function manualPayout() {
-        const id = document.getElementById('manual-match-id').value;
-        if (!id) return alert("Enter Match ID");
-        settleContest(id);
+
     window.addEventListener('load', refreshData);
     window.addEventListener('load', checkApiHealth);
     window.addEventListener('load', fetchUserCount);
