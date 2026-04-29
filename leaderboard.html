@@ -454,6 +454,21 @@
         });
     };
 
+    // Real-time listener for leaderboard (Task B9)
+    let leaderboardChannel = null;
+
+    window.initLeaderboardSync = function(matchId) {
+        if (leaderboardChannel) leaderboardChannel.unsubscribe();
+        
+        leaderboardChannel = _supabase
+            .channel('public:entries_match_' + matchId)
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'entries', filter: `match_id=eq.${matchId}` }, payload => {
+                console.log('Leaderboard update received:', payload);
+                window.renderLeaderboardData(document.getElementById('tab-global').classList.contains('bg-primary') ? 'global' : 'friends');
+            })
+            .subscribe();
+    };
+
     window.addEventListener('load', async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const matchId = urlParams.get('match') || 'm1';
@@ -469,6 +484,7 @@
 
         window.renderLeaderboardData('global');
         window.renderNexusFeed();
+        window.initLeaderboardSync(matchId);
     });
 
 </script>

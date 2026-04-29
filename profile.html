@@ -343,6 +343,42 @@
     </div>
 </div>
 </main>
+<!-- Referral System Section (Task E3) -->
+<section class="mt-8 mb-12">
+    <div class="glass-panel rounded-[2.5rem] p-8 border border-white/10 relative overflow-hidden">
+        <div class="absolute top-0 right-0 p-8 opacity-10">
+            <span class="material-symbols-outlined text-[8rem]">diversity_3</span>
+        </div>
+        <div class="relative z-10 max-w-2xl">
+            <h3 class="text-2xl font-black font-headline text-gray-900 mb-2 uppercase italic tracking-tight">Expand the XI Network</h3>
+            <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                Invite fellow analysts to SkillXI. Earn <span class="text-primary font-bold">0.01 SOL</span> for every successful recruit who enters their first contest.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-1 bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 flex items-center justify-between group hover:border-primary/30 transition-all">
+                    <code id="referral-link" class="text-xs text-gray-600 font-medium">skill-xi.app/join?ref=user_7xkp</code>
+                    <button onclick="copyReferralLink()" class="material-symbols-outlined text-gray-400 hover:text-primary transition-colors">content_copy</button>
+                </div>
+                <button onclick="copyReferralLink()" class="px-8 py-4 bg-primary text-white font-headline font-bold rounded-2xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all uppercase text-xs tracking-widest">
+                    Invite Analysts
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function copyReferralLink() {
+        const link = document.getElementById('referral-link').innerText;
+        navigator.clipboard.writeText(link);
+        if (window.showWalletToast) {
+            window.showWalletToast('Referral link copied to clipboard!', 'success');
+        } else {
+            alert('Referral link copied!');
+        }
+    }
+</script>
+
 <!-- BottomNavBar (Mobile Only) -->
 <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-white/95 backdrop-blur-2xl border-t border-gray-100 shadow-lg md:hidden z-50 rounded-t-[2.5rem]">
 <a class="flex flex-col items-center justify-center text-gray-400 p-3 hover:text-primary transition-all " href="index.html">

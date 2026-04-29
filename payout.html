@@ -336,4 +336,60 @@
 </a>
 </nav>
 <script src="assets/js/main.js"></script>
+<script>
+function generateShareCard() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 600; canvas.height = 340;
+  const ctx = canvas.getContext('2d');
+  
+  // Background
+  ctx.fillStyle = '#131318';
+  ctx.fillRect(0,0,600,340);
+  
+  // Green accent bar
+  ctx.fillStyle = '#00D09C';
+  ctx.fillRect(0,0,600,6);
+  
+  // Logo text
+  ctx.fillStyle = '#a8e8ff';
+  ctx.font = 'bold 28px Space Grotesk, sans-serif';
+  ctx.fillText('SkillXI', 30, 50);
+  
+  // Rank
+  ctx.fillStyle = '#00D09C';
+  ctx.font = 'bold 72px Space Grotesk, sans-serif';
+  ctx.fillText('#2', 30, 150);
+  
+  // Match
+  ctx.fillStyle = '#e4e1e9';
+  ctx.font = '18px Inter, sans-serif';
+  ctx.fillText('Man City vs Arsenal · GW29', 30, 180);
+  
+  // Prize
+  ctx.fillStyle = '#a8e8ff';
+  ctx.font = 'bold 36px Space Grotesk, sans-serif';
+  ctx.fillText('Won 4.5 SOL', 30, 230);
+  
+  // Points
+  ctx.fillStyle = '#bbc9cf';
+  ctx.font = '16px Inter, sans-serif';
+  ctx.fillText('782 pts · Captain: Haaland (2x)', 30, 265);
+  
+  // Website
+  ctx.fillStyle = '#859398';
+  ctx.font = '14px Inter, sans-serif';
+  ctx.fillText('skill-xi-two.vercel.app', 30, 310);
+  
+  // Download
+  const link = document.createElement('a');
+  link.download = 'skillxi-result.png';
+  link.href = canvas.toDataURL();
+  link.click();
+}
+
+// Wire the buttons
+document.querySelectorAll('.material-symbols-outlined[data-icon="photo_camera"], .material-symbols-outlined[data-icon="download"]').forEach(el => {
+    el.closest('div').onclick = generateShareCard;
+});
+</script>
 </body></html>
