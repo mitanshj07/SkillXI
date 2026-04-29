@@ -402,4 +402,43 @@
 </a>
 </nav>
 <script src="assets/js/main.js"></script>
+<script>
+    // Wire subscription buttons
+    document.querySelectorAll('button').forEach(btn => {
+        const text = btn.textContent.trim();
+        if (text === 'Start 7-Day Free Trial') {
+            btn.onclick = () => handleSubscribe('pro');
+        } else if (text === 'Go Elite') {
+            btn.onclick = () => handleSubscribe('elite');
+        }
+    });
+
+    async function handleSubscribe(plan) {
+        localStorage.setItem('skillxi_subscription', plan);
+        
+        const wallet = localStorage.getItem('skillxi_wallet');
+        if (wallet && window._supabase) {
+            try {
+                await window._supabase.from('profiles')
+                    .update({ tier: plan.toUpperCase() })
+                    .eq('wallet_id', wallet);
+            } catch(e) { console.warn('Subscription sync failed:', e); }
+        }
+
+        // Show confirmation
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:100000;background:rgba(19,19,24,0.95);display:flex;align-items:center;justify-content:center;';
+        overlay.innerHTML = `
+            <div style="text-align:center;max-width:400px;padding:40px;">
+                <div style="font-size:64px;margin-bottom:20px;">✅</div>
+                <h2 style="font-family:Space Grotesk;font-size:28px;font-weight:800;color:#a8e8ff;margin-bottom:12px;">Subscribed to ${plan === 'pro' ? 'Pro Analyst' : 'Elite Oracle'}!</h2>
+                <p style="color:#859398;font-size:14px;margin-bottom:24px;">Your AI features are now unlocked. Redirecting to your profile...</p>
+                <div style="color:#00D09C;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;animation:pulse 1.5s infinite;">Loading...</div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        
+        setTimeout(() => { window.location.href = 'profile.html'; }, 2500);
+    }
+</script>
 </body></html>

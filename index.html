@@ -118,6 +118,18 @@
     <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]"></div>
     <div class="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px]"></div>
 
+    <!-- Live Scores Ticker -->
+    <div class="relative z-10 mb-6 overflow-hidden">
+        <div class="flex items-center gap-3 py-2">
+            <span class="flex items-center gap-1.5 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-lg text-[10px] font-black text-red-500 uppercase tracking-widest whitespace-nowrap">
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span> LIVE
+            </span>
+            <div id="live-ticker" class="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+                <span class="text-xs text-gray-400 font-bold uppercase tracking-widest whitespace-nowrap">Loading scores...</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Header -->
     <section class="relative z-10 mb-12">
         <div class="flex flex-col md:flex-row items-start gap-8 mb-12">

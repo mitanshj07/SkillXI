@@ -943,6 +943,25 @@ window.setPlayerRole = function(id, role) {
     window.updateBuilderUI();
 };
 
+window.proceedToConfirm = function() {
+    const manager = window.lineupManager;
+    
+    // Save squad data to localStorage for the confirm page
+    localStorage.setItem('skillxi_confirm_squad', JSON.stringify(manager.selectedPlayers));
+    localStorage.setItem('skillxi_confirm_captain', manager.captainId);
+    localStorage.setItem('skillxi_confirm_vc', manager.vcId);
+    
+    // Get contest info from URL params or defaults
+    const params = new URLSearchParams(window.location.search);
+    const contestId = params.get('contest') || 'c001';
+    const contest = FALLBACK_CONTESTS.find(c => c.id === contestId) || FALLBACK_CONTESTS[0];
+    
+    localStorage.setItem('skillxi_confirm_contest', JSON.stringify(contest));
+    
+    // Navigate to confirm page
+    window.location.href = 'contest-confirm.html';
+};
+
 window.renderMyTeamPitch = function() {
   const pitch = document.getElementById('my-team-pitch');
   if (!pitch) return;
@@ -1076,10 +1095,83 @@ window.filterContests = function(sport) {
   window.renderContests(sport);
 };
 
-// --- 8. PAGE ROUTING & INITIALIZATION ---
-// Use DOMContentLoaded so inline <script> load handlers in each HTML page
-// don't race with this one. Each page's inline script uses 'load' (fires later)
-// while this router uses DOMContentLoaded (fires first, sets up globals).
+// --- 8. FANTASY SCORING ENGINE (TASK B6) ---
+const FANTASY_SCORING = {
+  goal_FWD: 50, goal_MID: 50, goal_DEF: 80, goal_GK: 80,
+  assist: 25,
+  clean_sheet_GK: 40, clean_sheet_DEF: 40, clean_sheet_MID: 15,
+  yellow_card: -10, red_card: -25,
+  bonus_1st: 15, bonus_2nd: 10, bonus_3rd: 5,
+  played_60min: 2, played_full: 4
+};
+
+const DEMO_MATCH_EVENTS = [
+  {player:"Haaland", type:"goal", minute:23, team:"MCI"},
+  {player:"De Bruyne", type:"assist", minute:23, team:"MCI"},
+  {player:"Haaland", type:"goal", minute:67, team:"MCI"},
+  {player:"Saka", type:"goal", minute:41, team:"ARS"},
+  {player:"Rice", type:"assist", minute:41, team:"ARS"},
+  {player:"Saliba", type:"yellow_card", minute:55, team:"ARS"},
+];
+
+window.calculateFantasyPoints = function(playerName, position, isCaptain, isVC) {
+  let pts = 4;
+  DEMO_MATCH_EVENTS.forEach(e => {
+    if (e.player === playerName) {
+      if (e.type === 'goal') pts += FANTASY_SCORING['goal_'+position] || 50;
+      if (e.type === 'assist') pts += FANTASY_SCORING.assist;
+      if (e.type === 'yellow_card') pts += FANTASY_SCORING.yellow_card;
+      if (e.type === 'red_card') pts += FANTASY_SCORING.red_card;
+      if (e.type === 'clean_sheet') pts += FANTASY_SCORING['clean_sheet_'+position] || 0;
+    }
+  });
+  if (isCaptain) pts *= 2;
+  if (isVC) pts *= 1.5;
+  return Math.round(pts);
+};
+
+// --- 9. LIVE SCORES TICKER (TASK D1) ---
+window.initLiveScoresTicker = async function() {
+  const tickerEl = document.getElementById('live-ticker');
+  if (!tickerEl) return;
+
+  try {
+    const res = await fetch('/api/scores?live=true');
+    const matches = await res.json();
+
+    if (matches && matches.length > 0) {
+      tickerEl.innerHTML = matches.slice(0, 5).map(m => {
+        const home = m.teams?.home?.name || 'Home';
+        const away = m.teams?.away?.name || 'Away';
+        const hGoals = m.goals?.home ?? 0;
+        const aGoals = m.goals?.away ?? 0;
+        const mins = m.fixture?.status?.elapsed || 0;
+        return `<span class="inline-flex items-center gap-2 px-4 py-1 bg-white border border-gray-100 rounded-lg text-xs font-bold whitespace-nowrap">
+          <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+          ${home} ${hGoals} - ${aGoals} ${away} (${mins}')
+        </span>`;
+      }).join('');
+      return;
+    }
+  } catch (e) {
+    console.warn('[Ticker] Live API unavailable, using mock');
+  }
+
+  // Fallback mock ticker
+  tickerEl.innerHTML = `
+    <span class="inline-flex items-center gap-2 px-4 py-1 bg-white border border-gray-100 rounded-lg text-xs font-bold whitespace-nowrap">
+      <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+      MCI 2 - 1 ARS (67')
+    </span>
+    <span class="inline-flex items-center gap-2 px-4 py-1 bg-white border border-gray-100 rounded-lg text-xs font-bold whitespace-nowrap">
+      LIV 1 - 0 TOT (34')
+    </span>
+    <span class="inline-flex items-center gap-2 px-4 py-1 bg-white border border-gray-100 rounded-lg text-xs font-bold whitespace-nowrap">
+      <span class="text-gray-400">RMA vs BAR</span> Tomorrow 21:00
+    </span>`;
+};
+
+// --- 10. PAGE ROUTING & INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', async () => {
   // 1. Always inject demo banner first for transparency
   try { window.injectDemoBanner(); } catch(e) { console.error('Banner failed:', e); }
@@ -1093,18 +1185,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   // after fetching the contest title — we skip it here to avoid double-render.
   try {
     if (page === 'contests') {
-      // Small delay to ensure any layout shifts are done and DOM is fully ready
+      // Ensure contests always render — fix for the empty page bug
       setTimeout(() => {
-        const grid = document.getElementById('contests-grid');
-        if (grid && grid.children.length <= 1) { // 1 if it has the "Fetching..." text
-           window.renderContests('all');
-        }
-      }, 100);
+        window.renderContests('all');
+      }, 200);
     }
     // lineup and match-lobby initialise themselves via their own inline scripts
   } catch (err) {
     console.error('🚀 [Init] Page render error:', err);
   }
+
+  // Init live ticker on pages that have it
+  window.initLiveScoresTicker();
 
   // --- 9. GLOBAL COUNTDOWN TICKER ---
   setInterval(() => {

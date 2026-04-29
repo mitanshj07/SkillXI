@@ -23,12 +23,13 @@ window.sendChatMessage = async function() {
         // Get user wallet for context
         const wallet = window.localStorage.getItem('skillxi_wallet') || "";
 
-        const response = await fetch('/api/agent_brain', {
+        const response = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
                 message: msg,
-                user_wallet: wallet 
+                user_wallet: wallet,
+                lineup: localStorage.getItem('skillxi_temp_lineup') || '[]'
             })
         });
 

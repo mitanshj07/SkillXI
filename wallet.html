@@ -177,22 +177,22 @@
                     <span class="material-symbols-outlined text-primary font-black text-3xl">security</span>
                 </div>
                 <div class="space-y-6">
-                    <div class="p-6 bg-white rounded-3xl border border-gray-100 flex items-center gap-5 shadow-sm">
+                    <div id="wallet-device-status" class="p-6 bg-white rounded-3xl border border-gray-100 flex items-center gap-5 shadow-sm">
                         <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/5">
-                            <span class="material-symbols-outlined font-black text-2xl">smartphone</span>
+                            <span class="material-symbols-outlined font-black text-2xl">account_balance_wallet</span>
                         </div>
                         <div>
-                            <div class="text-[11px] font-black uppercase italic text-gray-900">iPhone 15 Pro</div>
-                            <div class="text-[9px] text-gray-400 font-black uppercase tracking-widest mt-0.5">SF, USA • LIVE</div>
+                            <div id="wallet-conn-label" class="text-[11px] font-black uppercase italic text-gray-400">No Wallet Connected</div>
+                            <div id="wallet-conn-sub" class="text-[9px] text-gray-300 font-black uppercase tracking-widest mt-0.5">Connect Phantom or Solflare</div>
                         </div>
                     </div>
-                    <div class="p-6 bg-white/50 rounded-3xl border border-gray-100 flex items-center gap-5 grayscale opacity-60">
-                        <div class="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
-                            <span class="material-symbols-outlined font-black text-2xl">desktop_windows</span>
+                    <div class="p-6 bg-white rounded-3xl border border-gray-100 flex items-center gap-5 shadow-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/5">
+                            <span class="material-symbols-outlined font-black text-2xl">shield</span>
                         </div>
                         <div>
-                            <div class="text-[11px] font-black uppercase italic text-gray-400">MacBook Pro 16</div>
-                            <div class="text-[9px] text-gray-400 font-black uppercase tracking-widest mt-0.5">London, UK • 2H AGO</div>
+                            <div class="text-[11px] font-black uppercase italic text-gray-900">Umbra Privacy</div>
+                            <div class="text-[9px] text-gray-400 font-black uppercase tracking-widest mt-0.5">Shielded Transactions Active</div>
                         </div>
                     </div>
                 </div>
@@ -222,28 +222,17 @@
                             <th class="px-12 py-6 text-right">Block Explorer</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        <tr class="hover:bg-gray-50/50 transition-colors">
-                            <td class="px-12 py-8">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/5">
-                                        <span class="material-symbols-outlined text-sm font-black">stars</span>
-                                    </div>
-                                    <span class="font-black uppercase italic text-sm text-gray-900 tracking-tight">Contest Win</span>
+                    <tbody id="tx-table-body" class="divide-y divide-gray-50">
+                        <tr>
+                            <td colspan="5" class="px-12 py-16 text-center">
+                                <div class="flex flex-col items-center gap-3">
+                                    <span class="material-symbols-outlined text-4xl text-gray-200">receipt_long</span>
+                                    <p class="text-gray-400 text-xs font-black uppercase tracking-widest">No transactions yet</p>
+                                    <p class="text-gray-300 text-[10px]">Join a contest to see your transaction history</p>
+                                    <a href="contests.html" class="mt-2 px-6 py-2 bg-primary text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/90 transition-all">Browse Contests</a>
                                 </div>
                             </td>
-                            <td class="px-12 py-8 text-gray-400 text-xs font-black uppercase tracking-widest">Oct 24, 2023</td>
-                            <td class="px-12 py-8 text-primary font-headline font-black text-2xl tracking-tighter">+12.50</td>
-                            <td class="px-12 py-8">
-                                <span class="px-4 py-2 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10 shadow-sm">Settled</span>
-                            </td>
-                            <td class="px-12 py-8 text-right">
-                                <a class="text-gray-300 hover:text-primary transition-all text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-end gap-2" href="https://explorer.solana.com/" target="_blank">
-                                    SCAN NODE <span class="material-symbols-outlined text-xs">open_in_new</span>
-                                </a>
-                            </td>
                         </tr>
-                        <!-- More rows... -->
                     </tbody>
                 </table>
             </div>
@@ -278,7 +267,15 @@
 <script>
     window.addEventListener('load', async () => {
         const wallet = window.localStorage.getItem('skillxi_wallet');
+        
+        // Update wallet connection status in Security section
+        const connLabel = document.getElementById('wallet-conn-label');
+        const connSub = document.getElementById('wallet-conn-sub');
+        
         if (wallet) {
+            if (connLabel) connLabel.innerText = wallet.slice(0,4) + '...' + wallet.slice(-4);
+            if (connLabel) connLabel.classList.replace('text-gray-400', 'text-gray-900');
+            if (connSub) connSub.innerText = 'CONNECTED · SOLANA DEVNET';
             // 1. Fetch Real Solana Balance
             try {
                 const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'), 'confirmed');

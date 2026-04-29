@@ -41,6 +41,15 @@
 </head>
 <body class="bg-background text-slate-200 font-body min-h-screen">
 
+<script>
+    // Password gate
+    if (localStorage.getItem('skillxi_admin') !== 'skillxi2026') {
+        const p = prompt('Admin Password:');
+        if (p !== 'skillxi2026') { location.href = 'index.html'; }
+        else { localStorage.setItem('skillxi_admin', 'skillxi2026'); }
+    }
+</script>
+
 <nav class="border-b border-white/5 bg-surface/50 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-[1440px] mx-auto px-6 h-20 flex justify-between items-center">
         <div class="flex items-center gap-4">
@@ -161,6 +170,92 @@
         </div>
     </div>
 </main>
+
+<!-- Create Contest Section -->
+<div class="max-w-[1440px] mx-auto px-8 pb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Create Contest Form -->
+        <div class="glass rounded-3xl p-8">
+            <h2 class="font-headline font-black text-2xl italic uppercase text-white tracking-tighter mb-6">Create Contest</h2>
+            <form id="create-contest-form" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="cc-home" placeholder="Home Team" class="bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary">
+                    <input type="text" id="cc-away" placeholder="Away Team" class="bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary">
+                </div>
+                <input type="text" id="cc-league" placeholder="League / Competition" class="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary">
+                <div class="grid grid-cols-3 gap-4">
+                    <input type="number" id="cc-entry" placeholder="Entry (SOL)" step="0.01" class="bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary">
+                    <input type="number" id="cc-prize" placeholder="Prize Pool (SOL)" class="bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary">
+                    <input type="number" id="cc-max" placeholder="Max Players" class="bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <select id="cc-difficulty" class="bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary">
+                        <option value="BEGINNER">Beginner</option>
+                        <option value="PRO">Pro</option>
+                        <option value="ELITE">Elite</option>
+                    </select>
+                    <select id="cc-sport" class="bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary">
+                        <option value="football">Football</option>
+                        <option value="cricket">Cricket</option>
+                        <option value="basketball">Basketball</option>
+                    </select>
+                </div>
+                <textarea id="cc-tip" placeholder="AI Tip (e.g., 'Haaland is the consensus captain')" rows="2" class="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-primary resize-none"></textarea>
+                <label class="flex items-center gap-3 text-xs text-slate-400">
+                    <input type="checkbox" id="cc-featured" class="rounded bg-background border-white/10"> Featured Contest
+                </label>
+                <button type="submit" class="w-full py-4 bg-primary text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/90 transition-all">
+                    Create Contest
+                </button>
+            </form>
+        </div>
+
+        <!-- API Health Check -->
+        <div class="glass rounded-3xl p-8">
+            <h2 class="font-headline font-black text-2xl italic uppercase text-white tracking-tighter mb-6">API Health</h2>
+            <div class="space-y-4" id="api-health">
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-primary pulse"></span>
+                        <span class="text-xs font-bold text-white">Supabase</span>
+                    </div>
+                    <span id="health-supabase" class="text-[10px] font-black text-primary uppercase tracking-widest">Checking...</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-primary pulse"></span>
+                        <span class="text-xs font-bold text-white">Gemini AI</span>
+                    </div>
+                    <span id="health-gemini" class="text-[10px] font-black text-primary uppercase tracking-widest">Checking...</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-primary pulse"></span>
+                        <span class="text-xs font-bold text-white">API-Football</span>
+                    </div>
+                    <span id="health-football" class="text-[10px] font-black text-primary uppercase tracking-widest">Checking...</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-primary pulse"></span>
+                        <span class="text-xs font-bold text-white">Solana RPC</span>
+                    </div>
+                    <span id="health-solana" class="text-[10px] font-black text-primary uppercase tracking-widest">Checking...</span>
+                </div>
+            </div>
+
+            <!-- User Count -->
+            <div class="mt-8 pt-6 border-t border-white/5">
+                <h3 class="text-sm font-bold text-white mb-4">User Base</h3>
+                <div class="flex items-baseline gap-3">
+                    <span id="user-count" class="text-4xl font-headline font-black text-white italic">--</span>
+                    <span class="text-slate-500 text-xs font-bold uppercase tracking-widest">registered wallets</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="assets/js/main.js"></script>
 <script>
@@ -296,6 +391,127 @@
     }
 
     window.addEventListener('load', refreshData);
+    window.addEventListener('load', checkApiHealth);
+    window.addEventListener('load', fetchUserCount);
+
+    // Create Contest Handler
+    document.getElementById('create-contest-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const home = document.getElementById('cc-home').value;
+        const away = document.getElementById('cc-away').value;
+        const league = document.getElementById('cc-league').value;
+        const entry = parseFloat(document.getElementById('cc-entry').value);
+        const prize = parseFloat(document.getElementById('cc-prize').value);
+        const maxP = parseInt(document.getElementById('cc-max').value);
+        const diff = document.getElementById('cc-difficulty').value;
+        const sport = document.getElementById('cc-sport').value;
+        const tip = document.getElementById('cc-tip').value;
+        const featured = document.getElementById('cc-featured').checked;
+
+        if (!home || !away || !entry || !prize) {
+            alert('Fill in all required fields');
+            return;
+        }
+
+        const id = 'c' + Date.now().toString().slice(-6);
+        const matchId = 'm' + Date.now().toString().slice(-6);
+
+        try {
+            const sb = window.supabase.createClient(
+                'https://vtvrvlcholgjoujqcoxd.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0dnJ2bGNob2xnam91anFjb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMzMzc0OTgsImV4cCI6MjA1ODkxMzQ5OH0.b4mxDsGgQzSrLtTl73cE4iqhJPiJ5GfEHpkCVe2DRAM'
+            );
+
+            await sb.from('matches').insert({
+                id: matchId,
+                home_team: home,
+                home_tag: home.slice(0,3).toUpperCase(),
+                away_team: away,
+                away_tag: away.slice(0,3).toUpperCase(),
+                league: league,
+                match_date: new Date(Date.now() + 86400000).toISOString(),
+                prize: prize,
+                entry: entry,
+                max_players: maxP || 200,
+                current_players: 0,
+                featured: featured,
+                status: 'NS'
+            });
+
+            alert(`Contest ${home} vs ${away} created! ID: ${matchId}`);
+            document.getElementById('create-contest-form').reset();
+            refreshData();
+        } catch (err) {
+            console.error('Create contest error:', err);
+            alert('Failed to create contest: ' + err.message);
+        }
+    });
+
+    // API Health Check
+    async function checkApiHealth() {
+        // Supabase
+        try {
+            const sb = window.supabase.createClient(
+                'https://vtvrvlcholgjoujqcoxd.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0dnJ2bGNob2xnam91anFjb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMzMzc0OTgsImV4cCI6MjA1ODkxMzQ5OH0.b4mxDsGgQzSrLtTl73cE4iqhJPiJ5GfEHpkCVe2DRAM'
+            );
+            await sb.from('profiles').select('wallet_id').limit(1);
+            document.getElementById('health-supabase').innerText = 'ONLINE';
+            document.getElementById('health-supabase').classList.replace('text-primary', 'text-green-400');
+        } catch (e) {
+            document.getElementById('health-supabase').innerText = 'OFFLINE';
+            document.getElementById('health-supabase').classList.replace('text-primary', 'text-red-400');
+        }
+
+        // Gemini
+        try {
+            const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=AIzaSyAV5LHPLVMjhuUjuxbxJvb9hKkSJ1wuxpk');
+            document.getElementById('health-gemini').innerText = res.ok ? 'ONLINE' : 'ERROR';
+            document.getElementById('health-gemini').classList.replace('text-primary', res.ok ? 'text-green-400' : 'text-red-400');
+        } catch (e) {
+            document.getElementById('health-gemini').innerText = 'OFFLINE';
+            document.getElementById('health-gemini').classList.replace('text-primary', 'text-red-400');
+        }
+
+        // Football API
+        try {
+            const res = await fetch('https://v3.football.api-sports.io/status', {
+                headers: { 'x-apisports-key': 'ebf76d464844eacdbe8a101bf8ee9106' }
+            });
+            const data = await res.json();
+            const remaining = data?.response?.requests?.current || '?';
+            document.getElementById('health-football').innerText = `ONLINE (${remaining} calls today)`;
+            document.getElementById('health-football').classList.replace('text-primary', 'text-green-400');
+        } catch (e) {
+            document.getElementById('health-football').innerText = 'OFFLINE';
+            document.getElementById('health-football').classList.replace('text-primary', 'text-red-400');
+        }
+
+        // Solana RPC
+        try {
+            const conn = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'));
+            await conn.getBlockHeight();
+            document.getElementById('health-solana').innerText = 'ONLINE (DEVNET)';
+            document.getElementById('health-solana').classList.replace('text-primary', 'text-green-400');
+        } catch (e) {
+            document.getElementById('health-solana').innerText = 'OFFLINE';
+            document.getElementById('health-solana').classList.replace('text-primary', 'text-red-400');
+        }
+    }
+
+    // User Count
+    async function fetchUserCount() {
+        try {
+            const sb = window.supabase.createClient(
+                'https://vtvrvlcholgjoujqcoxd.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0dnJ2bGNob2xnam91anFjb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMzMzc0OTgsImV4cCI6MjA1ODkxMzQ5OH0.b4mxDsGgQzSrLtTl73cE4iqhJPiJ5GfEHpkCVe2DRAM'
+            );
+            const { data, count } = await sb.from('profiles').select('*', { count: 'exact', head: true });
+            document.getElementById('user-count').innerText = count || 0;
+        } catch (e) {
+            document.getElementById('user-count').innerText = '0';
+        }
+    }
 </script>
 </body>
 </html>

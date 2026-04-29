@@ -147,7 +147,7 @@
 
 <script src="assets/js/main.js"></script>
 <script>
-    function switchView(view) {
+    window.switchView = function(view) {
         const selectionView = document.getElementById('view-selection');
         const teamView = document.getElementById('view-team');
         const rolesView = document.getElementById('view-roles');
@@ -178,7 +178,7 @@
             window.renderRoleSelection();
         }
         window.updateBuilderUI();
-    }
+    };
 
     function filterPos(pos) {
         window.currentPosFilter = pos;
@@ -194,20 +194,7 @@
         window.renderPlayerList && window.renderPlayerList(pos);
     }
 
-    function proceedToConfirm() {
-        if (window.lineupManager.selectedPlayers.length < 11) {
-            return window.showWalletToast('Please select 11 players', 'error');
-        }
-        if (!window.lineupManager.captainId || !window.lineupManager.vcId) {
-            return window.showWalletToast('Please select Captain & VC', 'error');
-        }
-        localStorage.setItem('skillxi_temp_lineup', JSON.stringify(window.lineupManager.selectedPlayers));
-        localStorage.setItem('skillxi_temp_c', window.lineupManager.captainId);
-        localStorage.setItem('skillxi_temp_vc', window.lineupManager.vcId);
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        window.location.href = `contest-confirm.html?match=${urlParams.get('match')}&contest=${urlParams.get('contest')}`;
-    }
+    // proceedToConfirm is defined in main.js — no need to redefine here
 
     // Single load handler — main.js DOMContentLoaded fires first (globals ready),
     // then this 'load' fires to do page-specific init safely.
