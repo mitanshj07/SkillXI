@@ -851,6 +851,96 @@ window.updateBuilderUI = function() {
 
   // Render My Team View
   window.renderMyTeamPitch();
+
+  // --- NEW: GUIDED ACTION BUTTON UPDATE ---
+  const actionBtn = document.getElementById('main-action-btn');
+  const actionText = document.getElementById('action-btn-text');
+  const actionIcon = document.getElementById('action-btn-icon');
+
+  if (actionBtn && actionText) {
+    if (window.currentLineupStep === 1) {
+       if (counts.total < 11) {
+          actionBtn.className = 'w-full py-4 bg-gray-100 text-gray-400 font-black uppercase tracking-widest text-xs rounded-2xl shadow-sm transition-all flex items-center justify-center gap-3 cursor-not-allowed';
+          actionText.innerText = `Select ${11 - counts.total} more players`;
+          actionIcon.innerText = 'lock';
+       } else {
+          actionBtn.className = 'w-full py-4 bg-primary text-white font-black uppercase tracking-widest text-xs rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95';
+          actionText.innerText = 'Review Lineup';
+          actionIcon.innerText = 'visibility';
+       }
+    } else if (window.currentLineupStep === 2) {
+       actionBtn.className = 'w-full py-4 bg-primary text-white font-black uppercase tracking-widest text-xs rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95';
+       actionText.innerText = 'Continue to Roles';
+       actionIcon.innerText = 'assignment_ind';
+    } else if (window.currentLineupStep === 3) {
+       const hasRoles = window.lineupManager.captainId && window.lineupManager.vcId;
+       if (!hasRoles) {
+          actionBtn.className = 'w-full py-4 bg-gray-100 text-gray-400 font-black uppercase tracking-widest text-xs rounded-2xl shadow-sm transition-all flex items-center justify-center gap-3 cursor-not-allowed';
+          actionText.innerText = 'Assign C & VC';
+          actionIcon.innerText = 'error_outline';
+       } else {
+          actionBtn.className = 'w-full py-4 bg-primary text-white font-black uppercase tracking-widest text-xs rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95';
+          actionText.innerText = 'Deploy Squad';
+          actionIcon.innerText = 'rocket_launch';
+       }
+    }
+  }
+};
+
+window.currentLineupStep = 1;
+
+window.handleMainAction = function() {
+    const manager = window.lineupManager;
+    const totalSelected = manager.selectedPlayers.length;
+
+    if (window.currentLineupStep === 1) {
+        if (totalSelected < 11) return window.showWalletToast('Pick 11 players to continue', 'error');
+        window.switchView('team');
+    } else if (window.currentLineupStep === 2) {
+        window.switchView('roles');
+    } else if (window.currentLineupStep === 3) {
+        if (!manager.captainId || !manager.vcId) {
+            return window.showWalletToast('Assign Captain & Vice-Captain', 'error');
+        }
+        window.proceedToConfirm();
+    }
+};
+
+window.renderRoleSelection = function() {
+    const container = document.getElementById('role-selection-list');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const manager = window.lineupManager;
+    manager.selectedPlayers.forEach(p => {
+        const isC = manager.captainId === p.id;
+        const isVC = manager.vcId === p.id;
+
+        const row = document.createElement('div');
+        row.className = `flex items-center justify-between p-4 rounded-2xl border transition-all ${isC || isVC ? 'border-primary bg-primary/5' : 'border-gray-100 bg-white'}`;
+        row.innerHTML = `
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center font-bold text-gray-400 overflow-hidden border border-gray-100">
+                    ${p.photo ? `<img src="${p.photo}" class="w-full h-full object-cover">` : p.name.slice(0,1)}
+                </div>
+                <div>
+                    <h4 class="font-black text-[11px] text-gray-900 uppercase italic">${p.name}</h4>
+                    <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">${p.pos} • ${p.team}</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="window.setPlayerRole('${p.id}', 'C')" class="px-4 py-2 rounded-xl font-black text-[10px] uppercase transition-all ${isC ? 'bg-primary text-white shadow-md' : 'bg-gray-100 text-gray-400'}">C</button>
+                <button onclick="window.setPlayerRole('${p.id}', 'VC')" class="px-4 py-2 rounded-xl font-black text-[10px] uppercase transition-all ${isVC ? 'bg-primary text-white shadow-md' : 'bg-gray-100 text-gray-400'}">VC</button>
+            </div>
+        `;
+        container.appendChild(row);
+    });
+};
+
+window.setPlayerRole = function(id, role) {
+    window.lineupManager.setRole(id, role);
+    window.renderRoleSelection();
+    window.updateBuilderUI();
 };
 
 window.renderMyTeamPitch = function() {
