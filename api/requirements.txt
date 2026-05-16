@@ -1,6 +1,0 @@
-langgraph
-google-generativeai
-requests
-langchain-google-genai
-python-dotenv
-supabase

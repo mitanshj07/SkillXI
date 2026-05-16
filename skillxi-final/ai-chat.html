@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillXI | AI Analyst Elite</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #35343a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8e8ff; }
+        .glass-panel {
+            background: rgba(27, 27, 32, 0.6);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "outline": "#859398",
+                        "primary": "#a8e8ff",
+                        "surface": "#131318",
+                        "tertiary-fixed-dim": "#00e479",
+                        "surface-container": "#1f1f25",
+                        "on-secondary-container": "#c9aeff",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#00586b",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary": "#3f008e",
+                        "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed": "#60ff99",
+                        "on-surface": "#e4e1e9",
+                        "surface-container-highest": "#35343a",
+                        "on-background": "#e4e1e9",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-container-lowest": "#0e0e13",
+                        "secondary": "#d2bbff",
+                        "on-primary-fixed": "#001f27",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#eaddff",
+                        "surface-tint": "#3cd7ff",
+                        "surface-container-low": "#1b1b20",
+                        "inverse-on-surface": "#303036",
+                        "tertiary-container": "#00df76",
+                        "surface-container-high": "#2a292f",
+                        "secondary-container": "#6001d1",
+                        "primary-fixed": "#b4ebff",
+                        "on-tertiary-fixed": "#00210c",
+                        "inverse-surface": "#e4e1e9",
+                        "surface-variant": "#35343a",
+                        "surface-bright": "#39383e",
+                        "background": "#131318",
+                        "primary-container": "#00d4ff",
+                        "on-primary": "#003642",
+                        "tertiary": "#00ff88",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "surface-dim": "#131318",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "on-error": "#690005",
+                        "inverse-primary": "#00677e",
+                        "outline-variant": "#3c494e",
+                        "on-tertiary": "#003919",
+                        "on-tertiary-container": "#005d2d",
+                        "primary-fixed-dim": "#3cd7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<link rel="stylesheet" href="assets/css/style.css"/>
+    <!-- Solana Web3 Integrations -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>window.Buffer = window.Buffer || buffer.Buffer;</script>
+    <script src="https://unpkg.com/@solana/web3.js@1.89.2/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-hidden">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-[#131318]/80 backdrop-blur-xl flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto shadow-[0_20px_40px_rgba(0,212,255,0.08)]">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-extrabold tracking-tighter text-[#a8e8ff] font-headline">SkillXI</span>
+<div class="hidden md:flex gap-8">
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline" href="#">Lobby</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline" href="#">Research</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline" href="#">Squads</a>
+<a class="text-slate-400 font-medium hover:text-white transition-colors font-headline" href="#">Intelligence</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-[#a8e8ff] hover:bg-[#a8e8ff]/10 p-2 rounded-full transition-all">account_balance_wallet</button>
+<button class="material-symbols-outlined text-[#a8e8ff] hover:bg-[#a8e8ff]/10 p-2 rounded-full transition-all">notifications</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary/30 overflow-hidden">
+<img alt="User Profile Avatar" data-alt="close-up portrait of a tech-savvy professional avatar with neon blue lighting accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQH0SWPv8s8LErG7dw0Z348-jQesfVXoq6F40l_KqPL-k9ESejLs_19euSzhdEvB5rmqekgO513Z-M3KdofWQSqoeTYeZuUSykx1N-E7WB1-NWmERMnF-5uRXKVtZubKIS6xTOnsjcsSC7sYYq9iObep_bs79G474Zg86QadKj-xIOIVL5MTe_mD58DMtlgWJOHYSX7Bld735VS3MahjS2l8hNSBua7YvGVU_e_0WfXr61nqspO6mEIYDRQGngXCesFEUzUyOGakza"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-[#ffffff0f] bg-[#0e0e13] flex flex-col pt-24 pb-8 z-40 hidden lg:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<div>
+<h2 class="text-[#d2bbff] font-black font-headline tracking-tight leading-none">KINETIC AI</h2>
+<p class="text-[10px] text-primary font-bold uppercase tracking-widest">V3.2 Active</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 transition-all hover:bg-[#2a292f] active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-headline font-bold">Home</span>
+</a>
+<a class="bg-gradient-to-r from-[#a8e8ff1a] to-transparent text-[#a8e8ff] border-r-4 border-[#a8e8ff] flex items-center gap-4 px-6 py-4 active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="psychology" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-headline font-bold">AI Analyst</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 transition-all hover:bg-[#2a292f]" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="font-headline font-bold">Market</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 transition-all hover:bg-[#2a292f]" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+<span class="font-headline font-bold">Contests</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-4 transition-all hover:bg-[#2a292f]" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-headline font-bold">Leaderboard</span>
+</a>
+</nav>
+<div class="px-6 mb-6">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-3 rounded-full font-bold text-xs tracking-widest shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-105 transition-all">UPGRADE TO PRO</button>
+</div>
+<div class="border-t border-[#ffffff0f] pt-4">
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-headline font-bold">Support</span>
+</a>
+<a class="text-[#5a5a75] hover:text-white flex items-center gap-4 px-6 py-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-headline font-bold">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area (3-Column Layout) -->
+<main class="lg:pl-64 pt-20 h-screen flex overflow-hidden">
+<!-- Left: Session History -->
+<section class="w-72 border-r border-[#ffffff0f] bg-surface-container-lowest hidden xl:flex flex-col">
+<div class="p-6 border-b border-[#ffffff0f]">
+<h3 class="text-xs font-bold text-primary tracking-widest uppercase mb-4">Chat History</h3>
+<button class="w-full flex items-center justify-center gap-2 py-2 bg-surface-container-high rounded-lg text-sm font-semibold hover:bg-surface-variant transition-all border border-outline-variant/20">
+<span class="material-symbols-outlined text-sm">add</span> New Session
+                </button>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-2">
+<div class="p-3 rounded-xl bg-surface-container-high border-l-2 border-primary">
+<p class="text-sm font-medium text-white truncate">Squad Optimization: Week 12</p>
+<p class="text-[10px] text-muted text-[#5a5a75]">2 mins ago</p>
+</div>
+<div class="p-3 rounded-xl hover:bg-surface-container transition-all group">
+<p class="text-sm font-medium text-on-surface-variant group-hover:text-white truncate">Pitch Condition Analysis</p>
+<p class="text-[10px] text-[#5a5a75]">2 hours ago</p>
+</div>
+<div class="p-3 rounded-xl hover:bg-surface-container transition-all group">
+<p class="text-sm font-medium text-on-surface-variant group-hover:text-white truncate">Player 'X' Value Trade</p>
+<p class="text-[10px] text-[#5a5a75]">Yesterday</p>
+</div>
+<div class="p-3 rounded-xl hover:bg-surface-container transition-all group">
+<p class="text-sm font-medium text-on-surface-variant group-hover:text-white truncate">Captain Choice Matrix</p>
+<p class="text-[10px] text-[#5a5a75]">Oct 24, 2023</p>
+</div>
+</div>
+</section>
+<!-- Center: Main Chat (Gemini Powered) -->
+<section class="flex-1 flex flex-col bg-surface overflow-hidden relative">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,232,255,0.03)_0%,_transparent_70%)] pointer-events-none"></div>
+
+<div id="ai-chat-container" style="
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+">
+
+  <!-- Chat Header -->
+  <div style="
+    background: #13131f;
+    border: 1px solid #1e1e30;
+    border-radius: 16px 16px 0 0;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  ">
+    <div style="
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    ">🧠</div>
+    <div>
+      <h2 style="color:#fff; font-size:17px; font-weight:700; margin:0;">
+        SkillXI AI Analyst
+      </h2>
+      <p style="color:#00ff88; font-size:12px; margin:0;">
+        ● Online · Powered by Gemini AI
+      </p>
+    </div>
+    <div style="margin-left:auto;">
+      <span style="
+        background: rgba(124,58,237,0.15);
+        border: 1px solid rgba(124,58,237,0.3);
+        color: #9d5cf5;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+      ">PRO FEATURE</span>
+    </div>
+  </div>
+
+  <!-- Messages Area -->
+  <div id="chat-messages" style="
+    background: #0a0a0f;
+    border-left: 1px solid #1e1e30;
+    border-right: 1px solid #1e1e30;
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  ">
+    <!-- Welcome message -->
+    <div style="text-align:center; padding: 20px;">
+      <div style="font-size: 36px; margin-bottom: 10px;">🏆</div>
+      <h3 style="color:#ffffff; font-size:16px; font-weight:600; margin-bottom:8px;">
+        Welcome to your AI Session
+      </h3>
+      <p style="color:#a0a0b8; font-size:13px; max-width:400px; margin:0 auto;">
+        Ask me anything about your fantasy lineup, player picks, 
+        captain choices, or match predictions.
+      </p>
+    </div>
+
+    <!-- Quick question chips -->
+    <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+      <button onclick="quickAsk('Who should I captain vs Arsenal?')" style="
+        background: #13131f; border: 1px solid #2a2a40;
+        color: #a0a0b8; padding: 8px 14px;
+        border-radius: 20px; font-size: 12px; cursor: pointer;
+        transition: all 0.2s;
+      " onmouseover="this.style.borderColor='#00d4ff'; this.style.color='#fff'"
+         onmouseout="this.style.borderColor='#2a2a40'; this.style.color='#a0a0b8'">
+        ⭐ Who should I captain?
+      </button>
+      <button onclick="quickAsk('Analyze the Man City vs Arsenal match for fantasy')" style="
+        background: #13131f; border: 1px solid #2a2a40;
+        color: #a0a0b8; padding: 8px 14px;
+        border-radius: 20px; font-size: 12px; cursor: pointer;
+        transition: all 0.2s;
+      " onmouseover="this.style.borderColor='#00d4ff'; this.style.color='#fff'"
+         onmouseout="this.style.borderColor='#2a2a40'; this.style.color='#a0a0b8'">
+        ⚽ Analyze the match
+      </button>
+      <button onclick="quickAsk('Find me 3 differential picks with low ownership')" style="
+        background: #13131f; border: 1px solid #2a2a40;
+        color: #a0a0b8; padding: 8px 14px;
+        border-radius: 20px; font-size: 12px; cursor: pointer;
+        transition: all 0.2s;
+      " onmouseover="this.style.borderColor='#00d4ff'; this.style.color='#fff'"
+         onmouseout="this.style.borderColor='#2a2a40'; this.style.color='#a0a0b8'">
+        💎 Find differentials
+      </button>
+      <button onclick="quickAsk('What is my best 4-3-3 lineup for tonight?')" style="
+        background: #13131f; border: 1px solid #2a2a40;
+        color: #a0a0b8; padding: 8px 14px;
+        border-radius: 20px; font-size: 12px; cursor: pointer;
+        transition: all 0.2s;
+      " onmouseover="this.style.borderColor='#00d4ff'; this.style.color='#fff'"
+         onmouseout="this.style.borderColor='#2a2a40'; this.style.color='#a0a0b8'">
+        🧠 Best lineup tonight
+      </button>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div style="
+    background: #13131f;
+    border: 1px solid #1e1e30;
+    border-radius: 0 0 16px 16px;
+    padding: 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  ">
+    <textarea 
+      id="chat-input"
+      placeholder="Ask me about your lineup, players, captain picks..."
+      onkeydown="handleChatKey(event)"
+      style="
+        flex: 1;
+        background: #0a0a0f;
+        border: 1px solid #2a2a40;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 14px;
+        padding: 12px 16px;
+        resize: none;
+        min-height: 44px;
+        max-height: 120px;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+      "
+      onfocus="this.style.borderColor='#00d4ff'"
+      onblur="this.style.borderColor='#2a2a40'"
+      rows="1"
+    ></textarea>
+    <button onclick="sendChatMessage()" style="
+      background: linear-gradient(135deg, #7c3aed, #9d5cf5);
+      color: white; border: none;
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    ">➤</button>
+  </div>
+
+  <p style="text-align:center; color:#5a5a75; font-size:11px; margin-top:10px;">
+    AI can make mistakes. Always verify with official sources.
+  </p>
+</div>
+</section>
+<!-- Right: Current Lineup / Context -->
+<section class="w-80 border-l border-[#ffffff0f] bg-surface-container-lowest hidden 2xl:flex flex-col">
+<div class="p-6 border-b border-[#ffffff0f]">
+<h3 class="text-xs font-bold text-secondary tracking-widest uppercase mb-4">Active Context</h3>
+<div class="bg-surface-container-high rounded-2xl p-4 border border-outline-variant/10">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Contest</span>
+<span class="bg-tertiary/10 text-tertiary text-[10px] font-bold px-2 py-0.5 rounded-full">$50k Pro</span>
+</div>
+<h4 class="font-headline font-bold text-sm">Mega Elite Classic</h4>
+<div class="mt-4 flex items-center justify-between">
+<div class="text-center">
+<p class="text-[10px] text-[#5a5a75] uppercase">Salary Left</p>
+<p class="text-sm font-headline font-black text-white">$14,500</p>
+</div>
+<div class="w-[1px] h-8 bg-outline-variant/20"></div>
+<div class="text-center">
+<p class="text-[10px] text-[#5a5a75] uppercase">Avg Projection</p>
+<p class="text-sm font-headline font-black text-primary">742.8</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xs font-bold text-[#5a5a75] tracking-widest uppercase">Current Lineup</h3>
+<span class="text-[10px] font-bold text-primary">11 / 11</span>
+</div>
+<div class="space-y-3">
+<!-- Player Item -->
+<div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="relative">
+<img alt="Player" class="w-10 h-10 rounded-full border border-outline-variant/30" data-alt="stylized athlete avatar with sleek minimalist lines and professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAidcSICOMVWT3Imx9ioD3GjDPQyMIO0PZ6ZhjpHAS4ip5isTitHoJb4DtPJAKdsJJKuUZIUyqeEFNCbNLlBbPxzovAL0p4krXPvcjKxLCS8bwKaE86_KLGpdqTWTl_FtWL7y7reKILJvKKcNB8MV1HPJOWcPQ96K5CbmCfP-65VOA5Pe0redD6O_UQEygj6v2XY0lS73Y7spwvuT0vvVMoLqbLx15ESEdTLp7A3EBWVIFOoiddllW5BKy87tROj5uPByx_p6fdjiHl"/>
+<div class="absolute -top-1 -right-1 bg-gold text-[8px] font-black px-1 rounded-sm text-black">C</div>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold text-white leading-tight">J. Butler</p>
+<p class="text-[10px] text-[#5a5a75]">9.5 Cr | 82.1 Pt</p>
+</div>
+<span class="material-symbols-outlined text-[#5a5a75] text-sm">sync</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low border border-transparent hover:border-primary/20 transition-all">
+<img alt="Player" class="w-10 h-10 rounded-full border border-outline-variant/30" data-alt="professional sports player avatar with clean lighting and neutral expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApZ-GCOWulZZiJ3Xhn8nVuC9dH75AMP0U0FGQU4SXeucA7ZnwyXaCBLsE3WHADtDMfCe7iJKuNc-ra_v3O6Vwt2HX9qyZy6VP2C8avYLn8pdWTM2XSaN1XfF4yThJTMrg0QFsdPA0yeoWWnVCH9olYNJltGCtWq4Qyz8JW6_FaoJh-q0UlguEgF0tJYOHH-7RHudwle9sbNPi1uA99kjX_Y1k3_3g75aYuFhFx7tBLl5SBP-RmPXE9_83qJxvFxvdxWLD5k9MkTARQ"/>
+<div class="flex-1">
+<p class="text-xs font-bold text-white leading-tight">S. Thompson</p>
+<p class="text-[10px] text-[#5a5a75]">8.0 Cr | 64.5 Pt</p>
+</div>
+<span class="material-symbols-outlined text-[#5a5a75] text-sm">sync</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low border border-transparent hover:border-primary/20 transition-all">
+<img alt="Player" class="w-10 h-10 rounded-full border border-outline-variant/30" data-alt="modern professional athlete portrait avatar with soft blue glow effect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7kInlo2HNMnzwoQoJKCZyi7tjtS57qyPYWz1PW-LfaCgeKpy4WG5qVdyDPL9TFtGiR4tL_2b0-3cU71jNRm8br24u49FC36sEoFDYvi7vHplgMzTx9UyrTDYjZ4OfT7sIFB92TERjaZV0o1bc7zkAxo002FXFGecHcvty7LM03_quoZ-EzGaRrSFkwB9pv9y-s_ezfYs2TpaY3Ab863hAAgiwEEI_WQJOZ4aCXQ3vP2WJJs9blqZPjFj2itbo3NsF-N8HT4O63Qev"/>
+<div class="flex-1">
+<p class="text-xs font-bold text-white leading-tight">L. James</p>
+<p class="text-[10px] text-[#5a5a75]">10.5 Cr | 95.2 Pt</p>
+</div>
+<span class="material-symbols-outlined text-[#5a5a75] text-sm">sync</span>
+</div>
+<!-- Placeholder for empty slots -->
+<div class="border-2 border-dashed border-outline-variant/20 rounded-xl p-4 flex flex-col items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[#5a5a75]">person_add</span>
+<p class="text-[10px] text-[#5a5a75] font-bold">ADD FLEX SLOT</p>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-high border-t border-[#ffffff0f]">
+<button class="w-full bg-tertiary text-on-tertiary font-black py-4 rounded-xl shadow-[0_10px_20px_rgba(0,255,136,0.2)] hover:scale-[1.02] active:scale-95 transition-all text-xs tracking-widest">
+                    SUBMIT OPTIMIZED SQUAD
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component - Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#131318]/90 backdrop-blur-2xl md:hidden z-50 border-t border-[#ffffff1a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)] rounded-t-[2rem]">
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="sports_kabaddi">sports_kabaddi</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Lobby</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#a8e8ff] to-[#00d4ff] text-[#131318] rounded-full p-3 shadow-[0_0_20px_rgba(0,212,255,0.4)] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="hidden">Intelligence</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5a5a75] p-3 hover:text-[#a8e8ff] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest mt-1">Wallet</span>
+</a>
+</nav>
+<script src="assets/js/main.js"></script>
+</body></html>

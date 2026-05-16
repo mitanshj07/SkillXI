@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="SkillXI Blink">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00d4ff"/><stop offset="1" stop-color="#00ff88"/></linearGradient>
+    <radialGradient id="r" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#20364a"/><stop offset="1" stop-color="#070912"/></radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#r)"/>
+  <path d="M116 156h280l-34 54H150l-34-54Zm34 146h212l34 54H116l34-54Zm44-73h174l-34 54H160l34-54Z" fill="url(#g)"/>
+  <circle cx="256" cy="256" r="178" fill="none" stroke="#a8e8ff" stroke-opacity=".28" stroke-width="10"/>
+  <text x="256" y="432" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="900" fill="#fff">SkillXI</text>
+</svg>
