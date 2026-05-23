@@ -183,7 +183,7 @@ document.addEventListener('click', (event) => {
   if (nextButton) { skillxiGoToConfirm(); return; }
   if (payJoin) { event.preventDefault(); skillxiPayAndJoin(); return; }
   if (adminCreate) { skillxiCreateAdminContest(); return; }
-  if (adminLock || adminDelete) { const id = (adminLock || adminDelete).getAttribute(adminLock ? 'data-admin-lock' : 'data-admin-delete'); let contests = readStore(SKILLXI_ADMIN_CONTESTS_KEY, SEEDED_CONTESTS); contests = adminDelete ? contests.filter((contest) => contest.id !== id) : contests.map((contest) => contest.id === id ? { ...contest, status: 'locked' } : contest); writeStore(SKILLXI_ADMIN_CONTESTS_KEY, contests); skillxiRenderAdminPage(); return; }
+  if (adminLock || adminDelete) { const id = (adminLock || adminDelete).getAttribute(adminLock ? 'data-admin-lock' : 'data-admin-delete'); let contests = readStore(SKILLXI_ADMIN_CONTESTS_KEY, typeof PAGE_STATE !== 'undefined' ? PAGE_STATE.contests : []); contests = adminDelete ? contests.filter((contest) => contest.id !== id) : contests.map((contest) => contest.id === id ? { ...contest, status: 'locked' } : contest); writeStore(SKILLXI_ADMIN_CONTESTS_KEY, contests); skillxiRenderAdminPage(); return; }
   if (adminSettle) { window.settleContest(adminSettle.getAttribute('data-admin-settle')); return; }
 }, true);
 window.addEventListener('load', () => setTimeout(skillxiInitCompletionLayer, 0));

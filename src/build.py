@@ -240,6 +240,7 @@ def generate_page(filename, source_path, title, description, body_class_override
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>{title}</title>
     <meta name="description" content="{description}"/>
+    <script src="https://unpkg.com/@solana/web3.js@1.91.4/lib/index.iife.min.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="stylesheet" href="assets/css/style.css"/>
 {TAILWIND_CONFIG}

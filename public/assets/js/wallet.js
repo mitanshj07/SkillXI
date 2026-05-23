@@ -92,11 +92,11 @@ function saveReceipts(receipts) {
   writeStore(STORAGE_KEYS.receipts, receipts);
 }
 function getContestById(contestId) {
-  return PAGE_STATE.contests.find((contest) => contest.id === contestId) || SEEDED_CONTESTS.find((contest) => contest.id === contestId) || null;
+  return PAGE_STATE.contests.find((contest) => contest.id === contestId) || null;
 }
 function getSelectedContestId() {
   const search = new URLSearchParams(window.location.search);
-  return search.get('contest') || window.localStorage.getItem(STORAGE_KEYS.selectedContest) || SEEDED_CONTESTS[0].id;
+  return search.get('contest') || window.localStorage.getItem(STORAGE_KEYS.selectedContest) || (PAGE_STATE.contests[0]?.id || null);
 }
 
 function setSelectedContest(contestId) {
@@ -108,7 +108,7 @@ function currentContest() {
   if (!PAGE_STATE.activeContest) {
     setSelectedContest(getSelectedContestId());
   }
-  return PAGE_STATE.activeContest || SEEDED_CONTESTS[0];
+  return PAGE_STATE.activeContest || PAGE_STATE.contests[0] || null;
 }
 function fallbackUserProfile() {
   const wallet = getSavedWallet();

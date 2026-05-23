@@ -261,7 +261,8 @@ function skillxiWriteLineupState(state) {
   writeStore(SKILLXI_LINEUP_KEY, { ...state, contestId: getSelectedContestId(), savedAt: new Date().toISOString() });
 }
 function skillxiPlayersByName(names) {
-  return names.map((name) => SKILLXI_PLAYERS.find((player) => player.name === name)).filter(Boolean);
+  const pool = PAGE_STATE.players || [];
+  return names.map((name) => pool.find((player) => player.name === name)).filter(Boolean);
 }
 function skillxiLineupPayload() {
   const state = skillxiReadLineupState();
@@ -298,9 +299,53 @@ function skillxiAutoFillLineup() {
   skillxiRenderLineupBuilder();
   window.showWalletToast('AI auto-filled a legal 11-player team.', 'success');
 }
-function skillxiRenderLineupBuilder() {
+async function skillxiRenderLineupBuilder() {
   if (getPath() !== 'lineup.html') return;
   const existing = document.getElementById('skillxi-lineup-builder');
+  const target = Array.from(document.querySelectorAll('div')).find((node) => (node.textContent || '').includes('Lock Lineup'));
+  const section = target?.closest('.flex.flex-wrap') || document.querySelector('section.w-full.md\\:w-\\[60\\%\\]');
+  
+  if (!PAGE_STATE.players) {
+    if (existing) { existing.innerHTML = '<div style="color:#a8e8ff;padding:20px;text-align:center;">Loading live rosters...</div>'; }
+    else if (section) { section.insertAdjacentHTML(section.classList?.contains('flex-wrap') ? 'afterend' : 'afterbegin', '<section id="skillxi-lineup-builder" style="background:#0f0f1a;border:1px solid #1e1e30;border-radius:18px;padding:20px;margin:0 0 24px;text-align:center;color:#a8e8ff;">Loading live rosters...</section>'); }
+    
+    try {
+      const contest = currentContest();
+      const res = await fetch(FOOTBALL_API_URL + '?players=1&fixture=' + encodeURIComponent(contest.fixture_id || '1379295'));
+      const payload = await res.json();
+      const teams = Array.isArray(payload.data) ? payload.data : [];
+      let allPlayers = [];
+      teams.forEach((teamEntry) => {
+        const teamName = teamEntry.team?.name || 'UNK';
+        (teamEntry.players || []).forEach((p) => {
+          allPlayers.push({
+            name: p.player?.name || 'Unknown Player',
+            team: teamName,
+            position: p.statistics?.[0]?.games?.position || 'MID',
+            credits: p.statistics?.[0]?.games?.rating ? parseFloat((parseFloat(p.statistics[0].games.rating) * 1.5).toFixed(1)) : 8.0,
+            rating: p.statistics?.[0]?.games?.rating ? parseFloat(p.statistics[0].games.rating) : 7.0,
+            projection: p.statistics?.[0]?.games?.rating ? Math.round(parseFloat(p.statistics[0].games.rating) * 7.5) : 40
+          });
+        });
+      });
+      if (allPlayers.length === 0) {
+        allPlayers = [
+          { name: 'Erling Haaland', team: 'MCI', position: 'FWD', credits: 14.5, rating: 9.3, projection: 78 },
+          { name: 'Bukayo Saka', team: 'ARS', position: 'FWD', credits: 13, rating: 8.9, projection: 70 },
+          { name: 'Kevin De Bruyne', team: 'MCI', position: 'MID', credits: 11.5, rating: 8.8, projection: 68 },
+          { name: 'Rodri', team: 'MCI', position: 'MID', credits: 7.5, rating: 8.2, projection: 58 },
+          { name: 'William Saliba', team: 'ARS', position: 'DEF', credits: 8.5, rating: 7.6, projection: 49 },
+          { name: 'Ederson', team: 'MCI', position: 'GK', credits: 8.5, rating: 7.2, projection: 41 }
+        ];
+      }
+      PAGE_STATE.players = allPlayers;
+    } catch (e) {
+      console.warn('Failed to fetch players', e);
+      PAGE_STATE.players = [];
+    }
+  }
+
+  const pool = PAGE_STATE.players;
   const state = skillxiReadLineupState();
   const cost = skillxiLineupCost(state);
   const counts = skillxiPositionCounts(state);
@@ -311,7 +356,7 @@ function skillxiRenderLineupBuilder() {
   const vcOptions = selectedOptions.replace('value="' + escapeHtml(state.viceCaptain) + '"', 'value="' + escapeHtml(state.viceCaptain) + '" selected');
   const lineupSummary = selectedPlayers.length ? selectedPlayers.map((player, index) => '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:#10101a;border:1px solid #242438;border-radius:12px;padding:10px 12px;"><span style="color:#fff;font-size:13px;font-weight:800;">' + (index + 1) + '. ' + escapeHtml(player.name) + '</span><span style="color:#a0a0b8;font-size:12px;">' + escapeHtml(player.position) + ' &bull; ' + player.credits + ' Cr' + (state.captain === player.name ? ' &bull; C' : '') + (state.viceCaptain === player.name ? ' &bull; VC' : '') + '</span></div>').join('') : '<p style="margin:0;color:#a0a0b8;font-size:13px;line-height:1.6;">Add players from the pool. Your match lineup appears here, then choose captain and vice captain separately.</p>';
   const lineupControls = '<aside data-skillxi-match-lineup style="background:#13131f;border:1px solid #242438;border-radius:16px;padding:16px;display:grid;gap:14px;align-self:start;"><div><p style="margin:0;color:#a8e8ff;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Your Match Lineup</p><h3 style="margin:6px 0 0;color:#fff;font-size:18px;">Selected XI, Captain, Vice</h3></div><div style="display:grid;gap:8px;max-height:285px;overflow:auto;">' + lineupSummary + '</div><label style="display:grid;gap:8px;color:#ffd166;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;">Captain (2x points)<select data-skillxi-captain-select ' + (selectedPlayers.length ? '' : 'disabled') + ' style="width:100%;background:#0d0d14;color:#fff;border:1px solid #35354a;border-radius:12px;padding:12px;font-weight:800;"><option value="">Select captain</option>' + captainOptions + '</select></label><label style="display:grid;gap:8px;color:#d2bbff;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;">Vice Captain (1.5x points)<select data-skillxi-vc-select ' + (selectedPlayers.length ? '' : 'disabled') + ' style="width:100%;background:#0d0d14;color:#fff;border:1px solid #35354a;border-radius:12px;padding:12px;font-weight:800;"><option value="">Select vice captain</option>' + vcOptions + '</select></label></aside>';
-  const cards = SKILLXI_PLAYERS.map((player) => {
+  const cards = pool.map((player) => {
     const selected = state.selected.includes(player.name);
     const isCaptain = state.captain === player.name;
     const isVc = state.viceCaptain === player.name;
@@ -329,10 +374,10 @@ function skillxiRenderLineupBuilder() {
       <div id="skillxi-lineup-errors" style="color:#ffb4ab;font-size:13px;line-height:1.6;margin-top:14px;"></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;"><button data-skillxi-autofill style="background:#7c3aed;color:#fff;border:none;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;">AI Auto-Fill Team</button><button data-skillxi-reset style="background:#1f1f2e;color:#a0a0b8;border:1px solid #35354a;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;">Reset Team</button><button data-skillxi-next style="margin-left:auto;background:linear-gradient(135deg,#00ff88,#00d4ff);color:#061118;border:none;border-radius:12px;padding:12px 20px;font-weight:900;cursor:pointer;">Next Step: Review & Pay</button></div>
     </section>`;
-  if (existing) { existing.outerHTML = builderHtml; return; }
-  const target = Array.from(document.querySelectorAll('div')).find((node) => (node.textContent || '').includes('Lock Lineup'));
-  const section = target?.closest('.flex.flex-wrap') || document.querySelector('section.w-full.md\\:w-\\[60\\%\\]');
-  if (section?.insertAdjacentHTML) section.insertAdjacentHTML(section.classList?.contains('flex-wrap') ? 'afterend' : 'afterbegin', builderHtml);
+  
+  const currentRoot = document.getElementById('skillxi-lineup-builder');
+  if (currentRoot) { currentRoot.outerHTML = builderHtml; }
+  else if (section) { section.insertAdjacentHTML(section.classList?.contains('flex-wrap') ? 'afterend' : 'afterbegin', builderHtml); }
 }
 function skillxiGoToConfirm() {
   const state = skillxiReadLineupState();

@@ -43,9 +43,7 @@ window.getContests = async function getContests() {
   const liveFixtures = await fetchUpcomingFixtures(24);
   const liveContests = contestsFromFixtures(liveFixtures);
 
-  const seeded = SEEDED_CONTESTS.map((contest) => ({ ...contest, source: 'seed' }));
-  const mergedBase = normalized.length ? normalized : seeded;
-  const merged = [...liveContests, ...mergedBase].filter((contest, idx, arr) => arr.findIndex((c) => c.id === contest.id) === idx);
+  const merged = [...liveContests, ...normalized].filter((contest, idx, arr) => arr.findIndex((c) => c.id === contest.id) === idx);
 
   PAGE_STATE.contests = merged;
   return merged;

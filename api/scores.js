@@ -69,6 +69,19 @@ export default async function handler(req, res) {
       return res.status(200).json({ source: 'api-football', season, leagues, data });
     }
 
+    if (req.query.players) {
+      const data = await withCache(
+        `players:${fixture || '1379295'}`,
+        300000,
+        async () => {
+          const url = `https://v3.football.api-sports.io/fixtures/players?fixture=${encodeURIComponent(fixture || '1379295')}`;
+          const payload = await apiFetch(url, key);
+          return payload.response || [];
+        }
+      );
+      return res.status(200).json({ source: 'api-football', data });
+    }
+
     const data = await withCache(
       `${live ? 'live' : 'fixture'}:${fixture || '1379295'}`,
       live ? 30000 : 60000,
@@ -84,6 +97,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ source: 'api-football', data });
   } catch (error) {
+    if (req.query.players) return res.status(200).json({ source: 'fallback', data: [], warning: error.message });
     if (upcoming) return res.status(200).json({ source: 'fallback', data: fallbackUpcoming(), warning: error.message });
     return res.status(200).json({ source: 'fallback', data: fallbackScore(live), warning: error.message });
   }

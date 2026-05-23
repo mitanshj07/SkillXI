@@ -18,8 +18,8 @@ async function skillxiRenderAdminPage() {
   if (!root) return;
   const isAdmin = await verifyAdminToken();
   if (!isAdmin) { renderAdminLogin(root); return; }
-  const adminContests = readStore(SKILLXI_ADMIN_CONTESTS_KEY, SEEDED_CONTESTS);
-  const users = SEEDED_USERS;
+  const adminContests = readStore(SKILLXI_ADMIN_CONTESTS_KEY, PAGE_STATE.contests || []);
+  const users = await window.getLeaderboard ? await window.getLeaderboard() : [];
   const entries = getLocalEntries();
   root.innerHTML = `<section class="sx-shell"><div class="sx-header"><a class="sx-logo" href="index.html">SkillXI Admin</a><button class="sx-wallet" id="skillxi-admin-logout">Lock admin</button></div><main class="sx-main"><p class="sx-kicker">Ops Dashboard</p><h1>Contest Control</h1><div class="sx-stats"><article><b>${users.length}</b><span>Total users</span></article><article><b>${adminContests.filter((c) => c.status !== 'settled').length}</b><span>Active contests</span></article><article><b>${entries.length}</b><span>Local entries</span></article><article><b id="skillxi-api-health">Checking</b><span>API health</span></article></div><section class="sx-panel"><div class="sx-panel-head"><h2>Contest Manager</h2><button id="skillxi-admin-create">Create Contest</button></div><div class="sx-table">${adminContests.map((contest) => `<div><span>${escapeHtml(contest.title)}</span><span>${escapeHtml(contest.status)}</span><span>${escapeHtml(contest.prize_pool)}</span><button data-admin-lock="${escapeHtml(contest.id)}">Lock</button><button data-admin-settle="${escapeHtml(contest.id)}">Settle</button><button data-admin-delete="${escapeHtml(contest.id)}">Delete</button></div>`).join('')}</div></section><section class="sx-panel"><div class="sx-panel-head"><h2>User Manager</h2><span>Production user data comes from Supabase after schema migration</span></div><div class="sx-table">${users.map((user) => `<div><span>${escapeHtml(user.username)}</span><span>${escapeHtml(shortWallet(user.wallet_address))}</span><span>${user.skill_score}</span><span>${formatSol(user.total_earned || 0)}</span></div>`).join('')}</div></section><section class="sx-panel"><div class="sx-panel-head"><h2>Compliance & Risk</h2><button id="skillxi-admin-health-refresh">Refresh Health</button></div><p class="sx-muted">Paid beta requires allowlisted wallets, region checks, entry caps, and KYC provider configuration unless devnet override is explicitly enabled.</p></section><section class="sx-panel"><div class="sx-panel-head"><h2>Leaderboard</h2><button onclick="settleContest()">Sync From Entries</button></div><p class="sx-muted">Settlement creates local receipts and can be reconciled with Supabase after migration.</p></section></main></section>`;
   skillxiHydrateAdminHealth();
@@ -27,8 +27,8 @@ async function skillxiRenderAdminPage() {
 function skillxiCreateAdminContest() {
   const title = prompt('Contest title:', 'Man City vs Arsenal Mini League');
   if (!title) return;
-  const contests = readStore(SKILLXI_ADMIN_CONTESTS_KEY, SEEDED_CONTESTS);
-  contests.unshift({ ...SEEDED_CONTESTS[0], id: `admin-${Date.now()}`, title, status: 'open', joined: 0, source: 'local-admin' });
+  const contests = readStore(SKILLXI_ADMIN_CONTESTS_KEY, PAGE_STATE.contests || []);
+  contests.unshift({ ...(PAGE_STATE.contests[0] || {}), id: `admin-${Date.now()}`, title, status: 'open', joined: 0, source: 'local-admin' });
   writeStore(SKILLXI_ADMIN_CONTESTS_KEY, contests); PAGE_STATE.contests = contests; skillxiRenderAdminPage();
 }
 async function skillxiHydrateAdminHealth() {

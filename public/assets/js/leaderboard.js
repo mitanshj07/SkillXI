@@ -1,8 +1,5 @@
 window.getLeaderboard = async function getLeaderboard() {
   const rows = await trySupabaseSelect('users', '*');
-  if (!rows.length) {
-    return SEEDED_USERS.map(normalizeUser);
-  }
   return rows
     .sort((left, right) => Number(right.skill_score || 0) - Number(left.skill_score || 0))
     .slice(0, 20)
