@@ -65,7 +65,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/skillxi-final/index.html"
+      "destination": "/public/index.html"
     },
     {
       "source": "/api/(.*)",
@@ -73,11 +73,11 @@
     },
     {
       "source": "/assets/(.*)",
-      "destination": "/skillxi-final/assets/$1"
+      "destination": "/public/assets/$1"
     },
     {
       "source": "/(.*)",
-      "destination": "/skillxi-final/$1"
+      "destination": "/public/$1"
     }
   ]
 }

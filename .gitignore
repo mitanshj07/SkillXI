@@ -11,15 +11,23 @@ node_modules/
 __pycache__/
 *.pyc
 
-# Supabase local
-supabase/.temp/
+# Build cache
+.npm_cache/
+
+# Runtime artifacts
+server.log
+server.pid
+*.log
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# OS
 .DS_Store
+Thumbs.db
 
 # Vercel
 .vercel/
