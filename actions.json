@@ -1,12 +1,8 @@
 {
   "rules": [
-    {
-      "pathPattern": "/*",
-      "apiPath": "/api/actions/join"
-    },
-    {
-      "pathPattern": "/api/actions/**",
-      "apiPath": "/api/actions/**"
-    }
+    { "pathPattern": "/contests.html", "apiPath": "/api/actions/join" },
+    { "pathPattern": "/match-lobby.html", "apiPath": "/api/actions/join" },
+    { "pathPattern": "/lineup.html", "apiPath": "/api/actions/join" },
+    { "pathPattern": "/contest-confirm.html", "apiPath": "/api/actions/join" }
   ]
 }
