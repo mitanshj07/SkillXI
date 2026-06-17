@@ -43,10 +43,10 @@ export default async function handler(req, res) {
   };
 
   if (!wallet) return res.status(200).json({ allowed: false, reason: 'Connect wallet first.', checks });
+  if (!paid) return res.status(200).json({ allowed: true, reason: 'Free contest allowed.', checks });
   if (RESTRICTED_COUNTRIES.includes(country)) {
     return res.status(200).json({ allowed: false, reason: `Paid fantasy contests are not available in ${country}.`, checks });
   }
-  if (!paid) return res.status(200).json({ allowed: true, reason: 'Free contest allowed.', checks });
   if (entryAmount > maxEntrySol) {
     return res.status(200).json({ allowed: false, reason: `Entry exceeds beta cap of ${maxEntrySol} SOL.`, checks });
   }

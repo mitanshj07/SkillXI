@@ -12,8 +12,12 @@ function withCache(key, ttlMs, fetcher) {
 
 async function apiFetch(url, key) {
   const response = await fetch(url, { headers: { 'x-apisports-key': key } });
-  const payload = await response.json();
   if (!response.ok) throw new Error(`API-Football HTTP ${response.status}`);
+  const payload = await response.json();
+  if (payload.errors && (Array.isArray(payload.errors) ? payload.errors.length > 0 : Object.keys(payload.errors).length > 0)) {
+    const errorMsg = Array.isArray(payload.errors) ? payload.errors.join(', ') : Object.values(payload.errors).join(', ');
+    throw new Error(`API-Football error: ${errorMsg}`);
+  }
   return payload;
 }
 
