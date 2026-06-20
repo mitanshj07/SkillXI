@@ -87,7 +87,7 @@ export default async function handler(req, res) {
     }
 
     const data = await withCache(
-      `${live ? 'live' : 'fixture'}:${fixture || '1379295'}`,
+      live ? 'live:all' : `fixture:${fixture || '1379295'}`,
       live ? 30000 : 60000,
       async () => {
         const url = live

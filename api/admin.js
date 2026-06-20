@@ -17,13 +17,17 @@ function makeToken() {
 }
 
 function verifyToken(token = '') {
-  if (!secret() || !token.includes('.')) return false;
-  const [encoded, sig] = token.split('.');
-  const expected = sign(encoded);
-  if (sig.length !== expected.length) return false;
-  if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return false;
-  const payload = JSON.parse(Buffer.from(encoded, 'base64url').toString('utf8'));
-  return payload.role === 'admin' && payload.exp > Date.now();
+  try {
+    if (!secret() || !token.includes('.')) return false;
+    const [encoded, sig] = token.split('.');
+    const expected = sign(encoded);
+    if (sig.length !== expected.length) return false;
+    if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return false;
+    const payload = JSON.parse(Buffer.from(encoded, 'base64url').toString('utf8'));
+    return payload.role === 'admin' && payload.exp > Date.now();
+  } catch {
+    return false;
+  }
 }
 
 export default async function handler(req, res) {
@@ -39,7 +43,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Method not allowed' });
   const password = String(req.body?.password || '');
   const expected = String(process.env.ADMIN_PASSWORD || '');
-  const valid = password.length === expected.length && crypto.timingSafeEqual(Buffer.from(password), Buffer.from(expected));
+  const bufPassword = Buffer.from(password);
+  const bufExpected = Buffer.from(expected);
+  const valid = bufPassword.length === bufExpected.length && crypto.timingSafeEqual(bufPassword, bufExpected);
   if (!valid) return res.status(401).json({ ok: false, error: 'Invalid admin password' });
 
   return res.status(200).json({ ok: true, token: makeToken() });
