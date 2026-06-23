@@ -37,10 +37,12 @@ function contestsFromFixtures(fixtures) {
   }).filter(Boolean);
 }
 window.getContests = async function getContests() {
-  const rows = await trySupabaseSelect('contests', '*');
-  const normalized = rows.map(normalizeContest).filter(Boolean);
+  const [rows, liveFixtures] = await Promise.all([
+    trySupabaseSelect('contests', '*'),
+    fetchUpcomingFixtures(24)
+  ]);
 
-  const liveFixtures = await fetchUpcomingFixtures(24);
+  const normalized = rows.map(normalizeContest).filter(Boolean);
   const liveContests = contestsFromFixtures(liveFixtures);
 
   const merged = [...liveContests, ...normalized].filter((contest, idx, arr) => arr.findIndex((c) => c.id === contest.id) === idx);
